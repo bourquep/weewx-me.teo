@@ -63,3 +63,32 @@ jobs:
       # --force is required for now, as NextJS references a React version that is not yet published.
       - run: npm ci --force
       - run: npm run build
+
+      # Upload artifacts for this locale
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-output-${{ matrix.build-locale }}
+          path: ./out/${{ matrix.build-locale }}
+          retention-days: 1
+
+  combine-builds:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create combined directory
+        run: mkdir -p ./dist
+
+      # Download all locale builds
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: build-output-*
+          path: ./out
+          merge-multiple: true
+
+      # Upload combined artifacts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: combined-build-output
+          path: ./dist
+          retention-days: 1
