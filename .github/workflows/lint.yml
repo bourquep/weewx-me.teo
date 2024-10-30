@@ -23,3 +23,4 @@ jobs:
       # --force is required for now, as NextJS references a React version that is not yet published.
       - run: npm ci --force
       - run: npm run lint
+      - run: npm run lint-format
