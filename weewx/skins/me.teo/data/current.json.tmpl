@@ -1,0 +1,50 @@
+#set $observations = $to_list($DisplayOptions.get('observations_current', ['outTemp', 'outHumidity', 'windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'lightning_strike_count', 'barometer', 'UV']))
+#set $obs_type_sum = $to_list($DisplayOptions.get('obs_type_sum', ['rain', 'ET', 'hail', 'snow', 'lightning_strike_count']))
+#set $obs_type_max = $to_list($DisplayOptions.get('obs_type_max', ['rainRate', 'hailRate', 'snowRate', 'UV']))
+{
+  "station": {
+    "location": "$station.location",
+    "latitude": "$station.latitude[0]° $station.latitude[1]' $station.latitude[2]",
+    "longitude": "$station.longitude[0]° $station.longitude[1]' $station.longitude[2]",
+    "altitude": "$station.altitude",
+    "link": "$station.station_url"
+  },
+  "report": {
+    "time": $current.dateTime.json,
+    "generator": "weewx $station.version",
+    "lang": "$lang"
+  },
+  "observations": [
+#for $x in $observations
+  #if $getVar('year.%s.has_data' % $x)
+    {
+      "observation": "$x",
+      "label": "$obs.label[$x]",
+      "unit": "$getVar('unit.label.' + $x)",
+      "current": $getVar('current.' + $x).json,
+    #if $x == 'windDir'
+      "currentCompass": "$current.windDir.ordinal_compass",
+      "max": $span(hour_delta=24).wind.vecdir.json,
+      "maxCompass": "$span(hour_delta=24).wind.vecdir.ordinal_compass",
+      "past24h": $span(hour_delta=24).windDir.series(aggregate_type='avg', aggregate_interval='1h', time_series='start').json
+    #elif $x in $obs_type_sum
+      "sum": $getattr($span(hour_delta=24), $x).sum.json,
+      "past24h": $getattr($span(hour_delta=24), $x).series(aggregate_type='sum', aggregate_interval='1h', time_series='start').json
+    #elif $x in $obs_type_max
+      "max": $getattr($span(hour_delta=24), $x).max.json,
+      "maxTime": $getattr($span(hour_delta=24), $x).maxtime.json,
+      "past24h": $getattr($span(hour_delta=24), $x).series(aggregate_type='max', aggregate_interval='1h', time_series='start').json
+    #else
+      "min": $getattr($span(hour_delta=24), $x).min.json,
+      "minTime": $getattr($span(hour_delta=24), $x).mintime.json,
+      "max": $getattr($span(hour_delta=24), $x).max.json,
+      "maxTime": $getattr($span(hour_delta=24), $x).maxtime.json,
+      "past24h": $getattr($span(hour_delta=24), $x).series(aggregate_type='avg', aggregate_interval='1h', time_series='start').json
+    #end if
+    },
+  #end if
+#end for
+    ## Last value can't end with a comma
+    null
+  ]
+}

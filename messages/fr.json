@@ -1,0 +1,11 @@
+{
+  "Global": {
+    "DataLoadErrorTitle": "Impossible de charger les données.",
+    "DominantWindDirectionLabel": "dominant"
+  },
+  "Current": {
+    "PageTitle": "Conditions actuelles",
+    "PageFootnote": "Les graphiques et autres statistiques sont basés sur les dernières 24 heures.",
+    "EmptyGraphMessage": "Aucune donnée pour les dernières 24 heures."
+  }
+}
