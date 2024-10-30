@@ -77,7 +77,7 @@ jobs:
 
     steps:
       - name: Create combined directory
-        run: mkdir -p ./dist
+        run: mkdir -p ./out
 
       # Download all locale builds
       - uses: actions/download-artifact@v4
@@ -90,5 +90,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: combined-build-output
-          path: ./dist
+          path: ./out
           retention-days: 1
