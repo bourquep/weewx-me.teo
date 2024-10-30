@@ -1,15 +1,40 @@
-"""
-Installation script for the Me.teo WeeWX skin.
-"""
-import os.path
+# Installer for the Me.teo WeeWX skin
+# Pascal Bourque, 2024
+
 import configobj
-
-import weewx.extension
 from setup import ExtensionInstaller
+from io import StringIO
+import os
 
-VERSION = "0.1.0"
+VERSION      = "0.1.0"
+NAME         = 'Me.teo'
+DESCRIPTION  = 'A delightful skin for WeeWX.'
+AUTHOR       = "Pascal Bourque"
+AUTHOR_EMAIL = "pascal@cosmos.moi"
 
-# Find all files in directory recursively
+def loader():
+    return MeteoInstaller()
+
+class MeteoInstaller(ExtensionInstaller):
+    def __init__(self):
+        super(MeteoInstaller, self).__init__(
+            version=VERSION,
+            name=NAME,
+            description=DESCRIPTION,
+            author=AUTHOR,
+            author_email=AUTHOR_EMAIL,
+            config=config_dict,
+            files=[('skins/me.teo', find_files('skins/me.teo'))]
+        )
+
+config_string = """
+[StdReport]
+    [[Me.teo]]
+        skin = me.teo
+        enable = true
+"""
+config_dict = configobj.ConfigObj(StringIO(config_string))
+
 def find_files(directory):
     matches = []
     for root, dirnames, filenames in os.walk(directory):
@@ -18,32 +43,3 @@ def find_files(directory):
             relative_path = os.path.relpath(os.path.join(root, filename), directory)
             matches.append(os.path.join(root, filename))
     return matches
-
-def loader():
-    return MeteoSkinInstaller()
-
-class MeteoSkinInstaller(ExtensionInstaller):
-    def __init__(self):
-        skin_files = find_files('skins/me.teo')
-
-        super(MeteoSkinInstaller, self).__init__(
-            version=VERSION,
-            name='Me.teo',
-            description='A delightful skin for WeeWX.',
-            author="Pascal Bourque",
-            author_email="pascal@cosmos.moi",
-            config={
-                'StdReport': {
-                    'Me.teo': {
-                        'skin': 'me.teo',
-                        'enable': True,
-                    }
-                }
-            },
-            files=[
-                ('skins/me.teo', skin_files),
-            ]
-        )
-
-if __name__ == '__main__':
-    installer = MeteoSkinInstaller()
