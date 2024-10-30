@@ -10,8 +10,7 @@ const fetcher = async (url: string | URL | Request) => {
   return res.json();
 };
 
-// TODO: Dynamic baseUrl: /sample_data when localhost, /data when deployed
-const baseUrl = '/sample_data';
+const baseUrl = process.env.NODE_ENV === 'production' ? '/data' : '/sample_data';
 
 export function useCurrentData() {
   const { data, error, isLoading } = useSWR(`${baseUrl}/current.json`, fetcher, { refreshInterval: 60 * 1 * 1000 });

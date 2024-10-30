@@ -82,7 +82,7 @@ jobs:
         run: mkdir -p ./package/weewx-me.teo/skins/me.teo/html
 
       - name: Add skin files
-        run: cp -r ./weewx/skins/me.teo/* ./package/weewx-me.teo/skins/me.teo/
+        run: cp -r ./weewx/* ./package/weewx-me.teo/
 
       - name: Add locale HTML builds
         uses: actions/download-artifact@v4
