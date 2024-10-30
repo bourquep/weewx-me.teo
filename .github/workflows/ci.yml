@@ -71,24 +71,29 @@ jobs:
           path: ./out
           retention-days: 1
 
-  combine-builds:
+  package-skin:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Create combined directory
-        run: mkdir -p ./out
+      - uses: actions/checkout@v4
 
-      # Download all locale builds
-      - uses: actions/download-artifact@v4
+      - name: Create combined directory
+        run: mkdir -p ./package/weewx/skins/me.teo/html
+
+      - name: Add skin files
+        run: cp -r ./weewx/skins/me.teo/* ./package/weewx/skins/me.teo/
+
+      - name: Add locale HTML builds
+        uses: actions/download-artifact@v4
         with:
           pattern: build-output-*
-          path: ./out
+          path: ./package/weewx/skins/me.teo/html
           merge-multiple: true
 
-      # Upload combined artifacts
-      - uses: actions/upload-artifact@v4
+      - name: Archive combined build output
+        uses: actions/upload-artifact@v4
         with:
           name: combined-build-output
-          path: ./out
+          path: ./package
           retention-days: 1
