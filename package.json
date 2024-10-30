@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "serve out",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint-format": "prettier -c ."
   },
   "dependencies": {
     "@emotion/cache": "11.13.1",
