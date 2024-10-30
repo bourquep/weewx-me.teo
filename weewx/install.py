@@ -15,6 +15,17 @@ AUTHOR_EMAIL = "pascal@cosmos.moi"
 def loader():
     return MeteoInstaller()
 
+def get_files():
+    skin_files = {}
+    this_dir = os.path.dirname(os.path.abspath(__file__))
+    skin_path = os.path.join(this_dir, 'skins/me.teo')
+    for root, dirs, files in os.walk(skin_path):
+        relative_path = root[len(this_dir)+1:]
+        skin_files[relative_path] = []
+        for file in files:
+            skin_files[relative_path].append(os.path.join(relative_path, file))
+    return [(k,v) for k,v in skin_files.items()]
+
 class MeteoInstaller(ExtensionInstaller):
     def __init__(self):
         super(MeteoInstaller, self).__init__(
@@ -24,11 +35,7 @@ class MeteoInstaller(ExtensionInstaller):
             author=AUTHOR,
             author_email=AUTHOR_EMAIL,
             config=config_dict,
-            files=[
-              ('skins/me.teo', ['skins/me.teo/skin.conf']),
-              ('skins/me.teo/data', ['skins/me.teo/data/*']),
-              ('skins/me.teo/html', ['skins/me.teo/html/*'])
-            ]
+            files=get_files()
         )
 
 config_string = """
