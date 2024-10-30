@@ -17,6 +17,17 @@ def loader():
 
 class MeteoInstaller(ExtensionInstaller):
     def __init__(self):
+        # Determine the directory where this installer lives
+        this_dir = os.path.abspath(os.path.dirname(__file__))
+        skin_dir = os.path.join(this_dir, 'skins/me.teo')
+
+        # Find all the files in the skin directory
+        file_list = []
+        for dirpath, _, filenames in os.walk(skin_dir):
+            for f in filenames:
+                rel_path = os.path.relpath(dirpath, this_dir)
+                file_list.append((rel_path, [os.path.join(dirpath, f)]))
+
         super(MeteoInstaller, self).__init__(
             version=VERSION,
             name=NAME,
@@ -24,7 +35,7 @@ class MeteoInstaller(ExtensionInstaller):
             author=AUTHOR,
             author_email=AUTHOR_EMAIL,
             config=config_dict,
-            files=[('skins/me.teo', find_files('skins/me.teo'))]
+            files=file_list
         )
 
 config_string = """
@@ -34,12 +45,3 @@ config_string = """
         enable = true
 """
 config_dict = configobj.ConfigObj(StringIO(config_string))
-
-def find_files(directory):
-    matches = []
-    for root, dirnames, filenames in os.walk(directory):
-        for filename in filenames:
-            # Get the relative path from the skin directory
-            relative_path = os.path.relpath(os.path.join(root, filename), directory)
-            matches.append(os.path.join(root, filename))
-    return matches
