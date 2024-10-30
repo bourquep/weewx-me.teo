@@ -78,7 +78,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Create combined directory
+      - name: Create package directory
         run: mkdir -p ./package/weewx-me.teo/skins/me.teo/html
 
       - name: Add skin files
@@ -91,9 +91,9 @@ jobs:
           path: ./package/weewx-me.teo/skins/me.teo/html
           merge-multiple: true
 
-      - name: Archive combined build output
+      - name: Create package archive
         uses: actions/upload-artifact@v4
         with:
-          name: combined-build-output
+          name: weewx-me.teo
           path: ./package
           retention-days: 1
