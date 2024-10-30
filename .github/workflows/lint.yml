@@ -20,5 +20,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-      - run: npm ci
+      # --force is required for now, as NextJS references a React version that is not yet published.
+      - run: npm ci --force
       - run: npm run lint
