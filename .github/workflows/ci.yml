@@ -126,7 +126,8 @@ jobs:
       - name: Download skin package
         uses: actions/download-artifact@v4
         with:
-          pattern: weewx-me.teo
+          name: weewx-me.teo
+          path: package
 
       - name: Release
         env:
