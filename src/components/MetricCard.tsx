@@ -72,7 +72,7 @@ export default function MetricCard({
     <Card variant="outlined" sx={{ height: '100%' }}>
       <CardHeader
         title={cardTitle}
-        action={metricUnit.length > 0 && <Chip variant="outlined" size="small" color="primary" label={metricUnit} />}
+        action={metricUnit.length > 0 && <Chip variant="outlined" size="small" color="info" label={metricUnit} />}
       />
       <CardContent sx={{ paddingY: 0 }}>
         {/* Current value + min/max/sum */}
@@ -128,8 +128,9 @@ export default function MetricCard({
               valueFormatter: (date) => format.dateTime(date, { timeStyle: 'short' })
             }}
             yAxis={{ min: graphMinValue, max: graphMaxValue }}
-            colors={[theme.palette.primary.main]}
+            colors={[theme.palette.grey[200]]}
             curve="natural"
+            area
             disableAxisListener
             sx={{ pointerEvents: 'none' }}
           />
