@@ -40,3 +40,11 @@ from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for
 more details.
+
+# Licensing
+
+weewx-me.teo is licensed under the GNU Public License v3.
+
+# Copyright
+
+© 2024 Pascal Bourque
