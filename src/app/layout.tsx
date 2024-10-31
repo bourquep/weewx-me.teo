@@ -61,7 +61,9 @@ export default async function RootLayout({
       <body className={roboto.variable}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <StaticNextIntlClientProvider messages={messages}>{children}</StaticNextIntlClientProvider>
+            <StaticNextIntlClientProvider locale={locale} messages={messages}>
+              {children}
+            </StaticNextIntlClientProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

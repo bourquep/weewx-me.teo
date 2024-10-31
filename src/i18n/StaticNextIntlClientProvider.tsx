@@ -22,16 +22,15 @@ import { AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 interface StaticNextIntlClientProviderProps {
+  locale: string;
   messages?: AbstractIntlMessages;
   children: React.ReactNode;
 }
 
-export function StaticNextIntlClientProvider({ messages, children }: StaticNextIntlClientProviderProps) {
-  const [locale, setLocale] = useState('en');
+export function StaticNextIntlClientProvider({ locale, messages, children }: StaticNextIntlClientProviderProps) {
   const [timezone, setTimezone] = useState('UTC');
 
   useEffect(() => {
-    setLocale(navigator.language.split('-')[0] || 'en');
     setTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone);
   }, []);
 
