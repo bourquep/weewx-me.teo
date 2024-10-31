@@ -21,8 +21,8 @@ const semanticReleaseConfig = {
       {
         assets: [
           {
-            path: 'package/weewx-me.teo/**/*',
-            label: 'WeeWX Skin Extension Package'
+            path: 'package/weewx-me.teo.zip',
+            label: 'Me.teo WeeWX Skin Extension Package'
           }
         ]
       }

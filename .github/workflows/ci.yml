@@ -93,11 +93,14 @@ jobs:
       - name: Add skin files
         run: cp -r ./weewx/* ./package/weewx-me.teo/
 
-      - name: Create package archive
+      - name: Create ZIP file
+        run: cd ./package && zip -r weewx-me.teo.zip weewx-me.teo
+
+      - name: Upload archive as artifact
         uses: actions/upload-artifact@v4
         with:
           name: weewx-me.teo
-          path: ./package
+          path: ./package/weewx-me.teo.zip
           retention-days: 1
 
   release:
@@ -123,11 +126,11 @@ jobs:
       # --force is required for now, as NextJS references a React version that is not yet published.
       - run: npm ci --force
 
-      - name: Download skin package
+      - name: Download ZIP package
         uses: actions/download-artifact@v4
         with:
           name: weewx-me.teo
-          path: package
+          path: ./package
 
       - name: Release
         env:
