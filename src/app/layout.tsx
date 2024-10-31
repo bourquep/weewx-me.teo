@@ -55,7 +55,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <meta name="theme-color" content="#3874cb" media="(prefers-color-scheme: light)" />
+      <meta name="theme-color" content="#26c6da" media="(prefers-color-scheme: light)" />
       <meta name="theme-color" content="#272727" media="(prefers-color-scheme: dark)" />
 
       <body className={roboto.variable}>
