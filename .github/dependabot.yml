@@ -10,6 +10,6 @@ updates:
     schedule:
       interval: 'weekly'
     labels:
-      - "dependencies"
+      - 'dependencies'
     reviewers:
-      - "bourquep"
+      - 'bourquep'
