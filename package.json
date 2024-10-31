@@ -1,13 +1,44 @@
 {
-  "name": "me.teo",
+  "name": "weewx-me.teo",
   "version": "0.1.0",
-  "private": true,
+  "license": "GPL-3.0",
+  "private": false,
+  "description": "A delightful skin for WeeWX.",
+  "keywords": [
+    "weewx",
+    "weewx-skin",
+    "weather"
+  ],
+  "author": {
+    "name": "Pascal Bourque",
+    "email": "pascal@cosmos.moi"
+  },
+  "contributors": [
+    {
+      "name": "Pascal Bourque",
+      "email": "pascal@cosmos.moi"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Pascal Bourque",
+      "email": "pascal@cosmos.moi"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/bourquep/weewx-me.teo/issues"
+  },
+  "homepage": "https://github.com/bourquep/weewx-me.teo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bourquep/weewx-me.teo.git"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "serve out",
     "lint": "next lint",
-    "lint-format": "prettier -c ."
+    "style-lint": "prettier -c ."
   },
   "dependencies": {
     "@emotion/cache": "11.13.1",
