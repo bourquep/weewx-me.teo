@@ -36,7 +36,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "serve out",
+    "start": "serve out/en",
     "lint": "next lint",
     "style-lint": "prettier -c ."
   },

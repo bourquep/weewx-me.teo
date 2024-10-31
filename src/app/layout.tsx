@@ -16,11 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+import { StaticNextIntlClientProvider } from '@/i18n/StaticNextIntlClientProvider';
 import theme from '@/theme';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import { Roboto } from 'next/font/google';
 
@@ -51,9 +51,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
@@ -64,7 +61,9 @@ export default async function RootLayout({
       <body className={roboto.variable}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+            <StaticNextIntlClientProvider locale={locale} messages={messages}>
+              {children}
+            </StaticNextIntlClientProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
