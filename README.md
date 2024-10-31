@@ -4,6 +4,10 @@ A modern, responsive web interface skin for the [WeeWX weather station software]
 WeeWX-Me.teo provides a clean, mobile-friendly dashboard focused on presenting current weather data in an intuitive and
 visually appealing way.
 
+| Light                                                                                          | Dark                                                                                          |
+| ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| ![iPad-light](https://github.com/user-attachments/assets/8936393b-4d76-40f0-8504-84e0cc68c3ac) | ![iPad-dark](https://github.com/user-attachments/assets/4129fbe1-f956-444c-832c-3c300ee84538) |
+
 ## Description
 
 WeeWX-Me.teo is a custom skin for WeeWX that offers:
