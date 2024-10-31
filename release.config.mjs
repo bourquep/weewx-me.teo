@@ -7,7 +7,12 @@ const semanticReleaseConfig = {
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
     '@semantic-release/changelog',
-    '@semantic-release/github'
+    [
+      '@semantic-release/github',
+      {
+        assets: [{ path: 'package/**/*', label: 'WeeWX Skin Extension Package' }]
+      }
+    ]
   ]
 };
 
