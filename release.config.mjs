@@ -2,7 +2,7 @@
  * @type {import('semantic-release').GlobalConfig}
  */
 const semanticReleaseConfig = {
-  branches: ['main', { name: 'semantic-release', channel: 'beta', prerelease: true }],
+  branches: ['main'],
   plugins: [
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
@@ -10,7 +10,12 @@ const semanticReleaseConfig = {
     [
       '@semantic-release/github',
       {
-        assets: [{ path: 'package/**/*', label: 'WeeWX Skin Extension Package' }]
+        assets: [
+          {
+            path: 'package/**/*',
+            label: 'WeeWX Skin Extension Package'
+          }
+        ]
       }
     ]
   ]
