@@ -28,6 +28,7 @@ jobs:
       - run: npm run lint-format
 
   build:
+    needs: lint
     runs-on: ubuntu-latest
 
     strategy:
