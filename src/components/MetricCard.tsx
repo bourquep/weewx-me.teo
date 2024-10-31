@@ -87,16 +87,17 @@ export default function MetricCard({
   const formattedSumValue = formatNumber(sumValue);
 
   return (
-    <Card variant="outlined" sx={{ height: '100%' }}>
+    <Card variant="outlined" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardHeader
         title={cardTitle}
         action={metricUnit.length > 0 && <Chip variant="outlined" size="small" color="info" label={metricUnit} />}
       />
-      <CardContent sx={{ paddingY: 0 }}>
+
+      <CardContent sx={{ paddingY: 0, flexGrow: 1 }}>
         {/* Current value + min/max/sum */}
         <Stack direction="row" alignItems="center" spacing={1}>
           {/* Current value */}
-          <Typography variant="h2" sx={{ fontWeight: '500' }}>
+          <Typography variant={(formattedCurrentValue?.length ?? 0) < 5 ? 'h1' : 'h2'} sx={{ fontWeight: '500' }}>
             {formattedCurrentValue}
           </Typography>
 
