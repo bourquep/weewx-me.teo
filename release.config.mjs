@@ -2,7 +2,7 @@
  * @type {import('semantic-release').GlobalConfig}
  */
 const semanticReleaseConfig = {
-  branches: ['main', 'semantic-release'],
+  branches: ['main', { name: 'semantic-release', channel: 'beta', prerelease: true }],
   plugins: [
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
