@@ -124,9 +124,6 @@ function sparkLineMinMaxValuesFromObservation(observation: string): [number?, nu
     case 'lightning_strike_count':
       return [0, undefined];
 
-    case 'outHumidity':
-      return [0, undefined];
-
     case 'UV':
       return [0, undefined];
 
