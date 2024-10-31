@@ -159,7 +159,19 @@ export default function MetricCard({
           />
         )}
         {isGraphEmpty && (
-          <Typography variant="body2" sx={{ color: 'text.secondary', fontStyle: 'italic' }}>
+          <Typography
+            variant="caption"
+            height={40}
+            sx={{
+              color: 'grey',
+              fontStyle: 'italic',
+              textAlign: 'center',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
             {t('Current.EmptyGraphMessage')}
           </Typography>
         )}
