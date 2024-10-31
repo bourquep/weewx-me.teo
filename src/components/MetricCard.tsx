@@ -34,6 +34,8 @@ interface MetricCardProps {
   cardTitle: string;
   sparkLineData: Array<Array<number>>;
   sparkLinePlotType: 'line' | 'bar';
+  sparkLineMinValue?: number;
+  sparkLineMaxValue?: number;
   currentValue: number | string;
   minValue?: number | string;
   minTimestamp?: number | string;
@@ -47,6 +49,8 @@ export default function MetricCard({
   cardTitle,
   sparkLineData,
   sparkLinePlotType,
+  sparkLineMinValue,
+  sparkLineMaxValue,
   currentValue,
   minValue,
   minTimestamp,
@@ -60,8 +64,8 @@ export default function MetricCard({
   const t = useTranslations();
 
   const graphData = sparkLineData.map(([, value]) => Number(value.toFixed(1)));
-  const graphMinValue = Math.min(...graphData);
-  const graphMaxValue = Math.max(...graphData);
+  const graphMinValue = sparkLineMinValue ?? Math.min(...graphData);
+  const graphMaxValue = sparkLineMaxValue ?? Math.max(...graphData);
   const isGraphEmpty = graphData.filter((x) => x != 0).length == 0;
 
   function formatNumber(value?: number | string, options: NumberFormatOptions = { maximumFractionDigits: 1 }) {

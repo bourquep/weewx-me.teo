@@ -26,14 +26,6 @@ import { useTranslations } from 'next-intl';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
-function plotTypeFromObservation(observation: string): 'line' | 'bar' {
-  if (['windDir', 'rainRate', 'rain'].includes(observation)) {
-    return 'bar';
-  }
-
-  return 'line';
-}
-
 export default function Home() {
   const { data, error, isLoading } = useCurrentData();
   const t = useTranslations();
@@ -90,6 +82,8 @@ export default function Home() {
                 sumValue={observation.sum}
                 sparkLineData={observation.past24h}
                 sparkLinePlotType={plotTypeFromObservation(observation.observation)}
+                sparkLineMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
+                sparkLineMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
               />
             </Grid2>
           ))}
@@ -100,4 +94,43 @@ export default function Home() {
       </Typography>
     </Stack>
   );
+}
+
+function plotTypeFromObservation(observation: string): 'line' | 'bar' {
+  if (['windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'UV'].includes(observation)) {
+    return 'bar';
+  }
+
+  return 'line';
+}
+
+function sparkLineMinMaxValuesFromObservation(observation: string): [number?, number?] {
+  switch (observation) {
+    case 'windDir':
+      return [0, 360];
+
+    case 'windSpeed':
+      return [0, undefined];
+
+    case 'windGust':
+      return [0, undefined];
+
+    case 'rainRate':
+      return [0, undefined];
+
+    case 'rain':
+      return [0, undefined];
+
+    case 'lightning_strike_count':
+      return [0, undefined];
+
+    case 'outHumidity':
+      return [0, undefined];
+
+    case 'UV':
+      return [0, undefined];
+
+    default:
+      return [undefined, undefined];
+  }
 }
