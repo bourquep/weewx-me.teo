@@ -51,9 +51,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
@@ -64,7 +61,9 @@ export default async function RootLayout({
       <body className={roboto.variable}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+            <NextIntlClientProvider timeZone={Intl.DateTimeFormat().resolvedOptions().timeZone} messages={messages}>
+              {children}
+            </NextIntlClientProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
