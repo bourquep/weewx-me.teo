@@ -49,7 +49,7 @@
     "@mui/material-nextjs": "6.1.5",
     "@mui/x-charts": "7.22.0",
     "next": "15.0.1",
-    "next-intl": "3.23.5",
+    "next-intl": "3.24.0",
     "react": "19.0.0-rc.0",
     "react-dom": "19.0.0-rc.0",
     "swr": "2.2.5"
