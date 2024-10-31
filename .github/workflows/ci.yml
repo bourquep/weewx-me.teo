@@ -5,6 +5,7 @@ on:
     branches: ['main']
   pull_request:
     branches: ['main']
+  workflow_dispatch:
 
 env:
   NODE_VERSION: 20.x
@@ -72,7 +73,7 @@ jobs:
           path: ./out
           retention-days: 1
 
-  package-skin:
+  package:
     needs: build
     runs-on: ubuntu-latest
 
@@ -98,3 +99,36 @@ jobs:
           name: weewx-me.teo
           path: ./package
           retention-days: 1
+
+  release:
+    if: github.event_name == 'workflow_dispatch'
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      # --force is required for now, as NextJS references a React version that is not yet published.
+      - run: npm ci --force
+
+      - name: Download skin package
+        uses: actions/download-artifact@v4
+        with:
+          pattern: weewx-me.teo
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
