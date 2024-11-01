@@ -23,6 +23,9 @@ type GlobalDataType = typeof globalData;
 type CurrentWeatherDataType = typeof currentData;
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface GlobalData extends GlobalDataType {}
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface CurrentWeatherData extends CurrentWeatherDataType {}
 }
