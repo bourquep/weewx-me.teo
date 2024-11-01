@@ -98,7 +98,7 @@ architecture-beta
   service html(disk)[HTML files] in weewx
   service cheetah(server)[Cheetah templates] in weewx
 
-  service visitor(internet)[External visitor] in users
+  service visitor(material-symbols:person-outline)[External visitor] in users
   service developer(internet)[Developer] in users
 
   visitor:R -- L:html
