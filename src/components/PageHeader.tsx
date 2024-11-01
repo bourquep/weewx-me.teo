@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
-import { AppBar, Box, Stack, Toolbar, Typography } from '@mui/material';
+import { AppBar, Stack, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useFormatter } from 'next-intl';
 
 interface PageHeaderProps {
@@ -29,27 +29,53 @@ interface PageHeaderProps {
 }
 
 export default function PageHeader(props: PageHeaderProps) {
-  const format = useFormatter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <AppBar>
-      <Toolbar>
-        <Stack>
-          <Typography variant="h6" component="div">
-            {props.stationLocationName}
-          </Typography>
-          <Typography variant="caption">{props.stationCoordinates}</Typography>
-        </Stack>
-
-        <Box flexGrow={1} />
-
-        <Stack textAlign="end">
-          <Typography variant="h6">{props.pageTitle}</Typography>
-          <Typography variant="caption">
-            {format.dateTime(props.observationDate, { dateStyle: 'medium', timeStyle: 'medium' })}
-          </Typography>
-        </Stack>
-      </Toolbar>
+      <Toolbar>{isMobile ? <CompactPageHeader {...props} /> : <RegularPageHeader {...props} />}</Toolbar>
     </AppBar>
+  );
+}
+
+function CompactPageHeader(props: PageHeaderProps) {
+  const format = useFormatter();
+
+  return (
+    <Stack textAlign="center" sx={{ minWidth: 0, flex: 1 }}>
+      <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+        {props.stationLocationName}
+      </Typography>
+      <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+        {format.dateTime(props.observationDate, { dateStyle: 'medium', timeStyle: 'medium' })}
+      </Typography>
+    </Stack>
+  );
+}
+
+function RegularPageHeader(props: PageHeaderProps) {
+  const format = useFormatter();
+
+  return (
+    <>
+      <Stack sx={{ minWidth: 0, flex: 1.25 }}>
+        <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+          {props.stationLocationName}
+        </Typography>
+        <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+          {props.stationCoordinates}
+        </Typography>
+      </Stack>
+
+      <Stack textAlign="end" sx={{ minWidth: 0, flex: 1 }}>
+        <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+          {props.pageTitle}
+        </Typography>
+        <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+          {format.dateTime(props.observationDate, { dateStyle: 'medium', timeStyle: 'medium' })}
+        </Typography>
+      </Stack>
+    </>
   );
 }
