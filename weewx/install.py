@@ -19,9 +19,9 @@ from setup import ExtensionInstaller
 from io import StringIO
 import os
 
-VERSION      = "0.1.0"
+VERSION      = "##SKIN_VERSION##"
 NAME         = 'Me.teo'
-DESCRIPTION  = 'A delightful skin for WeeWX.'
+DESCRIPTION  = 'A modern, responsive web interface skin for WeeWX.'
 AUTHOR       = "Pascal Bourque"
 AUTHOR_EMAIL = "pascal@cosmos.moi"
 

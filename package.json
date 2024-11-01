@@ -55,6 +55,7 @@
     "swr": "2.2.5"
   },
   "devDependencies": {
+    "@semantic-release/exec": "6.0.3",
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",

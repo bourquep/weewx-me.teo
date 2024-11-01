@@ -7,24 +7,20 @@ const semanticReleaseConfig = {
     [
       '@semantic-release/commit-analyzer',
       {
-        releaseRules: [
-          {
-            type: 'ci',
-            release: 'patch'
-          }
-        ]
+        releaseRules: [{ type: 'ci', release: 'patch' }]
       }
     ],
     '@semantic-release/release-notes-generator',
     [
+      '@semantic-release/exec',
+      {
+        prepareCmd: './prepare_release.sh ${nextRelease.version}'
+      }
+    ],
+    [
       '@semantic-release/github',
       {
-        assets: [
-          {
-            path: 'package/weewx-me.teo.zip',
-            label: 'Extension package'
-          }
-        ]
+        assets: [{ path: 'package/weewx-me.teo.zip', label: 'Extension package' }]
       }
     ]
   ]
