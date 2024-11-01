@@ -96,17 +96,19 @@ architecture-beta
   service sample(disk)[Sample JSON data] in skin
   service json(disk)[JSON data files] in weewx
   service html(disk)[HTML files] in weewx
+  service cheetah(server)[Cheetah templates] in weewx
 
   service visitor(internet)[External visitor] in users
   service developer(internet)[Developer] in users
 
-  visitor:R --> L:html
-  html:R --> L:json
+  visitor:R -- L:html
+  html:R -- L:json
 
-  developer:R --> L:nextjs
-  nextjs:R --> L:sample
+  developer:R -- L:nextjs
+  nextjs:R -- L:sample
 
-  nextjs:B -- T:html
+  nextjs:B --> T:html
+  cheetah:B --> T:json
 ```
 
 ## Localization
