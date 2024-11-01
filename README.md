@@ -102,10 +102,10 @@ architecture-beta
   service developer(internet)[Developer] in users
 
   visitor:R -- L:html
-  visitor:R -- L:json
+  html:R -- L:json
 
   developer:R -- L:nextjs
-  developer:R -- L:sample
+  nextjs:R -- L:sample
 
   nextjs:B --> T:html
   cheetah:T --> B:json
