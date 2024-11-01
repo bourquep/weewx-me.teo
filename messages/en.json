@@ -1,6 +1,7 @@
 {
   "Global": {
     "DataLoadErrorTitle": "Unable to load weather data.",
+    "DataLoadUnexpectedErrorMessage": "An unexpected error occurred while loading weather data.",
     "DominantWindDirectionLabel": "dominant"
   },
   "Current": {

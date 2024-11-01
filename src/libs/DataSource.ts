@@ -30,20 +30,26 @@ const fetcher = async (url: string | URL | Request) => {
 
 const baseUrl = process.env.NODE_ENV === 'production' ? '/data' : '/sample_data';
 
-export function useGlobalData() {
-  const { data, error, isLoading } = useSWR(`${baseUrl}/global.json`, fetcher, { refreshInterval: 60 * 1 * 1000 });
-  return {
-    data: data as GlobalData,
-    error,
-    isLoading
-  };
-}
+export function useCurrentWeatherData() {
+  const global = useSWR<GlobalData>(`${baseUrl}/global.json`, fetcher);
 
-export function useCurrentData() {
-  const { data, error, isLoading } = useSWR(`${baseUrl}/current.json`, fetcher, { refreshInterval: 60 * 1 * 1000 });
+  const current = useSWR<CurrentWeatherData>(`${baseUrl}/current.json`, fetcher, {
+    refreshInterval: 60 * 1000 // 1 minute
+  });
+
   return {
-    data: data as CurrentWeatherData,
-    error,
-    isLoading
+    global: {
+      data: global.data,
+      error: global.error,
+      isLoading: global.isLoading
+    },
+    current: {
+      data: current.data,
+      error: current.error,
+      isLoading: current.isLoading
+    },
+    // Combined loading and error states
+    isLoading: global.isLoading || current.isLoading,
+    error: global.error || current.error
   };
 }
