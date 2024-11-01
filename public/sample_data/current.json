@@ -9,6 +9,7 @@
   "report": {
     "time": 1730317200,
     "generator": "weewx 5.1.0",
+    "skin": "me.teo 0.1.0",
     "lang": "fr"
   },
   "observations": [

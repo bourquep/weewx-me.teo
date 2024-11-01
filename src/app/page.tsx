@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import MetricCard from '@/components/MetricCard';
 import PageHeader from '@/components/PageHeader';
 import { useCurrentData } from '@/libs/DataSource';
-import { Alert, AlertTitle, Box, CircularProgress, Grid2, Stack, styled, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, CircularProgress, Grid2, Link, Stack, styled, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -89,8 +89,16 @@ export default function Home() {
           ))}
       </Grid2>
 
-      <Typography mt={2} variant="caption" sx={{ color: 'text.secondary', fontStyle: 'italic' }}>
-        {t('Current.PageFootnote')}
+      <Typography mt={2} variant="caption" sx={{ color: 'text.secondary' }}>
+        <em>{t('Current.PageFootnote')}</em>
+        <br />
+        <Link href="https://github.com/bourquep/weewx-me.teo" target="_blank">
+          {data.report.skin}
+        </Link>
+        {' | '}
+        <Link href="https://github.com/weewx/weewx" target="_blank">
+          {data.report.generator}
+        </Link>
       </Typography>
     </Stack>
   );
