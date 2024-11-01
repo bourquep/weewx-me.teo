@@ -28,23 +28,20 @@ You will need a working WeeWX installation. So far, this skin has only been test
 
 ### Standard Installation
 
-1. Download the latest release:
+1. Run the following command on your WeeWX server:
 
 ```bash
-wget -O weewx-me.teo.zip https://github.com/bourquep/weewx-me.teo/releases/latest/download/weewx-me.teo.zip
+weectl extension install https://github.com/bourquep/weewx-me.teo/releases/latest/download/weewx-me.teo.zip
 ```
 
-2. Install the skin using WeeWX's extension installer:
-
-```bash
-weectl extension install weewx-me.teo.zip
-```
-
-3. Restart WeeWX:
+2. Restart WeeWX:
 
 ```bash
 sudo systemctl restart weewx
 ```
+
+_The command required to restart WeeWX may vary depending on your WeeWX installation. Please refer to the
+[WeeWX documentation](https://weewx.com/docs/5.1/usersguide/running/#running-as-a-daemon) for more information._
 
 ## Configuration
 
