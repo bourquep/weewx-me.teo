@@ -96,15 +96,18 @@ configuration in `weewx.conf`:
 
 ### Adding New Languages
 
-1. Create a new code translation file in `messages/xx.json`
-2. Copy the template from `en.json`
-3. Translate all strings
-4. Create a new skin translation file in `weewx/skins/me.teo/lang/xx.json`
-5. Copy the template from `en.json`
-6. Translate all strings
-7. Add the language code to the `build-locale` language matrix in `.github/workflows/ci.yml`
-8. Add the language to the list of supported languages in `README.md`
-9. Submit a pull request and be a hero!
+1. [Fork](https://github.com/bourquep/weewx-me.teo/fork) this repository
+2. Create a new code translation file in `messages/xx.json`
+3. Copy the template from `en.json`
+4. Translate all strings
+5. Create a new skin translation file in `weewx/skins/me.teo/lang/xx.json`
+6. Copy the template from `en.json`
+7. Translate all strings
+8. Add the language code to:
+   - the `build-locale` language matrix in `.github/workflows/ci.yml`
+   - the `CopyGenerator.copy_once` list in `weewx/skins/me.teo/skin.conf`
+9. Add the language to the list of supported languages in `README.md`
+10. Submit a pull request and be a hero!
 
 ### Language Selection
 
