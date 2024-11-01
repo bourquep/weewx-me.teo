@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import MetricCard from '@/components/MetricCard';
 import PageHeader from '@/components/PageHeader';
-import { useCurrentData } from '@/libs/DataSource';
+import { useCurrentData, useGlobalData } from '@/libs/DataSource';
 import { Alert, AlertTitle, Box, CircularProgress, Grid2, Link, Stack, styled, Typography } from '@mui/material';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { useTranslations } from 'next-intl';
@@ -28,10 +28,11 @@ import { useTranslations } from 'next-intl';
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 export default function Home() {
-  const { data, error, isLoading } = useCurrentData();
+  const { data: globalData, error: globalDataError, isLoading: isGlobalDataLoading } = useGlobalData();
+  const { data: currentData, error: currentDataError, isLoading: isCurrentDataLoading } = useCurrentData();
   const t = useTranslations();
 
-  if (isLoading) {
+  if (isGlobalDataLoading || isCurrentDataLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <CircularProgress />
@@ -39,12 +40,12 @@ export default function Home() {
     );
   }
 
-  if (error) {
+  if (globalDataError || currentDataError) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <Alert severity="error">
           <AlertTitle>{t('Global.DataLoadErrorTitle')}</AlertTitle>
-          {`${error}`}
+          {`${globalDataError ?? currentDataError}`}
         </Alert>
       </Box>
     );
@@ -52,13 +53,13 @@ export default function Home() {
 
   return (
     <>
-      {(data.meta.gaId?.length ?? 0 > 0) && <GoogleAnalytics gaId={data.meta.gaId} />}
+      {globalData.meta.googleAnalyticsId.length > 0 && <GoogleAnalytics gaId={globalData.meta.googleAnalyticsId} />}
       <Stack>
         <PageHeader
-          stationLocationName={data.station.location}
-          stationCoordinates={`${data.station.latitude}, ${data.station.longitude}, ${data.station.altitude}`}
+          stationLocationName={globalData.station.location}
+          stationCoordinates={`${globalData.station.latitude}, ${globalData.station.longitude}, ${globalData.station.altitude}`}
           pageTitle={t('Current.PageTitle')}
-          observationDate={new Date(data.report.time * 1000)}
+          observationDate={new Date(currentData.report.time * 1000)}
         />
 
         <Offset />
@@ -66,7 +67,7 @@ export default function Home() {
         {/* <SectionHeader title={t('SectionHeaderTitle')} subtitle={t('SectionHeaderSubtitle')} /> */}
 
         <Grid2 container spacing={2} columns={{ xs: 4, sm: 8, md: 12, lg: 12, xl: 16 }}>
-          {data.observations
+          {currentData.observations
             .filter((x) => x != null)
             .map((observation) => (
               <Grid2 key={observation!.observation} size={4}>
@@ -96,11 +97,11 @@ export default function Home() {
           <em>{t('Current.PageFootnote')}</em>
           <br />
           <Link href="https://github.com/bourquep/weewx-me.teo" target="_blank">
-            {data.report.skin}
+            {globalData.meta.skin}
           </Link>
           {' | '}
           <Link href="https://github.com/weewx/weewx" target="_blank">
-            {data.report.generator}
+            {globalData.meta.generator}
           </Link>
         </Typography>
       </Stack>

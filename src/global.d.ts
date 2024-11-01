@@ -16,11 +16,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import current from '../public/sample_data/current.json';
+import currentData from '../public/sample_data/current.json';
+import globalData from '../public/sample_data/global.json';
 
-type Current = typeof current;
+type GlobalDataType = typeof globalData;
+type CurrentWeatherDataType = typeof currentData;
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  interface CurrentWeatherData extends Current {}
+  interface GlobalData extends GlobalDataType {}
+  interface CurrentWeatherData extends CurrentWeatherDataType {}
 }

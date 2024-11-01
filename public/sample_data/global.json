@@ -1,0 +1,15 @@
+{
+  "station": {
+    "location": "Domaine-des-Hauts-Bois",
+    "latitude": "45° 34.00' N",
+    "longitude": "073° 19.14' O",
+    "altitude": "45 mètres",
+    "link": "https://meteo.cosmos.moi"
+  },
+  "meta": {
+    "generator": "weewx 5.1.0",
+    "skin": "me.teo 0.1.0",
+    "lang": "fr",
+    "googleAnalyticsId": ""
+  }
+}

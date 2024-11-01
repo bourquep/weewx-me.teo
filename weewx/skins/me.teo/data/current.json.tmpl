@@ -18,18 +18,8 @@
 #set $obs_type_sum = $to_list($DisplayOptions.get('obs_type_sum', ['rain', 'ET', 'hail', 'snow', 'lightning_strike_count']))
 #set $obs_type_max = $to_list($DisplayOptions.get('obs_type_max', ['rainRate', 'hailRate', 'snowRate', 'UV']))
 {
-  "station": {
-    "location": "$station.location",
-    "latitude": "$station.latitude[0]° $station.latitude[1]' $station.latitude[2]",
-    "longitude": "$station.longitude[0]° $station.longitude[1]' $station.longitude[2]",
-    "altitude": "$station.altitude",
-    "link": "$station.station_url"
-  },
   "report": {
-    "time": $current.dateTime.json,
-    "generator": "weewx $station.version",
-    "skin": "me.teo $SKIN_VERSION",
-    "lang": "$lang"
+    "time": $current.dateTime.json
   },
   "observations": [
 #for $x in $observations
