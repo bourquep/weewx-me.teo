@@ -108,7 +108,7 @@ architecture-beta
   nextjs:R -- L:sample
 
   nextjs:B --> T:html
-  cheetah:B --> T:json
+  cheetah:R --> L:json
 ```
 
 ## Localization
