@@ -30,6 +30,15 @@ const fetcher = async (url: string | URL | Request) => {
 
 const baseUrl = process.env.NODE_ENV === 'production' ? '/data' : '/sample_data';
 
+export function useGlobalData() {
+  const { data, error, isLoading } = useSWR(`${baseUrl}/global.json`, fetcher, { refreshInterval: 60 * 1 * 1000 });
+  return {
+    data: data as GlobalData,
+    error,
+    isLoading
+  };
+}
+
 export function useCurrentData() {
   const { data, error, isLoading } = useSWR(`${baseUrl}/current.json`, fetcher, { refreshInterval: 60 * 1 * 1000 });
   return {

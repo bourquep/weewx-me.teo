@@ -63,6 +63,21 @@ There's not much else needed to get started. You can have a look at the `skin.co
 liking. The most likely customization you'll want to make is to edit the `observations_current` variable to list which
 observations you want on your Me.teo dashboard and in what order.
 
+### Google Analytics
+
+If you have a Google Analytics account and want to track visits to your site, you can add your tracking ID to the skin
+configuration in `weewx.conf`:
+
+```ini
+[StdReport]
+    [[Me.teo]]
+        skin = me.teo
+        enable = true
+
+        [[[Extras]]]
+            googleAnalyticsId = "G-XXXXXXXXXX"
+```
+
 ## Architecture
 
 ### Data Flow

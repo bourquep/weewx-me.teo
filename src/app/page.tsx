@@ -20,17 +20,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import MetricCard from '@/components/MetricCard';
 import PageHeader from '@/components/PageHeader';
-import { useCurrentData } from '@/libs/DataSource';
+import { useCurrentData, useGlobalData } from '@/libs/DataSource';
 import { Alert, AlertTitle, Box, CircularProgress, Grid2, Link, Stack, styled, Typography } from '@mui/material';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { useTranslations } from 'next-intl';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 export default function Home() {
-  const { data, error, isLoading } = useCurrentData();
+  const { data: globalData, error: globalDataError, isLoading: isGlobalDataLoading } = useGlobalData();
+  const { data: currentData, error: currentDataError, isLoading: isCurrentDataLoading } = useCurrentData();
   const t = useTranslations();
 
-  if (isLoading) {
+  if (isGlobalDataLoading || isCurrentDataLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <CircularProgress />
@@ -38,69 +40,72 @@ export default function Home() {
     );
   }
 
-  if (error) {
+  if (globalDataError || currentDataError) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <Alert severity="error">
           <AlertTitle>{t('Global.DataLoadErrorTitle')}</AlertTitle>
-          {`${error}`}
+          {`${globalDataError ?? currentDataError}`}
         </Alert>
       </Box>
     );
   }
 
   return (
-    <Stack>
-      <PageHeader
-        stationLocationName={data.station.location}
-        stationCoordinates={`${data.station.latitude}, ${data.station.longitude}, ${data.station.altitude}`}
-        pageTitle={t('Current.PageTitle')}
-        observationDate={new Date(data.report.time * 1000)}
-      />
+    <>
+      {globalData.meta.googleAnalyticsId.length > 0 && <GoogleAnalytics gaId={globalData.meta.googleAnalyticsId} />}
+      <Stack>
+        <PageHeader
+          stationLocationName={globalData.station.location}
+          stationCoordinates={`${globalData.station.latitude}, ${globalData.station.longitude}, ${globalData.station.altitude}`}
+          pageTitle={t('Current.PageTitle')}
+          observationDate={new Date(currentData.report.time * 1000)}
+        />
 
-      <Offset />
+        <Offset />
 
-      {/* <SectionHeader title={t('SectionHeaderTitle')} subtitle={t('SectionHeaderSubtitle')} /> */}
+        {/* <SectionHeader title={t('SectionHeaderTitle')} subtitle={t('SectionHeaderSubtitle')} /> */}
 
-      <Grid2 container spacing={2} columns={{ xs: 4, sm: 8, md: 12, lg: 12, xl: 16 }}>
-        {data.observations
-          .filter((x) => x != null)
-          .map((observation) => (
-            <Grid2 key={observation!.observation} size={4}>
-              <MetricCard
-                cardTitle={observation.label}
-                metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
-                currentValue={
-                  observation.observation === 'windDir' ? (observation.currentCompass ?? 'n/a') : observation.current
-                }
-                minValue={observation.min}
-                minTimestamp={observation.minTime}
-                maxValue={observation.observation === 'windDir' ? observation.maxCompass : observation.max}
-                maxTimestamp={
-                  observation.observation === 'windDir' ? t('Global.DominantWindDirectionLabel') : observation.maxTime
-                }
-                sumValue={observation.sum}
-                sparkLineData={observation.past24h}
-                sparkLinePlotType={plotTypeFromObservation(observation.observation)}
-                sparkLineMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
-                sparkLineMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
-              />
-            </Grid2>
-          ))}
-      </Grid2>
+        <Grid2 container spacing={2} columns={{ xs: 4, sm: 8, md: 12, lg: 12, xl: 16 }}>
+          {currentData.observations
+            .filter((x) => x != null)
+            .map((observation) => (
+              <Grid2 key={observation!.observation} size={4}>
+                <MetricCard
+                  cardTitle={observation.label}
+                  metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
+                  currentValue={
+                    observation.observation === 'windDir' ? (observation.currentCompass ?? 'n/a') : observation.current
+                  }
+                  minValue={observation.min}
+                  minTimestamp={observation.minTime}
+                  maxValue={observation.observation === 'windDir' ? observation.maxCompass : observation.max}
+                  maxTimestamp={
+                    observation.observation === 'windDir' ? t('Global.DominantWindDirectionLabel') : observation.maxTime
+                  }
+                  sumValue={observation.sum}
+                  sparkLineData={observation.past24h}
+                  sparkLinePlotType={plotTypeFromObservation(observation.observation)}
+                  sparkLineMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
+                  sparkLineMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
+                />
+              </Grid2>
+            ))}
+        </Grid2>
 
-      <Typography mt={2} variant="caption" sx={{ color: 'text.secondary' }}>
-        <em>{t('Current.PageFootnote')}</em>
-        <br />
-        <Link href="https://github.com/bourquep/weewx-me.teo" target="_blank">
-          {data.report.skin}
-        </Link>
-        {' | '}
-        <Link href="https://github.com/weewx/weewx" target="_blank">
-          {data.report.generator}
-        </Link>
-      </Typography>
-    </Stack>
+        <Typography mt={2} variant="caption" sx={{ color: 'text.secondary' }}>
+          <em>{t('Current.PageFootnote')}</em>
+          <br />
+          <Link href="https://github.com/bourquep/weewx-me.teo" target="_blank">
+            {globalData.meta.skin}
+          </Link>
+          {' | '}
+          <Link href="https://github.com/weewx/weewx" target="_blank">
+            {globalData.meta.generator}
+          </Link>
+        </Typography>
+      </Stack>
+    </>
   );
 }
 
