@@ -88,16 +88,17 @@ configuration in `weewx.conf`:
 
 ```mermaid
 architecture-beta
+  group users(cloud)[Users]
   group skin(cloud)[Meteo skin]
   group weewx(cloud)[WeeWX]
 
   service nextjs(server)[NextJS app] in skin
   service sample(disk)[Sample JSON data] in skin
   service json(disk)[JSON data files] in weewx
-  service html(disk)[HTML files] in skin
+  service html(disk)[HTML files] in weewx
 
-  service visitor(internet)[External visitor]
-  service developer(internet)[Developer]
+  service visitor(internet)[External visitor] in users
+  service developer(internet)[Developer] in users
 
   visitor:R --> L:html
   html:R --> L:json
