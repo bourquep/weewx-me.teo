@@ -63,7 +63,7 @@ export default function MetricCard({
   const format = useFormatter();
   const t = useTranslations();
 
-  const graphData = sparkLineData.map(([, value]) => Number(value.toFixed(1)));
+  const graphData = sparkLineData.map(([, value]) => (value != null ? Number(value.toFixed(1)) : 0));
   const graphMinValue = sparkLineMinValue ?? Math.min(...graphData);
   const graphMaxValue = sparkLineMaxValue ?? Math.max(...graphData);
   const isGraphEmpty = graphData.filter((x) => x != 0).length == 0;
