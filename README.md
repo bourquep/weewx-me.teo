@@ -86,10 +86,10 @@ configuration in `weewx.conf`:
 
 ```mermaid
 architecture-beta
-  group skin(cloud)[Me.teo skin]
+  group skin(cloud)[Meteo skin]
   group weewx(cloud)[WeeWX]
 
-  service nextjs(server)[Next.js app] in skin
+  service nextjs(server)[NextJS app] in skin
   service sample(disk)[Sample JSON data] in skin
   service json(disk)[JSON data files] in weewx
   service html(server)[HTML files] in skin
