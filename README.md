@@ -147,7 +147,7 @@ Then, open [http://localhost:3000](http://localhost:3000) with your browser to s
 ```mermaid
 architecture-beta
   group users(cloud)[Users]
-  group skin(cloud)[weewx-me.teo]
+  group skin(cloud)[weewx-me_teo]
   group weewx(cloud)[WeeWX]
 
   service nextjs(server)[NextJS app] in skin
