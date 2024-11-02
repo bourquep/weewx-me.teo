@@ -93,9 +93,6 @@ are welcome!
 
 ## Submitting Pull Requests
 
-This repository uses conventional commits and semantic versioning. Please follow these guidelines when submitting pull
-requests.
-
 ### Conventional Commits
 
 This repository uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). This means that each commit
