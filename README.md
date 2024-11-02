@@ -28,6 +28,10 @@ You will need a working WeeWX installation. So far, this skin has only been test
 
 ### Standard Installation
 
+> [!IMPORTANT]
+> You **do not** need to clone this repository to install the skin. The following instructions will guide
+> you through the simple installation process.
+
 1. Run the following command on your WeeWX server:
 
 ```bash
