@@ -14,7 +14,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set $observations = $to_list($DisplayOptions.get('observations_current', ['outTemp', 'outHumidity', 'windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'lightning_strike_count', 'barometer', 'UV']))
+#set $observations = $to_list($DisplayOptions.get('observations_current', ['outTemp', 'outHumidity', 'windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'barometer', 'UV']))
 #set $obs_type_sum = $to_list($DisplayOptions.get('obs_type_sum', ['rain', 'ET', 'hail', 'snow', 'lightning_strike_count']))
 #set $obs_type_max = $to_list($DisplayOptions.get('obs_type_max', ['rainRate', 'hailRate', 'snowRate', 'UV']))
 {
@@ -48,6 +48,14 @@
       "maxTime": $getattr($span(hour_delta=24), $x).maxtime.json,
       "past24h": $getattr($span(hour_delta=24), $x).series(aggregate_type='avg', aggregate_interval='1h', time_series='start').json
     #end if
+    },
+  #else
+    {
+      "observation": "$x",
+      "label": "$obs.label[$x]",
+      "unit": "$getVar('unit.label.' + $x)",
+      "current": 0,
+      "past24h": []
     },
   #end if
 #end for
