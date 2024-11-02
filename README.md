@@ -165,7 +165,6 @@ architecture-beta
   developer:R -- L:nextjs
   nextjs:R -- L:sample
 
-  nextjs:B --> T:html
   cheetah:T --> B:json
 ```
 
