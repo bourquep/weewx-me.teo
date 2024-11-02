@@ -24,5 +24,13 @@ module.exports = {
   singleQuote: true,
   trailingComma: 'none',
   arrowParens: 'always',
-  plugins: ['prettier-plugin-organize-imports']
+  plugins: ['prettier-plugin-organize-imports'],
+  overrides: [
+    {
+      files: ['*.md', '*.markdown'],
+      options: {
+        proseWrap: 'preserve'
+      }
+    }
+  ]
 };
