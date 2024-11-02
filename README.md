@@ -114,6 +114,10 @@ When configuring your web server, you can either:
 If the latter approach is used, please be aware that the observation and unit labels will still be displayed according
 to the settings in `weewx.conf`.
 
+## Contributing
+
+If you want to contribute to this project, please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines.
+
 ## License
 
 WeeWX-Me.teo is licensed under the GNU Public License v3. This means you are free to use, modify and redistribute this
