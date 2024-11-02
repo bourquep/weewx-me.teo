@@ -110,7 +110,7 @@ export default function Home() {
 }
 
 function plotTypeFromObservation(observation: string): 'line' | 'bar' {
-  if (['windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'UV'].includes(observation)) {
+  if (['windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'UV', 'ET'].includes(observation)) {
     return 'bar';
   }
 
