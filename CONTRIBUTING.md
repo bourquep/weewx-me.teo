@@ -66,7 +66,17 @@ architecture-beta
   cheetah:T --> B:json
 ```
 
-### Adding New Languages
+### NextJS
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions
+are welcome!
+
+## Adding New Languages
 
 1. [Fork](https://github.com/bourquep/weewx-me.teo/fork) this repository
 2. Create a new code translation file in `messages/xx.json`
@@ -80,16 +90,6 @@ architecture-beta
    - the `CopyGenerator.copy_once` list in `weewx/skins/me.teo/skin.conf`
 9. Add the language to the list of supported languages in `README.md`
 10. Submit a pull request and be a hero!
-
-### NextJS
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions
-are welcome!
 
 ## Submitting Pull Requests
 
