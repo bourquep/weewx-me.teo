@@ -40,7 +40,8 @@ weectl extension install https://github.com/bourquep/weewx-me.teo/releases/lates
 sudo systemctl restart weewx
 ```
 
-> [!NOTE] The command required to restart WeeWX may vary depending on your WeeWX installation. Please refer to the
+> [!NOTE]
+> The command required to restart WeeWX may vary depending on your WeeWX installation. Please refer to the
 > [WeeWX documentation](https://weewx.com/docs/5.1/usersguide/running/#running-as-a-daemon) for more information.
 
 ## Configuration
@@ -122,7 +123,8 @@ First, install the dependencies:
 npm install --force
 ```
 
-> [!IMPORTANT] The skin uses NextJS v15, which has a peer dependency on React v19 RC, which makes many packages fail to
+> [!IMPORTANT]
+> The skin uses NextJS v15, which has a peer dependency on React v19 RC, which makes many packages fail to
 > install because of peer dependency mismatch. Right now, `npm install --force` must be used to work around this, but
 > hopefully React v19 will be out of RC soon and that workaround won't be needed anymore.
 
