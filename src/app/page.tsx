@@ -19,16 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 'use client';
 
 import MetricCard from '@/components/MetricCard';
-import PageHeader from '@/components/PageHeader';
 import { useCurrentWeatherData } from '@/libs/DataSource';
-import { Alert, AlertTitle, Box, CircularProgress, Grid2, Link, Stack, styled, Typography } from '@mui/material';
-import { GoogleAnalytics } from '@next/third-parties/google';
+import { Alert, AlertTitle, Box, CircularProgress, Grid2, Stack, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
-const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
-
 export default function Home() {
-  const { global, current, isLoading, error } = useCurrentWeatherData();
+  const { data, isLoading, error } = useCurrentWeatherData();
 
   const t = useTranslations();
 
@@ -40,7 +36,7 @@ export default function Home() {
     );
   }
 
-  if (error || global.data === undefined || current.data === undefined) {
+  if (error || data === undefined) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <Alert severity="error">
@@ -53,21 +49,9 @@ export default function Home() {
 
   return (
     <>
-      {global.data.meta.googleAnalyticsId.length > 0 && <GoogleAnalytics gaId={global.data.meta.googleAnalyticsId} />}
       <Stack>
-        <PageHeader
-          stationLocationName={global.data.station.location}
-          stationCoordinates={`${global.data.station.latitude}, ${global.data.station.longitude}, ${global.data.station.altitude}`}
-          pageTitle={t('Current.PageTitle')}
-          observationDate={new Date(current.data.report.time * 1000)}
-        />
-
-        <Offset />
-
-        {/* <SectionHeader title={t('SectionHeaderTitle')} subtitle={t('SectionHeaderSubtitle')} /> */}
-
         <Grid2 container spacing={2} columns={{ xs: 4, sm: 8, md: 12, lg: 12, xl: 16 }}>
-          {current.data.observations
+          {data.observations
             .filter((x) => x != null)
             .map((observation) => (
               <Grid2 key={observation!.observation} size={4}>
@@ -91,17 +75,8 @@ export default function Home() {
               </Grid2>
             ))}
         </Grid2>
-
-        <Typography mt={2} variant="caption" sx={{ color: 'text.secondary' }}>
+        <Typography mt={2} mb={-2} variant="caption" sx={{ color: 'text.secondary' }}>
           <em>{t('Current.PageFootnote')}</em>
-          <br />
-          <Link href="https://github.com/bourquep/weewx-me.teo" target="_blank">
-            {global.data.meta.skin}
-          </Link>
-          {' | '}
-          <Link href="https://github.com/weewx/weewx" target="_blank">
-            {global.data.meta.generator}
-          </Link>
         </Typography>
       </Stack>
     </>

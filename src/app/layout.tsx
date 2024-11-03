@@ -16,8 +16,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+import GoogleAnalytics from '@/components/GoogleAnalytics';
+import PageFooter from '@/components/PageFooter';
+import PageHeader from '@/components/PageHeader';
 import { StaticNextIntlClientProvider } from '@/i18n/StaticNextIntlClientProvider';
 import theme from '@/theme';
+import { Stack } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import { Metadata } from 'next';
@@ -62,7 +66,12 @@ export default async function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <StaticNextIntlClientProvider locale={locale} messages={messages}>
-              {children}
+              <GoogleAnalytics />
+              <Stack>
+                <PageHeader pageTitle="Title" observationDate={new Date()} />
+                {children}
+                <PageFooter />
+              </Stack>
             </StaticNextIntlClientProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>

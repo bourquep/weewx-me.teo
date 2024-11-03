@@ -16,26 +16,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import useSWR from 'swr';
+'use client';
 
-const fetcher = async (url: string | URL | Request) => {
-  const res = await fetch(url);
+import { useGlobalData } from '@/libs/DataSource';
+import { GoogleAnalytics as NextGoogleAnalytics } from '@next/third-parties/google';
 
-  if (!res.ok) {
-    throw new Error(`Status code does not indicate success: ${res.status}`);
+export default function GoogleAnalytics() {
+  const { data, isLoading, error } = useGlobalData();
+
+  if (!isLoading && !error && data && data.meta.googleAnalyticsId.length > 0) {
+    return <NextGoogleAnalytics gaId={data.meta.googleAnalyticsId} />;
   }
 
-  return res.json();
-};
-
-const baseUrl = process.env.NODE_ENV === 'production' ? '/data' : '/sample_data';
-
-export function useGlobalData() {
-  return useSWR<GlobalData>(`${baseUrl}/global.json`, fetcher);
-}
-
-export function useCurrentWeatherData() {
-  return useSWR<CurrentWeatherData>(`${baseUrl}/current.json`, fetcher, {
-    refreshInterval: 60 * 1000 // 1 minute
-  });
+  return <></>;
 }

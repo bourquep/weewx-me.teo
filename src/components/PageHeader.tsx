@@ -18,34 +18,69 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
-import { AppBar, Stack, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { useGlobalData } from '@/libs/DataSource';
+import {
+  AppBar,
+  Box,
+  CircularProgress,
+  Stack,
+  styled,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 import { useFormatter } from 'next-intl';
 
 interface PageHeaderProps {
-  stationLocationName: string;
-  stationCoordinates: string;
   observationDate: Date;
   pageTitle: string;
+}
+
+interface LoadedPageHeaderProps extends PageHeaderProps {
+  data: GlobalData;
 }
 
 export default function PageHeader(props: PageHeaderProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { data, isLoading, error } = useGlobalData();
+
+  const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
   return (
-    <AppBar>
-      <Toolbar>{isMobile ? <CompactPageHeader {...props} /> : <RegularPageHeader {...props} />}</Toolbar>
-    </AppBar>
+    <Stack>
+      <AppBar>
+        <Toolbar>
+          {isLoading || error || !data ? (
+            <>
+              <Box flexGrow={1} />
+              <Typography variant="caption" color="error">
+                {isLoading && <CircularProgress />}
+                {error && 'Error loading data'}
+                {!isLoading && !error && !data && 'No data available'}
+              </Typography>
+              <Box flexGrow={1} />
+            </>
+          ) : isMobile ? (
+            <CompactPageHeader {...props} data={data} />
+          ) : (
+            <RegularPageHeader {...props} data={data} />
+          )}
+        </Toolbar>
+      </AppBar>
+      <Offset />
+    </Stack>
   );
 }
 
-function CompactPageHeader(props: PageHeaderProps) {
+function CompactPageHeader(props: LoadedPageHeaderProps) {
   const format = useFormatter();
 
   return (
     <Stack textAlign="center" sx={{ minWidth: 0, flex: 1 }}>
       <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-        {props.stationLocationName}
+        {props.data.station.location}
       </Typography>
       <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
         {format.dateTime(props.observationDate, { dateStyle: 'medium', timeStyle: 'medium' })}
@@ -54,17 +89,17 @@ function CompactPageHeader(props: PageHeaderProps) {
   );
 }
 
-function RegularPageHeader(props: PageHeaderProps) {
+function RegularPageHeader(props: LoadedPageHeaderProps) {
   const format = useFormatter();
 
   return (
     <>
       <Stack sx={{ minWidth: 0, flex: 1.25 }}>
         <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-          {props.stationLocationName}
+          {props.data.station.location}
         </Typography>
         <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-          {props.stationCoordinates}
+          {`${props.data.station.latitude}, ${props.data.station.longitude}, ${props.data.station.altitude}`}
         </Typography>
       </Stack>
 
