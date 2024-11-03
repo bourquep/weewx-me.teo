@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import PageFooter from '@/components/PageFooter';
 import PageHeader from '@/components/PageHeader';
+import { NavigationProvider } from '@/contexts/NavigationContext';
 import { StaticNextIntlClientProvider } from '@/i18n/StaticNextIntlClientProvider';
 import theme from '@/theme';
 import { Stack } from '@mui/material';
@@ -66,12 +67,14 @@ export default async function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <StaticNextIntlClientProvider locale={locale} messages={messages}>
-              <GoogleAnalytics />
-              <Stack>
-                <PageHeader pageTitle="Title" observationDate={new Date()} />
-                {children}
-                <PageFooter />
-              </Stack>
+              <NavigationProvider>
+                <GoogleAnalytics />
+                <Stack>
+                  <PageHeader />
+                  {children}
+                  <PageFooter />
+                </Stack>
+              </NavigationProvider>
             </StaticNextIntlClientProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>

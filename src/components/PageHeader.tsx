@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
+import { useNavigation } from '@/contexts/NavigationContext';
 import { useGlobalData } from '@/libs/DataSource';
 import {
   AppBar,
@@ -30,21 +31,20 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import { useFormatter } from 'next-intl';
 
-interface PageHeaderProps {
-  observationDate: Date;
-  pageTitle: string;
-}
+interface PageHeaderProps {}
 
 interface LoadedPageHeaderProps extends PageHeaderProps {
   data: GlobalData;
+  title: string;
+  subtitle: string;
 }
 
 export default function PageHeader(props: PageHeaderProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { data, isLoading, error } = useGlobalData();
+  const { title, subtitle } = useNavigation();
 
   const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -63,9 +63,9 @@ export default function PageHeader(props: PageHeaderProps) {
               <Box flexGrow={1} />
             </>
           ) : isMobile ? (
-            <CompactPageHeader {...props} data={data} />
+            <CompactPageHeader {...props} data={data} title={title} subtitle={subtitle} />
           ) : (
-            <RegularPageHeader {...props} data={data} />
+            <RegularPageHeader {...props} data={data} title={title} subtitle={subtitle} />
           )}
         </Toolbar>
       </AppBar>
@@ -75,23 +75,19 @@ export default function PageHeader(props: PageHeaderProps) {
 }
 
 function CompactPageHeader(props: LoadedPageHeaderProps) {
-  const format = useFormatter();
-
   return (
     <Stack textAlign="center" sx={{ minWidth: 0, flex: 1 }}>
       <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
         {props.data.station.location}
       </Typography>
       <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-        {format.dateTime(props.observationDate, { dateStyle: 'medium', timeStyle: 'medium' })}
+        {props.subtitle}
       </Typography>
     </Stack>
   );
 }
 
 function RegularPageHeader(props: LoadedPageHeaderProps) {
-  const format = useFormatter();
-
   return (
     <>
       <Stack sx={{ minWidth: 0, flex: 1.25 }}>
@@ -105,10 +101,10 @@ function RegularPageHeader(props: LoadedPageHeaderProps) {
 
       <Stack textAlign="end" sx={{ minWidth: 0, flex: 1 }}>
         <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-          {props.pageTitle}
+          {props.title}
         </Typography>
         <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-          {format.dateTime(props.observationDate, { dateStyle: 'medium', timeStyle: 'medium' })}
+          {props.subtitle}
         </Typography>
       </Stack>
     </>

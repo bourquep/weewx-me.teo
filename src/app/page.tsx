@@ -19,14 +19,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 'use client';
 
 import MetricCard from '@/components/MetricCard';
+import { useNavigation } from '@/contexts/NavigationContext';
 import { useCurrentWeatherData } from '@/libs/DataSource';
 import { Alert, AlertTitle, Box, CircularProgress, Grid2, Stack, Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
+import { useFormatter, useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 
 export default function Home() {
   const { data, isLoading, error } = useCurrentWeatherData();
+  const { setTitle, setSubtitle } = useNavigation();
 
   const t = useTranslations();
+  const format = useFormatter();
+
+  useEffect(() => {
+    setTitle(t('Current.PageTitle'));
+    setSubtitle(
+      data ? format.dateTime(new Date(data.report.time * 1000), { dateStyle: 'medium', timeStyle: 'medium' }) : ''
+    );
+  }, [data]);
 
   if (isLoading) {
     return (
