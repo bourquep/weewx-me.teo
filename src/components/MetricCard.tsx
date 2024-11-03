@@ -21,6 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import FunctionsIcon from '@mui/icons-material/Functions';
+import NavigationIcon from '@mui/icons-material/Navigation';
+import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import { Box, CardMedia, Chip, Stack, useTheme } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -30,19 +32,26 @@ import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 import { NumberFormatOptions, useFormatter, useTranslations } from 'next-intl';
 import IconLabel from './IconLabel';
 
+type MetricKind = 'number' | 'wind';
+
 interface MetricCardProps {
   cardTitle: string;
   sparkLineData: Array<Array<number>>;
   sparkLinePlotType: 'line' | 'bar';
   sparkLineMinValue?: number;
   sparkLineMaxValue?: number;
-  currentValue: number | string;
-  minValue?: number | string;
+  currentValue: number;
+  formattedCurrentValue?: string;
+  minValue?: number;
+  formattedMinValue?: string;
   minTimestamp?: number | string;
-  maxValue?: number | string;
+  maxValue?: number;
+  formattedMaxValue?: string;
   maxTimestamp?: number | string;
-  sumValue?: number | string;
+  sumValue?: number;
+  formattedSumValue?: string;
   metricUnit: string;
+  metricKind: MetricKind;
 }
 
 export default function MetricCard({
@@ -52,12 +61,17 @@ export default function MetricCard({
   sparkLineMinValue,
   sparkLineMaxValue,
   currentValue,
+  formattedCurrentValue,
   minValue,
+  formattedMinValue,
   minTimestamp,
   maxValue,
+  formattedMaxValue,
   maxTimestamp,
   sumValue,
-  metricUnit
+  formattedSumValue,
+  metricUnit,
+  metricKind
 }: MetricCardProps) {
   const theme = useTheme();
   const format = useFormatter();
@@ -79,16 +93,16 @@ export default function MetricCard({
       : timestamp;
   }
 
-  const formattedCurrentValue = formatNumber(currentValue, {
+  formattedCurrentValue ??= formatNumber(currentValue, {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1
   });
 
-  const formattedMinValue = formatNumber(minValue);
+  formattedMinValue ??= formatNumber(minValue);
   const formattedMinTimestamp = formatTimestamp(minTimestamp);
-  const formattedMaxValue = formatNumber(maxValue);
+  formattedMaxValue ??= formatNumber(maxValue);
   const formattedMaxTimestamp = formatTimestamp(maxTimestamp);
-  const formattedSumValue = formatNumber(sumValue);
+  formattedSumValue ??= formatNumber(sumValue);
 
   return (
     <Card variant="outlined" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -101,9 +115,21 @@ export default function MetricCard({
         {/* Current value + min/max/sum */}
         <Stack direction="row" alignItems="center" spacing={1}>
           {/* Current value */}
-          <Typography variant={(formattedCurrentValue?.length ?? 0) < 5 ? 'h1' : 'h2'} sx={{ fontWeight: '500' }}>
-            {formattedCurrentValue}
-          </Typography>
+          {metricKind === 'number' && (
+            <Typography variant={(formattedCurrentValue?.length ?? 0) < 5 ? 'h1' : 'h2'} sx={{ fontWeight: '500' }}>
+              {formattedCurrentValue}
+            </Typography>
+          )}
+          {metricKind === 'wind' && (
+            <>
+              <Typography variant="h1" sx={{ fontWeight: '500', translate: '0 8%' }}>
+                <NavigationOutlinedIcon fontSize="inherit" sx={{ transform: `rotate(${currentValue + 180}deg)` }} />
+              </Typography>
+              <Typography variant="h2" sx={{ fontWeight: '500' }}>
+                {formattedCurrentValue}
+              </Typography>
+            </>
+          )}
 
           {/* Spacer */}
           <Box flexGrow={1} />
@@ -141,7 +167,7 @@ export default function MetricCard({
       </CardContent>
 
       <CardMedia>
-        {!isGraphEmpty && (
+        {!isGraphEmpty && metricKind === 'number' && (
           <SparkLineChart
             height={40}
             plotType={sparkLinePlotType}
@@ -158,6 +184,22 @@ export default function MetricCard({
             sx={{ pointerEvents: 'none' }}
           />
         )}
+
+        {!isGraphEmpty && metricKind === 'wind' && (
+          <Stack direction="row" spacing={0} justifyContent="space-evenly">
+            {sparkLineData.map(([timestamp, value]) => (
+              <Typography key={timestamp} variant="body2" sx={{ translate: '0 8%' }}>
+                <NavigationIcon
+                  key={timestamp}
+                  fontSize="inherit"
+                  htmlColor={theme.palette.grey[200]}
+                  sx={{ transform: `rotate(${value + 180}deg)` }}
+                />
+              </Typography>
+            ))}
+          </Stack>
+        )}
+
         {isGraphEmpty && (
           <Typography
             variant="caption"
