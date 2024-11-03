@@ -1,8 +1,7 @@
 {
   "Global": {
     "DataLoadErrorTitle": "Impossible de charger les données.",
-    "DataLoadUnexpectedErrorMessage": "Une erreur inattendue s'est produite lors du chargement des données.",
-    "DominantWindDirectionLabel": "dominant"
+    "DataLoadUnexpectedErrorMessage": "Une erreur inattendue s'est produite lors du chargement des données."
   },
   "Current": {
     "PageTitle": "Conditions actuelles",

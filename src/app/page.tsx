@@ -81,9 +81,7 @@ export default function Home() {
                   minTimestamp={observation.minTime}
                   maxValue={observation.max}
                   formattedMaxValue={observation.observation === 'windDir' ? observation.maxCompass : undefined}
-                  maxTimestamp={
-                    observation.observation === 'windDir' ? t('Global.DominantWindDirectionLabel') : observation.maxTime
-                  }
+                  maxTimestamp={observation.maxLabel ?? observation.maxTime}
                   sumValue={observation.sum}
                   sparkLineData={observation.past24h}
                   sparkLinePlotType={plotTypeFromObservation(observation.observation)}

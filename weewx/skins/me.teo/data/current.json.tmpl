@@ -30,9 +30,20 @@
       "unit": "$getVar('unit.label.' + $x)",
       "current": $getVar('current.' + $x).json,
     #if $x == 'windDir'
+      #set $wind_vecavg = $span(hour_delta=24).wind.vecavg.raw
+      #set $wind_avg = $span(hour_delta=24).windSpeed.avg.raw
+      #set $steadiness = $wind_vecavg / $wind_avg if $wind_avg > 0 else 0
+      #if $steadiness > 0.75
+        #set $consistency = $gettext("steady")
+      #elif $steadiness > 0.5
+        #set $consistency = $gettext("mainly")
+      #else
+        #set $consistency = $gettext("variable")
+      #end if
       "currentCompass": "$current.windDir.ordinal_compass",
       "max": $span(hour_delta=24).wind.vecdir.json,
       "maxCompass": "$span(hour_delta=24).wind.vecdir.ordinal_compass",
+      "maxLabel": "$consistency",
       "past24h": $span(hour_delta=24).windDir.series(aggregate_type='avg', aggregate_interval='1h', time_series='start').json
     #elif $x in $obs_type_sum
       "sum": $getattr($span(hour_delta=24), $x).sum.json,
