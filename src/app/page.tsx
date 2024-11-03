@@ -74,12 +74,13 @@ export default function Home() {
                 <MetricCard
                   cardTitle={observation.label}
                   metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
-                  currentValue={
-                    observation.observation === 'windDir' ? (observation.currentCompass ?? 'n/a') : observation.current
-                  }
+                  metricKind={observation.observation === 'windDir' ? 'wind' : 'number'}
+                  currentValue={observation.current}
+                  formattedCurrentValue={observation.observation === 'windDir' ? observation.currentCompass : undefined}
                   minValue={observation.min}
                   minTimestamp={observation.minTime}
-                  maxValue={observation.observation === 'windDir' ? observation.maxCompass : observation.max}
+                  maxValue={observation.max}
+                  formattedMaxValue={observation.observation === 'windDir' ? observation.maxCompass : undefined}
                   maxTimestamp={
                     observation.observation === 'windDir' ? t('Global.DominantWindDirectionLabel') : observation.maxTime
                   }
