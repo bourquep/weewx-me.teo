@@ -20,19 +20,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useNavigation } from '@/contexts/NavigationContext';
 import { useGlobalData } from '@/libs/DataSource';
+import ExpandCircleDownOutlinedIcon from '@mui/icons-material/ExpandCircleDownOutlined';
 import {
   AppBar,
   Box,
   CircularProgress,
+  IconButton,
+  Menu,
+  MenuItem,
   Stack,
   styled,
-  Tab,
-  Tabs,
   Toolbar,
   Typography,
   useMediaQuery,
   useTheme
 } from '@mui/material';
+import { useState } from 'react';
 
 interface PageHeaderProps {}
 
@@ -40,6 +43,8 @@ interface LoadedPageHeaderProps extends PageHeaderProps {
   data: GlobalData;
   title: string;
   subtitle: string;
+  openMenu: (event: React.MouseEvent<HTMLElement>) => void;
+  onCloseMenu: () => void;
 }
 
 export default function PageHeader(props: PageHeaderProps) {
@@ -47,6 +52,15 @@ export default function PageHeader(props: PageHeaderProps) {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { data, isLoading, error } = useGlobalData();
   const { title, subtitle } = useNavigation();
+
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+  const isMenuOpen = Boolean(menuAnchor);
+  const openMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setMenuAnchor(event.currentTarget);
+  };
+  const onCloseMenu = () => {
+    setMenuAnchor(null);
+  };
 
   const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -65,43 +79,70 @@ export default function PageHeader(props: PageHeaderProps) {
               <Box flexGrow={1} />
             </>
           ) : isMobile ? (
-            <CompactPageHeader {...props} data={data} title={title} subtitle={subtitle} />
+            <CompactPageHeader
+              {...props}
+              data={data}
+              title={title}
+              subtitle={subtitle}
+              openMenu={openMenu}
+              onCloseMenu={onCloseMenu}
+            />
           ) : (
-            <RegularPageHeader {...props} data={data} title={title} subtitle={subtitle} />
+            <RegularPageHeader
+              {...props}
+              data={data}
+              title={title}
+              subtitle={subtitle}
+              openMenu={openMenu}
+              onCloseMenu={onCloseMenu}
+            />
           )}
         </Toolbar>
       </AppBar>
 
-      <Offset />
+      <Menu anchorEl={menuAnchor} open={isMenuOpen} onClose={onCloseMenu}>
+        <MenuItem>Current Conditions</MenuItem>
+        <MenuItem>Week-to-Date</MenuItem>
+        <MenuItem>Month-to-Date</MenuItem>
+        <MenuItem>Day</MenuItem>
+        <MenuItem>Month</MenuItem>
+        <MenuItem>Year</MenuItem>
+      </Menu>
 
-      <Tabs
-        value={0}
-        variant={isMobile ? 'scrollable' : 'fullWidth'}
-        scrollButtons="auto"
-        allowScrollButtonsMobile
-        sx={{ mb: 2, flex: 1 }}
-      >
-        <Tab label="Current" />
-        <Tab label="Week-to-date" />
-        <Tab label="Month-to-date" />
-        <Tab label="Day" />
-        <Tab label="Month" />
-        <Tab label="year" />
-      </Tabs>
+      <Offset />
     </Stack>
   );
 }
 
 function CompactPageHeader(props: LoadedPageHeaderProps) {
   return (
-    <Stack textAlign="center" sx={{ minWidth: 0, flex: 1 }}>
-      <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-        {props.data.station.location}
-      </Typography>
-      <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-        {props.subtitle}
-      </Typography>
-    </Stack>
+    <>
+      <Stack sx={{ minWidth: 0, flex: 1 }}>
+        <Stack direction="row">
+          <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+            {props.data.station.location}
+          </Typography>
+
+          <Box flexGrow={1} />
+
+          <IconButton size="small" onClick={props.openMenu}>
+            <ExpandCircleDownOutlinedIcon fontSize="inherit" />
+          </IconButton>
+        </Stack>
+
+        <Stack direction="row">
+          <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+            {props.subtitle}
+          </Typography>
+
+          <Box flexGrow={1} />
+
+          <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+            {props.title}
+          </Typography>
+        </Stack>
+      </Stack>
+    </>
   );
 }
 
@@ -125,6 +166,10 @@ function RegularPageHeader(props: LoadedPageHeaderProps) {
           {props.subtitle}
         </Typography>
       </Stack>
+
+      <IconButton size="large" onClick={props.openMenu}>
+        <ExpandCircleDownOutlinedIcon fontSize="inherit" />
+      </IconButton>
     </>
   );
 }
