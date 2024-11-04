@@ -15,6 +15,9 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set $observations = $to_list($DisplayOptions.get('observations_summary', ['outTemp', 'outHumidity', 'windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'barometer', 'UV']))
+#set $obs_type_sum = $to_list($DisplayOptions.get('obs_type_sum', ['rain', 'ET', 'hail', 'snow', 'lightning_strike_count']))
+#set $obs_type_max = $to_list($DisplayOptions.get('obs_type_max', ['rainRate', 'hailRate', 'snowRate', 'UV']))
+#set $aggregate_interval = 'day'
 {
   "report": {
     "time": $month.dateTime.json
@@ -31,7 +34,13 @@
       "max": $getattr($month, $x).max.json,
       "maxTime": $getattr($month, $x).maxtime.json,
       "avg": $getattr($month, $x).avg.json,
-      "graph": $getattr($month, $x).series(time_series='stop').json
+    #if $x in $obs_type_sum
+      "graph": $getattr($month, $x).series(aggregate_type='sum', aggregate_interval=$aggregate_interval, time_series='stop').json
+    #elif $x in $obs_type_max
+      "graph": $getattr($month, $x).series(aggregate_type='max', aggregate_interval=$aggregate_interval, time_series='stop').json
+    #else
+      "graph": $getattr($month, $x).series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='stop').json
+    #end if
     },
   #else
     {
