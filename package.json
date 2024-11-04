@@ -46,7 +46,7 @@
     "@emotion/styled": "11.13.0",
     "@mui/icons-material": "6.1.6",
     "@mui/material": "6.1.5",
-    "@mui/material-nextjs": "6.1.5",
+    "@mui/material-nextjs": "6.1.6",
     "@mui/x-charts": "7.22.0",
     "@next/third-parties": "15.0.2",
     "next": "15.0.1",
