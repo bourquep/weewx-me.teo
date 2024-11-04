@@ -23,7 +23,7 @@
   },
   "observations": [
 #for $x in $observations
-  #if $getVar('year.%s.has_data' % $x)
+  #if $getVar('current.%s.has_data' % $x)
     {
       "observation": "$x",
       "label": "$obs.label[$x]",

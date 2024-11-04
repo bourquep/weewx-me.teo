@@ -1,0 +1,48 @@
+## weewx-me.teo
+## Copyright (C) 2024 Pascal Bourque
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set $observations = $to_list($DisplayOptions.get('observations_summary', ['outTemp', 'outHumidity', 'windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'barometer', 'UV']))
+{
+  "report": {
+    "time": $month.dateTime.json
+  },
+  "observations": [
+#for $x in $observations
+  #if $getVar('month.%s.has_data' % $x)
+    {
+      "observation": "$x",
+      "label": "$obs.label[$x]",
+      "unit": "$getVar('unit.label.' + $x)",
+      "min": $getattr($month, $x).min.json,
+      "minTime": $getattr($month, $x).mintime.json,
+      "max": $getattr($month, $x).max.json,
+      "maxTime": $getattr($month, $x).maxtime.json,
+      "avg": $getattr($month, $x).avg.json,
+      "graph": $getattr($month, $x).series(time_series='stop').json
+    },
+  #else
+    {
+      "observation": "$x",
+      "label": "$obs.label[$x]",
+      "unit": "$getVar('unit.label.' + $x)",
+      "graph": []
+    },
+  #end if
+#end for
+    ## Last value can't end with a comma
+    null
+  ]
+}
