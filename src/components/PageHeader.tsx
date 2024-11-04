@@ -26,6 +26,8 @@ import {
   CircularProgress,
   Stack,
   styled,
+  Tab,
+  Tabs,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -69,7 +71,23 @@ export default function PageHeader(props: PageHeaderProps) {
           )}
         </Toolbar>
       </AppBar>
+
       <Offset />
+
+      <Tabs
+        value={0}
+        variant={isMobile ? 'scrollable' : 'fullWidth'}
+        scrollButtons="auto"
+        allowScrollButtonsMobile
+        sx={{ mb: 2, flex: 1 }}
+      >
+        <Tab label="Current" />
+        <Tab label="Week-to-date" />
+        <Tab label="Month-to-date" />
+        <Tab label="Day" />
+        <Tab label="Month" />
+        <Tab label="year" />
+      </Tabs>
     </Stack>
   );
 }
@@ -90,7 +108,7 @@ function CompactPageHeader(props: LoadedPageHeaderProps) {
 function RegularPageHeader(props: LoadedPageHeaderProps) {
   return (
     <>
-      <Stack sx={{ minWidth: 0, flex: 1.25 }}>
+      <Stack sx={{ minWidth: 0, flex: 1 }}>
         <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
           {props.data.station.location}
         </Typography>
