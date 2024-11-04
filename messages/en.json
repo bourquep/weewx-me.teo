@@ -7,5 +7,20 @@
     "PageTitle": "Current Conditions",
     "PageFootnote": "Graphs and other statistical data are based on the last 24 hours.",
     "EmptyGraphMessage": "No data for the past 24 hours."
+  },
+  "WeekToDate": {
+    "PageTitle": "Week to Date"
+  },
+  "MonthToDate": {
+    "PageTitle": "Month to Date"
+  },
+  "Day": {
+    "PageTitle": "Daily Summary"
+  },
+  "Month": {
+    "PageTitle": "Monthly Summary"
+  },
+  "Year": {
+    "PageTitle": "Yearly Summary"
   }
 }

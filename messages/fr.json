@@ -7,5 +7,20 @@
     "PageTitle": "Conditions actuelles",
     "PageFootnote": "Les graphiques et autres statistiques sont basés sur les dernières 24 heures.",
     "EmptyGraphMessage": "Aucune donnée pour les dernières 24 heures."
+  },
+  "WeekToDate": {
+    "PageTitle": "Semaine à ce jour"
+  },
+  "MonthToDate": {
+    "PageTitle": "Mois à ce jour"
+  },
+  "Day": {
+    "PageTitle": "Sommaire quotidien"
+  },
+  "Month": {
+    "PageTitle": "Sommaire mensuel"
+  },
+  "Year": {
+    "PageTitle": "Sommaire annuel"
   }
 }

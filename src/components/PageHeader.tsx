@@ -35,6 +35,8 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface PageHeaderProps {}
@@ -52,6 +54,8 @@ export default function PageHeader(props: PageHeaderProps) {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { data, isLoading, error } = useGlobalData();
   const { title, subtitle } = useNavigation();
+  const router = useRouter();
+  const t = useTranslations();
 
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(menuAnchor);
@@ -60,6 +64,10 @@ export default function PageHeader(props: PageHeaderProps) {
   };
   const onCloseMenu = () => {
     setMenuAnchor(null);
+  };
+  const navigate = (route: string) => {
+    onCloseMenu();
+    router.push(route);
   };
 
   const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -101,12 +109,12 @@ export default function PageHeader(props: PageHeaderProps) {
       </AppBar>
 
       <Menu anchorEl={menuAnchor} open={isMenuOpen} onClose={onCloseMenu}>
-        <MenuItem>Current Conditions</MenuItem>
-        <MenuItem>Week-to-Date</MenuItem>
-        <MenuItem>Month-to-Date</MenuItem>
-        <MenuItem>Day</MenuItem>
-        <MenuItem>Month</MenuItem>
-        <MenuItem>Year</MenuItem>
+        <MenuItem onClick={() => navigate('/')}>{t('Current.PageTitle')}</MenuItem>
+        <MenuItem onClick={() => navigate('/week-to-date')}>{t('WeekToDate.PageTitle')}</MenuItem>
+        <MenuItem onClick={() => navigate('/month-to-date')}>{t('MonthToDate.PageTitle')}</MenuItem>
+        <MenuItem onClick={() => navigate('/day')}>{t('Day.PageTitle')}</MenuItem>
+        <MenuItem onClick={() => navigate('/month')}>{t('Month.PageTitle')}</MenuItem>
+        <MenuItem onClick={() => navigate('/year')}>{t('Year.PageTitle')}</MenuItem>
       </Menu>
 
       <Offset />
