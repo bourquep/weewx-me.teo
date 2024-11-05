@@ -9,7 +9,8 @@
     "EmptyGraphMessage": "Aucune donnée pour les dernières 24 heures."
   },
   "WeekToDate": {
-    "PageTitle": "Semaine à ce jour"
+    "PageTitle": "Semaine à ce jour",
+    "PageSubtitleSince": "Depuis le"
   },
   "MonthToDate": {
     "PageTitle": "Mois à ce jour"

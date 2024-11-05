@@ -9,7 +9,8 @@
     "EmptyGraphMessage": "No data for the past 24 hours."
   },
   "WeekToDate": {
-    "PageTitle": "Week to Date"
+    "PageTitle": "Week to Date",
+    "PageSubtitleSince": "Since"
   },
   "MonthToDate": {
     "PageTitle": "Month to Date"

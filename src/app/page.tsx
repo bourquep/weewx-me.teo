@@ -18,10 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
+import LoadingOrErrorIndicator from '@/components/LoadingOrErrorIndicator';
 import MetricCard from '@/components/MetricCard';
 import { useNavigation } from '@/contexts/NavigationContext';
 import { useCurrentWeatherData } from '@/libs/DataSource';
-import { Alert, AlertTitle, Box, CircularProgress, Grid2, Stack, Typography } from '@mui/material';
+import { Grid2, Stack, Typography } from '@mui/material';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
@@ -39,57 +40,43 @@ export default function Home() {
     );
   }, [data]);
 
-  if (isLoading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (error || data === undefined) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-        <Alert severity="error">
-          <AlertTitle>{t('Global.DataLoadErrorTitle')}</AlertTitle>
-          {`${error || t('Global.DataLoadUnexpectedErrorMessage')}`}
-        </Alert>
-      </Box>
-    );
-  }
-
   return (
     <>
-      <Stack>
-        <Grid2 container spacing={2} columns={{ xs: 4, sm: 8, md: 12, lg: 12, xl: 16 }}>
-          {data.observations
-            .filter((x) => x != null)
-            .map((observation) => (
-              <Grid2 key={observation!.observation} size={4}>
-                <MetricCard
-                  cardTitle={observation.label}
-                  metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
-                  metricKind={observation.observation === 'windDir' ? 'wind' : 'number'}
-                  currentValue={observation.current}
-                  formattedCurrentValue={observation.observation === 'windDir' ? observation.currentCompass : undefined}
-                  minValue={observation.min}
-                  minTimestamp={observation.minTime}
-                  maxValue={observation.max}
-                  formattedMaxValue={observation.observation === 'windDir' ? observation.maxCompass : undefined}
-                  maxTimestamp={observation.maxLabel ?? observation.maxTime}
-                  sumValue={observation.sum}
-                  sparkLineData={observation.past24h}
-                  sparkLinePlotType={plotTypeFromObservation(observation.observation)}
-                  sparkLineMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
-                  sparkLineMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
-                />
-              </Grid2>
-            ))}
-        </Grid2>
-        <Typography mt={2} mb={-2} variant="caption" sx={{ color: 'text.secondary' }}>
-          <em>{t('Current.PageFootnote')}</em>
-        </Typography>
-      </Stack>
+      <LoadingOrErrorIndicator data={data} isLoading={isLoading} error={error} />
+      {data && (
+        <Stack>
+          <Grid2 container spacing={2} columns={{ xs: 4, sm: 8, md: 12, lg: 12, xl: 16 }}>
+            {data.observations
+              .filter((x) => x != null)
+              .map((observation) => (
+                <Grid2 key={observation!.observation} size={4}>
+                  <MetricCard
+                    cardTitle={observation.label}
+                    metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
+                    metricKind={observation.observation === 'windDir' ? 'wind' : 'number'}
+                    currentValue={observation.current}
+                    formattedCurrentValue={
+                      observation.observation === 'windDir' ? observation.currentCompass : undefined
+                    }
+                    minValue={observation.min}
+                    minTimestamp={observation.minTime}
+                    maxValue={observation.max}
+                    formattedMaxValue={observation.observation === 'windDir' ? observation.maxCompass : undefined}
+                    maxTimestamp={observation.maxLabel ?? observation.maxTime}
+                    sumValue={observation.sum}
+                    sparkLineData={observation.past24h}
+                    sparkLinePlotType={plotTypeFromObservation(observation.observation)}
+                    sparkLineMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
+                    sparkLineMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
+                  />
+                </Grid2>
+              ))}
+          </Grid2>
+          <Typography mt={2} mb={-2} variant="caption" sx={{ color: 'text.secondary' }}>
+            <em>{t('Current.PageFootnote')}</em>
+          </Typography>
+        </Stack>
+      )}
     </>
   );
 }
