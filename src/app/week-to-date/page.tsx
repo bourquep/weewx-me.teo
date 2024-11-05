@@ -25,7 +25,17 @@ import { useWeekToDateData } from '@/libs/DataSource';
 import FunctionIcon from '@/resources/FunctionIcon';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import { Card, CardContent, CardHeader, Chip, Stack, Typography, useTheme } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Chip,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 import { LineChart } from '@mui/x-charts';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
@@ -37,6 +47,7 @@ export default function WeekToDataPage() {
   const t = useTranslations();
   const format = useFormatter();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     setTitle(t('WeekToDate.PageTitle'));
@@ -57,9 +68,9 @@ export default function WeekToDataPage() {
               title="Temperature"
               action=<Chip variant="outlined" size="small" color="info" label={data.observations[0]!.unit} />
             />
-            <CardContent>
-              <Stack direction="row" spacing={2} sx={{ justifyContent: 'center' }}>
-                <Stack sx={{ alignItems: 'end' }}>
+            <CardContent sx={isMobile ? { paddingY: 0 } : {}}>
+              <Stack direction="row" spacing={2} sx={{ justifyContent: 'flex-start' }}>
+                <Stack sx={{ alignItems: 'start' }}>
                   <IconLabel
                     icon={ArrowDownwardIcon}
                     label={format.number(data.observations[0]!.min!, { maximumFractionDigits: 2 })}
@@ -72,7 +83,7 @@ export default function WeekToDataPage() {
                     })}
                   </Typography>
                 </Stack>
-                <Stack sx={{ alignItems: 'end' }}>
+                <Stack sx={{ alignItems: 'start' }}>
                   <IconLabel
                     icon={ArrowUpwardIcon}
                     label={format.number(data.observations[0]!.max!, { maximumFractionDigits: 2 })}
@@ -85,7 +96,7 @@ export default function WeekToDataPage() {
                     })}
                   </Typography>
                 </Stack>
-                <Stack sx={{ alignItems: 'end' }}>
+                <Stack sx={{ alignItems: 'start' }}>
                   <IconLabel
                     icon={FunctionIcon}
                     label={format.number(data.observations[0]!.avg!, { maximumFractionDigits: 2 })}
@@ -95,9 +106,11 @@ export default function WeekToDataPage() {
                   </Typography>
                 </Stack>
               </Stack>
+            </CardContent>
 
+            <CardMedia>
               <LineChart
-                grid={{ horizontal: true }}
+                grid={{ horizontal: !isMobile }}
                 series={[
                   {
                     data: data.observations[0]!.graph.map(([timestamp, value]) => value),
@@ -110,12 +123,28 @@ export default function WeekToDataPage() {
                 xAxis={[
                   {
                     data: data.observations[0]!.graph.map(([timestamp, value]) => new Date(timestamp * 1000)),
-                    scaleType: 'time'
+                    scaleType: 'time',
+                    min: new Date(data.observations[0]!.graph.at(0)![0] * 1000),
+                    max: new Date(data.observations[0]!.graph.at(-1)![0] * 1000)
                   }
                 ]}
-                height={300}
+                yAxis={
+                  isMobile
+                    ? [
+                        {
+                          min: Math.min(...data.observations[0]!.graph.map(([timestamp, value]) => value)) - 1,
+                          max: Math.max(...data.observations[0]!.graph.map(([timestamp, value]) => value)) + 1
+                        }
+                      ]
+                    : []
+                }
+                height={isMobile ? 100 : 300}
+                margin={isMobile ? { top: 4, right: 4, bottom: 4, left: 4 } : {}}
+                bottomAxis={isMobile ? null : undefined}
+                leftAxis={isMobile ? null : undefined}
+                slotProps={isMobile ? { popper: { placement: 'top-end' } } : {}}
               />
-            </CardContent>
+            </CardMedia>
           </Card>
         </Stack>
       )}
