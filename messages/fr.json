@@ -3,6 +3,9 @@
     "DataLoadErrorTitle": "Impossible de charger les données.",
     "DataLoadUnexpectedErrorMessage": "Une erreur inattendue s'est produite lors du chargement des données."
   },
+  "Labels": {
+    "Average": "Moyenne"
+  },
   "Current": {
     "PageTitle": "Conditions actuelles",
     "PageFootnote": "Les graphiques et autres statistiques sont basés sur les dernières 24 heures.",

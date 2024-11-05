@@ -18,21 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
+import IconLabel from '@/components/IconLabel';
 import LoadingOrErrorIndicator from '@/components/LoadingOrErrorIndicator';
 import { useNavigation } from '@/contexts/NavigationContext';
 import { useWeekToDateData } from '@/libs/DataSource';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Chip,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  useTheme
-} from '@mui/material';
+import FunctionIcon from '@/resources/FunctionIcon';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { Card, CardContent, CardHeader, Chip, Stack, Typography, useTheme } from '@mui/material';
 import { LineChart } from '@mui/x-charts';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
@@ -65,58 +58,63 @@ export default function WeekToDataPage() {
               action=<Chip variant="outlined" size="small" color="info" label={data.observations[0]!.unit} />
             />
             <CardContent>
-              <Stack direction="row">
-                <Table size="small" sx={{ width: 'auto', flexShrink: 0, alignSelf: 'center' }}>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell variant="head">Min</TableCell>
-                      <TableCell>{format.number(data.observations[0]!.min!, { maximumFractionDigits: 2 })}</TableCell>
-                      <TableCell>
-                        {format.dateTime(new Date(data.observations[0]!.minTime! * 1000), {
-                          dateStyle: 'medium',
-                          timeStyle: 'short'
-                        })}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell variant="head">Max</TableCell>
-                      <TableCell>{format.number(data.observations[0]!.max!, { maximumFractionDigits: 2 })}</TableCell>
-                      <TableCell>
-                        {format.dateTime(new Date(data.observations[0]!.maxTime! * 1000), {
-                          dateStyle: 'medium',
-                          timeStyle: 'short'
-                        })}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell variant="head">Avg</TableCell>
-                      <TableCell>{format.number(data.observations[0]!.avg!, { maximumFractionDigits: 2 })}</TableCell>
-                      <TableCell />
-                    </TableRow>
-                  </TableBody>
-                </Table>
-
-                <LineChart
-                  grid={{ horizontal: true }}
-                  series={[
-                    {
-                      data: data.observations[0]!.graph.map(([timestamp, value]) => value),
-                      showMark: false,
-                      area: true,
-                      color: theme.palette.grey[200],
-                      curve: 'natural'
-                    }
-                  ]}
-                  xAxis={[
-                    {
-                      data: data.observations[0]!.graph.map(([timestamp, value]) => new Date(timestamp * 1000)),
-                      scaleType: 'time'
-                    }
-                  ]}
-                  height={300}
-                  sx={{ flexGrow: 1 }}
-                />
+              <Stack direction="row" spacing={2} sx={{ justifyContent: 'center' }}>
+                <Stack sx={{ alignItems: 'end' }}>
+                  <IconLabel
+                    icon={ArrowDownwardIcon}
+                    label={format.number(data.observations[0]!.min!, { maximumFractionDigits: 2 })}
+                  />
+                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                    {format.dateTime(new Date(data.observations[0]!.minTime! * 1000), {
+                      weekday: 'long',
+                      hour: 'numeric',
+                      minute: '2-digit'
+                    })}
+                  </Typography>
+                </Stack>
+                <Stack sx={{ alignItems: 'end' }}>
+                  <IconLabel
+                    icon={ArrowUpwardIcon}
+                    label={format.number(data.observations[0]!.max!, { maximumFractionDigits: 2 })}
+                  />
+                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                    {format.dateTime(new Date(data.observations[0]!.maxTime! * 1000), {
+                      weekday: 'long',
+                      hour: 'numeric',
+                      minute: '2-digit'
+                    })}
+                  </Typography>
+                </Stack>
+                <Stack sx={{ alignItems: 'end' }}>
+                  <IconLabel
+                    icon={FunctionIcon}
+                    label={format.number(data.observations[0]!.avg!, { maximumFractionDigits: 2 })}
+                  />
+                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                    {t('Labels.Average')}
+                  </Typography>
+                </Stack>
               </Stack>
+
+              <LineChart
+                grid={{ horizontal: true }}
+                series={[
+                  {
+                    data: data.observations[0]!.graph.map(([timestamp, value]) => value),
+                    showMark: false,
+                    area: true,
+                    color: theme.palette.grey[200],
+                    curve: 'natural'
+                  }
+                ]}
+                xAxis={[
+                  {
+                    data: data.observations[0]!.graph.map(([timestamp, value]) => new Date(timestamp * 1000)),
+                    scaleType: 'time'
+                  }
+                ]}
+                height={300}
+              />
             </CardContent>
           </Card>
         </Stack>
