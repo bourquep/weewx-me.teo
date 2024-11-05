@@ -64,10 +64,10 @@ export default function Home() {
                     formattedMaxValue={observation.observation === 'windDir' ? observation.maxCompass : undefined}
                     maxTimestamp={observation.maxLabel ?? observation.maxTime}
                     sumValue={observation.sum}
-                    sparkLineData={observation.past24h}
-                    sparkLinePlotType={plotTypeFromObservation(observation.observation)}
-                    sparkLineMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
-                    sparkLineMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
+                    graphData={observation.past24h}
+                    graphPlotType={plotTypeFromObservation(observation.observation)}
+                    graphMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
+                    graphMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
                   />
                 </Grid2>
               ))}

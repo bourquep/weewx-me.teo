@@ -35,23 +35,29 @@ import IconLabel from './IconLabel';
 type CurrentMetricKind = 'number' | 'wind';
 
 interface CurrentMetricCardProps {
+  metricKind: CurrentMetricKind;
+  metricUnit: string;
+
   cardTitle: string;
-  sparkLineData: Array<Array<number>>;
-  sparkLinePlotType: 'line' | 'bar';
-  sparkLineMinValue?: number;
-  sparkLineMaxValue?: number;
+
   currentValue: number;
   formattedCurrentValue?: string;
+
   minValue?: number;
   formattedMinValue?: string;
   minTimestamp?: number | string;
+
   maxValue?: number;
   formattedMaxValue?: string;
   maxTimestamp?: number | string;
+
   sumValue?: number;
   formattedSumValue?: string;
-  metricUnit: string;
-  metricKind: CurrentMetricKind;
+
+  graphData: Array<Array<number>>;
+  graphPlotType: 'line' | 'bar';
+  graphMinValue?: number;
+  graphMaxValue?: number;
 }
 
 export default function CurrentMetricCard(props: CurrentMetricCardProps) {
@@ -59,9 +65,9 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
   const format = useFormatter();
   const t = useTranslations();
 
-  const graphData = props.sparkLineData.map(([, value]) => (value != null ? Number(value.toFixed(1)) : 0));
-  const graphMinValue = props.sparkLineMinValue ?? Math.min(...graphData);
-  const graphMaxValue = props.sparkLineMaxValue ?? Math.max(...graphData);
+  const graphData = props.graphData.map(([, value]) => (value != null ? Number(value.toFixed(1)) : 0));
+  const graphMinValue = props.graphMinValue ?? Math.min(...graphData);
+  const graphMaxValue = props.graphMaxValue ?? Math.max(...graphData);
   const isGraphEmpty = graphData.filter((x) => x != 0).length == 0;
 
   function formatNumber(value?: number | string, options: NumberFormatOptions = { maximumFractionDigits: 1 }) {
@@ -159,10 +165,10 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
         {!isGraphEmpty && props.metricKind === 'number' && (
           <SparkLineChart
             height={40}
-            plotType={props.sparkLinePlotType}
+            plotType={props.graphPlotType}
             data={graphData}
             xAxis={{
-              data: props.sparkLineData.map(([timestamp]) => new Date(timestamp * 1000)),
+              data: props.graphData.map(([timestamp]) => new Date(timestamp * 1000)),
               valueFormatter: (date) => format.dateTime(date, { timeStyle: 'short' })
             }}
             yAxis={{ min: graphMinValue, max: graphMaxValue }}
@@ -176,7 +182,7 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
 
         {!isGraphEmpty && props.metricKind === 'wind' && (
           <Stack direction="row" spacing={0} justifyContent="space-evenly">
-            {props.sparkLineData.map(([timestamp, value]) => (
+            {props.graphData.map(([timestamp, value]) => (
               <Typography key={timestamp} variant="body2" sx={{ translate: '0 8%' }}>
                 <NavigationIcon
                   key={timestamp}
