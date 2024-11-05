@@ -54,32 +54,14 @@ interface CurrentMetricCardProps {
   metricKind: CurrentMetricKind;
 }
 
-export default function CurrentMetricCard({
-  cardTitle,
-  sparkLineData,
-  sparkLinePlotType,
-  sparkLineMinValue,
-  sparkLineMaxValue,
-  currentValue,
-  formattedCurrentValue,
-  minValue,
-  formattedMinValue,
-  minTimestamp,
-  maxValue,
-  formattedMaxValue,
-  maxTimestamp,
-  sumValue,
-  formattedSumValue,
-  metricUnit,
-  metricKind
-}: CurrentMetricCardProps) {
+export default function CurrentMetricCard(props: CurrentMetricCardProps) {
   const theme = useTheme();
   const format = useFormatter();
   const t = useTranslations();
 
-  const graphData = sparkLineData.map(([, value]) => (value != null ? Number(value.toFixed(1)) : 0));
-  const graphMinValue = sparkLineMinValue ?? Math.min(...graphData);
-  const graphMaxValue = sparkLineMaxValue ?? Math.max(...graphData);
+  const graphData = props.sparkLineData.map(([, value]) => (value != null ? Number(value.toFixed(1)) : 0));
+  const graphMinValue = props.sparkLineMinValue ?? Math.min(...graphData);
+  const graphMaxValue = props.sparkLineMaxValue ?? Math.max(...graphData);
   const isGraphEmpty = graphData.filter((x) => x != 0).length == 0;
 
   function formatNumber(value?: number | string, options: NumberFormatOptions = { maximumFractionDigits: 1 }) {
@@ -93,37 +75,44 @@ export default function CurrentMetricCard({
       : timestamp;
   }
 
-  formattedCurrentValue ??= formatNumber(currentValue, {
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1
-  });
+  const formattedCurrentValue =
+    props.formattedCurrentValue ??
+    formatNumber(props.currentValue, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1
+    });
 
-  formattedMinValue ??= formatNumber(minValue);
-  const formattedMinTimestamp = formatTimestamp(minTimestamp);
-  formattedMaxValue ??= formatNumber(maxValue);
-  const formattedMaxTimestamp = formatTimestamp(maxTimestamp);
-  formattedSumValue ??= formatNumber(sumValue);
+  const formattedMinValue = props.formattedMinValue ?? formatNumber(props.minValue);
+  const formattedMinTimestamp = formatTimestamp(props.minTimestamp);
+  const formattedMaxValue = props.formattedMaxValue ?? formatNumber(props.maxValue);
+  const formattedMaxTimestamp = formatTimestamp(props.maxTimestamp);
+  const formattedSumValue = props.formattedSumValue ?? formatNumber(props.sumValue);
 
   return (
     <Card variant="outlined" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardHeader
-        title={cardTitle}
-        action={metricUnit.length > 0 && <Chip variant="outlined" size="small" color="info" label={metricUnit} />}
+        title={props.cardTitle}
+        action={
+          props.metricUnit.length > 0 && <Chip variant="outlined" size="small" color="info" label={props.metricUnit} />
+        }
       />
 
       <CardContent sx={{ paddingY: 0, flexGrow: 1 }}>
         {/* Current value + min/max/sum */}
         <Stack direction="row" alignItems="center" spacing={1}>
           {/* Current value */}
-          {metricKind === 'number' && (
+          {props.metricKind === 'number' && (
             <Typography variant={(formattedCurrentValue?.length ?? 0) < 5 ? 'h1' : 'h2'} sx={{ fontWeight: '500' }}>
               {formattedCurrentValue}
             </Typography>
           )}
-          {metricKind === 'wind' && (
+          {props.metricKind === 'wind' && (
             <>
               <Typography variant="h1" sx={{ fontWeight: '500', translate: '0 8%' }}>
-                <NavigationOutlinedIcon fontSize="inherit" sx={{ transform: `rotate(${currentValue + 180}deg)` }} />
+                <NavigationOutlinedIcon
+                  fontSize="inherit"
+                  sx={{ transform: `rotate(${props.currentValue + 180}deg)` }}
+                />
               </Typography>
               <Typography variant="h2" sx={{ fontWeight: '500' }}>
                 {formattedCurrentValue}
@@ -167,13 +156,13 @@ export default function CurrentMetricCard({
       </CardContent>
 
       <CardMedia>
-        {!isGraphEmpty && metricKind === 'number' && (
+        {!isGraphEmpty && props.metricKind === 'number' && (
           <SparkLineChart
             height={40}
-            plotType={sparkLinePlotType}
+            plotType={props.sparkLinePlotType}
             data={graphData}
             xAxis={{
-              data: sparkLineData.map(([timestamp]) => new Date(timestamp * 1000)),
+              data: props.sparkLineData.map(([timestamp]) => new Date(timestamp * 1000)),
               valueFormatter: (date) => format.dateTime(date, { timeStyle: 'short' })
             }}
             yAxis={{ min: graphMinValue, max: graphMaxValue }}
@@ -185,9 +174,9 @@ export default function CurrentMetricCard({
           />
         )}
 
-        {!isGraphEmpty && metricKind === 'wind' && (
+        {!isGraphEmpty && props.metricKind === 'wind' && (
           <Stack direction="row" spacing={0} justifyContent="space-evenly">
-            {sparkLineData.map(([timestamp, value]) => (
+            {props.sparkLineData.map(([timestamp, value]) => (
               <Typography key={timestamp} variant="body2" sx={{ translate: '0 8%' }}>
                 <NavigationIcon
                   key={timestamp}
