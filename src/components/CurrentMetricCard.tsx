@@ -32,9 +32,9 @@ import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 import { NumberFormatOptions, useFormatter, useTranslations } from 'next-intl';
 import IconLabel from './IconLabel';
 
-type MetricKind = 'number' | 'wind';
+type CurrentMetricKind = 'number' | 'wind';
 
-interface MetricCardProps {
+interface CurrentMetricCardProps {
   cardTitle: string;
   sparkLineData: Array<Array<number>>;
   sparkLinePlotType: 'line' | 'bar';
@@ -51,10 +51,10 @@ interface MetricCardProps {
   sumValue?: number;
   formattedSumValue?: string;
   metricUnit: string;
-  metricKind: MetricKind;
+  metricKind: CurrentMetricKind;
 }
 
-export default function MetricCard({
+export default function CurrentMetricCard({
   cardTitle,
   sparkLineData,
   sparkLinePlotType,
@@ -72,7 +72,7 @@ export default function MetricCard({
   formattedSumValue,
   metricUnit,
   metricKind
-}: MetricCardProps) {
+}: CurrentMetricCardProps) {
   const theme = useTheme();
   const format = useFormatter();
   const t = useTranslations();

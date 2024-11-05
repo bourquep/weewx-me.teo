@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
+import CurrentMetricCard from '@/components/CurrentMetricCard';
 import LoadingOrErrorIndicator from '@/components/LoadingOrErrorIndicator';
-import MetricCard from '@/components/MetricCard';
 import { useNavigation } from '@/contexts/NavigationContext';
 import { useCurrentWeatherData } from '@/libs/DataSource';
 import { Grid2, Stack, Typography } from '@mui/material';
@@ -50,7 +50,7 @@ export default function Home() {
               .filter((x) => x != null)
               .map((observation) => (
                 <Grid2 key={observation!.observation} size={4}>
-                  <MetricCard
+                  <CurrentMetricCard
                     cardTitle={observation.label}
                     metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
                     metricKind={observation.observation === 'windDir' ? 'wind' : 'number'}
