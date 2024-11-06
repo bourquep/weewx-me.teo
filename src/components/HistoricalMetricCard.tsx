@@ -76,10 +76,12 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
   const formattedAvgValue = props.formattedAvgValue ?? formatNumber(props.avgValue);
 
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardHeader
         title={props.cardTitle}
-        action=<Chip variant="outlined" size="small" color="info" label={props.metricUnit} />
+        action={
+          props.metricUnit.length > 0 && <Chip variant="outlined" size="small" color="info" label={props.metricUnit} />
+        }
       />
       <CardContent sx={isMobile ? { paddingY: 0 } : {}}>
         {/* Min/max/avg/sum */}

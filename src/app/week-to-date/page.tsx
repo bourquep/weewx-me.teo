@@ -22,7 +22,7 @@ import HistoricalMetricCard from '@/components/HistoricalMetricCard';
 import LoadingOrErrorIndicator from '@/components/LoadingOrErrorIndicator';
 import { useNavigation } from '@/contexts/NavigationContext';
 import { useWeekToDateData } from '@/libs/DataSource';
-import { Stack } from '@mui/material';
+import { Grid2 } from '@mui/material';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
@@ -45,25 +45,27 @@ export default function WeekToDataPage() {
   return (
     <>
       <LoadingOrErrorIndicator data={data} isLoading={isLoading} error={error} />
-      <Stack>
+      <Grid2 container spacing={2} columns={{ xs: 4, sm: 4, md: 4, lg: 8, xl: 8 }}>
         {data?.observations
           .filter((x) => x != null)
           .map((observation) => (
-            <HistoricalMetricCard
-              cardTitle={observation.label}
-              metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
-              minValue={observation.min}
-              minTimestamp={observation.minTime}
-              maxValue={observation.max}
-              maxTimestamp={observation.maxTime}
-              // sumValue={observation.sum}
-              graphData={observation.graph}
-              graphPlotType="line"
-              // graphMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
-              // graphMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
-            />
+            <Grid2 key={observation.observation} size={4}>
+              <HistoricalMetricCard
+                cardTitle={observation.label}
+                metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
+                minValue={observation.min}
+                minTimestamp={observation.minTime}
+                maxValue={observation.max}
+                maxTimestamp={observation.maxTime}
+                // sumValue={observation.sum}
+                graphData={observation.graph}
+                graphPlotType="line"
+                // graphMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
+                // graphMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
+              />
+            </Grid2>
           ))}
-      </Stack>
+      </Grid2>
     </>
   );
 }
