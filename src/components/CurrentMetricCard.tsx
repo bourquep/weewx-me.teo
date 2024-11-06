@@ -164,7 +164,7 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
         {!isGraphEmpty && props.metricKind === 'number' && (
           <SparkLineChart
             height={40}
-            plotType={props.graphPlotType === 'scatter' ? 'bar' : props.graphPlotType}
+            plotType={props.graphPlotType}
             data={graphData}
             xAxis={{
               data: props.graphData.map(([timestamp]) => new Date(timestamp * 1000)),

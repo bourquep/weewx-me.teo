@@ -16,15 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-export type PlotType = 'line' | 'bar' | 'scatter';
+export type PlotType = 'line' | 'bar';
 export type MetricKind = 'number' | 'wind';
 
 export function plotTypeFromObservation(observation: string): PlotType {
-  if (observation === 'windDir') {
-    return 'scatter';
-  }
-
-  if (['windSpeed', 'windGust', 'rainRate', 'rain', 'UV', 'ET'].includes(observation)) {
+  if (['rainRate', 'rain', 'UV', 'ET'].includes(observation)) {
     return 'bar';
   }
 

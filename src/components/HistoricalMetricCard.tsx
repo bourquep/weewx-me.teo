@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
-import { PlotType } from '@/libs/GraphUtils';
+import { MetricKind, PlotType } from '@/libs/GraphUtils';
 import FunctionIcon from '@/resources/FunctionIcon';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -39,6 +39,7 @@ import { NumberFormatOptions, useFormatter, useTranslations } from 'next-intl';
 import IconLabel from './IconLabel';
 
 interface HistoricalMetricCardProps {
+  metricKind: MetricKind;
   metricUnit: string;
 
   cardTitle: string;
@@ -161,9 +162,9 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
               {
                 data: graphData,
                 showMark: false,
-                area: true,
+                area: props.metricKind !== 'wind',
                 color: theme.palette.grey[200],
-                curve: 'linear'
+                curve: props.metricKind === 'wind' ? 'step' : 'linear'
               }
             ]}
             xAxis={[
@@ -172,7 +173,17 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
                 scaleType: 'time'
               }
             ]}
-            yAxis={[{ min: graphMinValue, max: graphMaxValue }]}
+            yAxis={[
+              {
+                min: graphMinValue,
+                max: graphMaxValue,
+                tickInterval: props.metricKind === 'wind' ? (value) => value % 90 === 0 : 'auto',
+                valueFormatter:
+                  props.metricKind === 'wind'
+                    ? (value) => (value < 90 ? 'N' : value < 180 ? 'E' : value < 270 ? 'S' : 'W')
+                    : undefined
+              }
+            ]}
             height={isMobile ? 100 : 300}
             margin={isMobile ? { top: 4, right: 4, bottom: 4, left: 4 } : {}}
             bottomAxis={isMobile ? null : undefined}

@@ -53,6 +53,7 @@ export default function WeekToDataPage() {
             <Grid2 key={observation.observation} size={4}>
               <HistoricalMetricCard
                 cardTitle={observation.label}
+                metricKind={observation.observation === 'windDir' ? 'wind' : 'number'}
                 metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
                 minValue={observation.min}
                 minTimestamp={observation.minTime}
