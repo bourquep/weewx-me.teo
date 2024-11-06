@@ -22,6 +22,7 @@ import CurrentMetricCard from '@/components/CurrentMetricCard';
 import LoadingOrErrorIndicator from '@/components/LoadingOrErrorIndicator';
 import { useNavigation } from '@/contexts/NavigationContext';
 import { useCurrentWeatherData } from '@/libs/DataSource';
+import { graphMinMaxValuesFromObservation, plotTypeFromObservation } from '@/libs/GraphUtils';
 import { Grid2, Stack, Typography } from '@mui/material';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
@@ -66,8 +67,8 @@ export default function Home() {
                     sumValue={observation.sum}
                     graphData={observation.past24h}
                     graphPlotType={plotTypeFromObservation(observation.observation)}
-                    graphMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
-                    graphMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
+                    graphMinValue={graphMinMaxValuesFromObservation(observation.observation)[0]}
+                    graphMaxValue={graphMinMaxValuesFromObservation(observation.observation)[1]}
                   />
                 </Grid2>
               ))}
@@ -79,40 +80,4 @@ export default function Home() {
       )}
     </>
   );
-}
-
-function plotTypeFromObservation(observation: string): 'line' | 'bar' {
-  if (['windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'UV', 'ET'].includes(observation)) {
-    return 'bar';
-  }
-
-  return 'line';
-}
-
-function sparkLineMinMaxValuesFromObservation(observation: string): [number?, number?] {
-  switch (observation) {
-    case 'windDir':
-      return [0, 360];
-
-    case 'windSpeed':
-      return [0, undefined];
-
-    case 'windGust':
-      return [0, undefined];
-
-    case 'rainRate':
-      return [0, undefined];
-
-    case 'rain':
-      return [0, undefined];
-
-    case 'lightning_strike_count':
-      return [0, undefined];
-
-    case 'UV':
-      return [0, undefined];
-
-    default:
-      return [undefined, undefined];
-  }
 }

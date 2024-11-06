@@ -22,6 +22,7 @@ import HistoricalMetricCard from '@/components/HistoricalMetricCard';
 import LoadingOrErrorIndicator from '@/components/LoadingOrErrorIndicator';
 import { useNavigation } from '@/contexts/NavigationContext';
 import { useWeekToDateData } from '@/libs/DataSource';
+import { graphMinMaxValuesFromObservation, plotTypeFromObservation } from '@/libs/GraphUtils';
 import { Grid2 } from '@mui/material';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
@@ -60,9 +61,9 @@ export default function WeekToDataPage() {
                 avgValue={observation.avg}
                 // sumValue={observation.sum}
                 graphData={observation.graph}
-                graphPlotType="line"
-                // graphMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
-                // graphMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
+                graphPlotType={plotTypeFromObservation(observation.observation)}
+                graphMinValue={graphMinMaxValuesFromObservation(observation.observation)[0]}
+                graphMaxValue={graphMinMaxValuesFromObservation(observation.observation)[1]}
               />
             </Grid2>
           ))}

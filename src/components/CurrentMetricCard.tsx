@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
+import { MetricKind, PlotType } from '@/libs/GraphUtils';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import FunctionsIcon from '@mui/icons-material/Functions';
@@ -32,10 +33,8 @@ import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 import { NumberFormatOptions, useFormatter, useTranslations } from 'next-intl';
 import IconLabel from './IconLabel';
 
-type CurrentMetricKind = 'number' | 'wind';
-
 interface CurrentMetricCardProps {
-  metricKind: CurrentMetricKind;
+  metricKind: MetricKind;
   metricUnit: string;
 
   cardTitle: string;
@@ -55,7 +54,7 @@ interface CurrentMetricCardProps {
   formattedSumValue?: string;
 
   graphData: Array<Array<number>>;
-  graphPlotType: 'line' | 'bar';
+  graphPlotType: PlotType;
   graphMinValue?: number;
   graphMaxValue?: number;
 }
@@ -165,7 +164,7 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
         {!isGraphEmpty && props.metricKind === 'number' && (
           <SparkLineChart
             height={40}
-            plotType={props.graphPlotType}
+            plotType={props.graphPlotType === 'scatter' ? 'bar' : props.graphPlotType}
             data={graphData}
             xAxis={{
               data: props.graphData.map(([timestamp]) => new Date(timestamp * 1000)),
