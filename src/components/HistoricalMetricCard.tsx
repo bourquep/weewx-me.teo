@@ -177,17 +177,20 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
               {
                 min: graphMinValue,
                 max: graphMaxValue,
-                tickInterval: props.metricKind === 'wind' ? (value) => value % 90 === 0 : 'auto',
+                tickInterval: [0, 90, 180, 270, 360],
                 valueFormatter:
                   props.metricKind === 'wind'
-                    ? (value) =>
-                        value < 90
-                          ? t('CardinalPoints.North')
-                          : value < 180
-                            ? t('CardinalPoints.East')
-                            : value < 270
-                              ? t('CardinalPoints.South')
-                              : t('CardinalPoints.West')
+                    ? (value) => {
+                        const angle = (value + 360) % 360;
+                        if (angle >= 337.5 || angle < 22.5) return t('CardinalPoints.North');
+                        if (angle >= 22.5 && angle < 67.5) return t('CardinalPoints.NorthEast');
+                        if (angle >= 67.5 && angle < 112.5) return t('CardinalPoints.East');
+                        if (angle >= 112.5 && angle < 157.5) return t('CardinalPoints.SouthEast');
+                        if (angle >= 157.5 && angle < 202.5) return t('CardinalPoints.South');
+                        if (angle >= 202.5 && angle < 247.5) return t('CardinalPoints.SouthWest');
+                        if (angle >= 247.5 && angle < 292.5) return t('CardinalPoints.West');
+                        return t('CardinalPoints.NorthWest');
+                      }
                     : undefined
               }
             ]}
