@@ -54,9 +54,11 @@ interface HistoricalMetricCardProps {
 
   avgValue?: number;
   formattedAvgValue?: string;
+  avgLabel?: string;
 
   sumValue?: number;
   formattedSumValue?: string;
+  sumLabel?: string;
 
   graphData: Array<Array<number>>;
   graphPlotType: PlotType;
@@ -136,7 +138,7 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
               <IconLabel icon={FunctionIcon} label={formattedAvgValue} />
 
               <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                {t('Labels.Average')}
+                {props.avgLabel ?? t('Labels.Average')}
               </Typography>
             </Stack>
           )}
@@ -147,7 +149,7 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
               <IconLabel icon={FunctionsIcon} label={formattedSumValue} />
 
               <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                {t('Labels.Sum')}
+                {props.sumLabel ?? t('Labels.Sum')}
               </Typography>
             </Stack>
           )}

@@ -60,7 +60,9 @@ export default function WeekToDataPage() {
                 maxValue={observation.max}
                 maxTimestamp={observation.maxTime}
                 avgValue={observation.avg}
-                // sumValue={observation.sum}
+                formattedAvgValue={observation.observation === 'windDir' ? observation.avgCompass : undefined}
+                avgLabel={observation.avgLabel}
+                sumValue={observation.sum}
                 graphData={observation.graph}
                 graphPlotType={plotTypeFromObservation(observation.observation)}
                 graphMinValue={graphMinMaxValuesFromObservation(observation.observation)[0]}

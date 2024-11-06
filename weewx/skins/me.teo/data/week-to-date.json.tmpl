@@ -29,16 +29,34 @@
       "observation": "$x",
       "label": "$obs.label[$x]",
       "unit": "$getVar('unit.label.' + $x)",
+    #if $x == 'windDir'
+      #set $wind_vecavg = $week.wind.vecavg.raw
+      #set $wind_avg = $week.windSpeed.avg.raw
+      #set $steadiness = $wind_vecavg / $wind_avg if $wind_avg > 0 else 0
+      #if $steadiness > 0.75
+        #set $consistency = $gettext("steady")
+      #elif $steadiness > 0.5
+        #set $consistency = $gettext("mainly")
+      #else
+        #set $consistency = $gettext("variable")
+      #end if
+      "avg": $week.wind.vecdir.json,
+      "avgCompass": "$week.wind.vecdir.ordinal_compass",
+      "avgLabel": "$consistency",
+      "graph": $week.windDir.series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='stop').json
+    #elif $x in $obs_type_sum
+      "sum": $getattr($week, $x).sum.json,
+      "graph": $getattr($week, $x).series(aggregate_type='sum', aggregate_interval=$aggregate_interval, time_series='stop').json
+    #elif $x in $obs_type_max
+      "max": $getattr($week, $x).max.json,
+      "maxTime": $getattr($week, $x).maxtime.json,
+      "graph": $getattr($week, $x).series(aggregate_type='max', aggregate_interval=$aggregate_interval, time_series='stop').json
+    #else
       "min": $getattr($week, $x).min.json,
       "minTime": $getattr($week, $x).mintime.json,
       "max": $getattr($week, $x).max.json,
       "maxTime": $getattr($week, $x).maxtime.json,
       "avg": $getattr($week, $x).avg.json,
-    #if $x in $obs_type_sum
-      "graph": $getattr($week, $x).series(aggregate_type='sum', aggregate_interval=$aggregate_interval, time_series='stop').json
-    #elif $x in $obs_type_max
-      "graph": $getattr($week, $x).series(aggregate_type='max', aggregate_interval=$aggregate_interval, time_series='stop').json
-    #else
       "graph": $getattr($week, $x).series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='stop').json
     #end if
     },
