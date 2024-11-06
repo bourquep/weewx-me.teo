@@ -177,7 +177,7 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
               {
                 min: graphMinValue,
                 max: graphMaxValue,
-                tickInterval: [0, 90, 180, 270, 360],
+                tickInterval: props.metricKind === 'wind' ? [0, 90, 180, 270, 360] : 'auto',
                 valueFormatter:
                   props.metricKind === 'wind'
                     ? (value) => {
