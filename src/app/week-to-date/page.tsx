@@ -18,25 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
-import IconLabel from '@/components/IconLabel';
+import HistoricalMetricCard from '@/components/HistoricalMetricCard';
 import LoadingOrErrorIndicator from '@/components/LoadingOrErrorIndicator';
 import { useNavigation } from '@/contexts/NavigationContext';
 import { useWeekToDateData } from '@/libs/DataSource';
-import FunctionIcon from '@/resources/FunctionIcon';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  Chip,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme
-} from '@mui/material';
-import { LineChart } from '@mui/x-charts';
+import { Stack } from '@mui/material';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
@@ -46,8 +32,6 @@ export default function WeekToDataPage() {
 
   const t = useTranslations();
   const format = useFormatter();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     setTitle(t('WeekToDate.PageTitle'));
@@ -61,93 +45,25 @@ export default function WeekToDataPage() {
   return (
     <>
       <LoadingOrErrorIndicator data={data} isLoading={isLoading} error={error} />
-      {data && (
-        <Stack>
-          <Card variant="outlined">
-            <CardHeader
-              title="Temperature"
-              action=<Chip variant="outlined" size="small" color="info" label={data.observations[0]!.unit} />
+      <Stack>
+        {data?.observations
+          .filter((x) => x != null)
+          .map((observation) => (
+            <HistoricalMetricCard
+              cardTitle={observation.label}
+              metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
+              minValue={observation.min}
+              minTimestamp={observation.minTime}
+              maxValue={observation.max}
+              maxTimestamp={observation.maxTime}
+              // sumValue={observation.sum}
+              graphData={observation.graph}
+              graphPlotType="line"
+              // graphMinValue={sparkLineMinMaxValuesFromObservation(observation.observation)[0]}
+              // graphMaxValue={sparkLineMinMaxValuesFromObservation(observation.observation)[1]}
             />
-            <CardContent sx={isMobile ? { paddingY: 0 } : {}}>
-              <Stack direction="row" spacing={2} sx={{ justifyContent: 'flex-start' }}>
-                <Stack sx={{ alignItems: 'start' }}>
-                  <IconLabel
-                    icon={ArrowDownwardIcon}
-                    label={format.number(data.observations[0]!.min!, { maximumFractionDigits: 2 })}
-                  />
-                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                    {format.dateTime(new Date(data.observations[0]!.minTime! * 1000), {
-                      weekday: 'long',
-                      hour: 'numeric',
-                      minute: '2-digit'
-                    })}
-                  </Typography>
-                </Stack>
-                <Stack sx={{ alignItems: 'start' }}>
-                  <IconLabel
-                    icon={ArrowUpwardIcon}
-                    label={format.number(data.observations[0]!.max!, { maximumFractionDigits: 2 })}
-                  />
-                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                    {format.dateTime(new Date(data.observations[0]!.maxTime! * 1000), {
-                      weekday: 'long',
-                      hour: 'numeric',
-                      minute: '2-digit'
-                    })}
-                  </Typography>
-                </Stack>
-                <Stack sx={{ alignItems: 'start' }}>
-                  <IconLabel
-                    icon={FunctionIcon}
-                    label={format.number(data.observations[0]!.avg!, { maximumFractionDigits: 2 })}
-                  />
-                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                    {t('Labels.Average')}
-                  </Typography>
-                </Stack>
-              </Stack>
-            </CardContent>
-
-            <CardMedia>
-              <LineChart
-                grid={{ horizontal: !isMobile }}
-                series={[
-                  {
-                    data: data.observations[0]!.graph.map(([timestamp, value]) => value),
-                    showMark: false,
-                    area: true,
-                    color: theme.palette.grey[200],
-                    curve: 'natural'
-                  }
-                ]}
-                xAxis={[
-                  {
-                    data: data.observations[0]!.graph.map(([timestamp, value]) => new Date(timestamp * 1000)),
-                    scaleType: 'time',
-                    min: new Date(data.observations[0]!.graph.at(0)![0] * 1000),
-                    max: new Date(data.observations[0]!.graph.at(-1)![0] * 1000)
-                  }
-                ]}
-                yAxis={
-                  isMobile
-                    ? [
-                        {
-                          min: Math.min(...data.observations[0]!.graph.map(([timestamp, value]) => value)) - 1,
-                          max: Math.max(...data.observations[0]!.graph.map(([timestamp, value]) => value)) + 1
-                        }
-                      ]
-                    : []
-                }
-                height={isMobile ? 100 : 300}
-                margin={isMobile ? { top: 4, right: 4, bottom: 4, left: 4 } : {}}
-                bottomAxis={isMobile ? null : undefined}
-                leftAxis={isMobile ? null : undefined}
-                slotProps={isMobile ? { popper: { placement: 'top-end' } } : {}}
-              />
-            </CardMedia>
-          </Card>
-        </Stack>
-      )}
+          ))}
+      </Stack>
     </>
   );
 }
