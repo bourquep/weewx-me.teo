@@ -48,10 +48,10 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const graphData = props.graphData.map(([, value]) => (value != null ? Number(value.toFixed(1)) : 0));
+  const graphData = props.graphData.map(([, value]) => (value != null ? Number(value.toFixed(1)) : null));
   const graphXAxis = props.graphData.map(([timestamp]) => (timestamp != null ? new Date(timestamp * 1000) : null));
-  const graphMinValue = props.graphMinValue ?? Math.min(...graphData);
-  const graphMaxValue = props.graphMaxValue ?? Math.max(...graphData);
+  const graphMinValue = props.graphMinValue ?? Math.min(...graphData.filter((x) => x != null));
+  const graphMaxValue = props.graphMaxValue ?? Math.max(...graphData.filter((x) => x != null));
 
   function formatNumber(value?: number | string, options: NumberFormatOptions = { maximumFractionDigits: 1 }) {
     return typeof value === 'number' ? format.number(value, options) : value;
@@ -141,7 +141,7 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
               showMark: false,
               area: true,
               color: theme.palette.grey[200],
-              curve: 'natural'
+              curve: 'linear'
             }
           ]}
           xAxis={[
@@ -150,7 +150,7 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
               scaleType: 'time'
             }
           ]}
-          yAxis={isMobile ? [{ min: graphMinValue - 1, max: graphMaxValue + 1 }] : []}
+          yAxis={[{ min: graphMinValue, max: graphMaxValue }]}
           height={isMobile ? 100 : 300}
           margin={isMobile ? { top: 4, right: 4, bottom: 4, left: 4 } : {}}
           bottomAxis={isMobile ? null : undefined}

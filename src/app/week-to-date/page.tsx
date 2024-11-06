@@ -57,6 +57,7 @@ export default function WeekToDataPage() {
                 minTimestamp={observation.minTime}
                 maxValue={observation.max}
                 maxTimestamp={observation.maxTime}
+                avgValue={observation.avg}
                 // sumValue={observation.sum}
                 graphData={observation.graph}
                 graphPlotType="line"

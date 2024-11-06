@@ -4,7 +4,8 @@
     "DataLoadUnexpectedErrorMessage": "Une erreur inattendue s'est produite lors du chargement des données."
   },
   "Labels": {
-    "Average": "Moyenne"
+    "Average": "Moyenne",
+    "Sum": "Somme"
   },
   "Current": {
     "PageTitle": "Conditions actuelles",
