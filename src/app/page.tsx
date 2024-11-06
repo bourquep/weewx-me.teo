@@ -49,7 +49,7 @@ export default function Home() {
             {data.observations
               .filter((x) => x != null)
               .map((observation) => (
-                <Grid2 key={observation!.observation} size={4}>
+                <Grid2 key={observation.observation} size={4}>
                   <CurrentMetricCard
                     cardTitle={observation.label}
                     metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
