@@ -41,5 +41,7 @@ export function useCurrentWeatherData() {
 }
 
 export function useWeekToDateData() {
-  return useSWR<WeekToDateData>(`${baseUrl}/week-to-date.json`, fetcher);
+  return useSWR<WeekToDateData>(`${baseUrl}/week-to-date.json`, fetcher, {
+    refreshInterval: 60 * 60 * 1000 // 1 hour
+  });
 }
