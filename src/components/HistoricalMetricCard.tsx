@@ -34,7 +34,7 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import { LineChart } from '@mui/x-charts';
+import { BarChart, LineChart } from '@mui/x-charts';
 import { NumberFormatOptions, useFormatter, useTranslations } from 'next-intl';
 import IconLabel from './IconLabel';
 
@@ -154,30 +154,56 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
       </CardContent>
 
       <CardMedia>
-        <LineChart
-          grid={{ horizontal: !isMobile }}
-          series={[
-            {
-              data: graphData,
-              showMark: false,
-              area: true,
-              color: theme.palette.grey[200],
-              curve: 'linear'
-            }
-          ]}
-          xAxis={[
-            {
-              data: graphXAxis,
-              scaleType: 'time'
-            }
-          ]}
-          yAxis={[{ min: graphMinValue, max: graphMaxValue }]}
-          height={isMobile ? 100 : 300}
-          margin={isMobile ? { top: 4, right: 4, bottom: 4, left: 4 } : {}}
-          bottomAxis={isMobile ? null : undefined}
-          leftAxis={isMobile ? null : undefined}
-          slotProps={isMobile ? { popper: { placement: 'top-end' } } : {}}
-        />
+        {props.graphPlotType === 'line' && (
+          <LineChart
+            grid={{ horizontal: !isMobile }}
+            series={[
+              {
+                data: graphData,
+                showMark: false,
+                area: true,
+                color: theme.palette.grey[200],
+                curve: 'linear'
+              }
+            ]}
+            xAxis={[
+              {
+                data: graphXAxis,
+                scaleType: 'time'
+              }
+            ]}
+            yAxis={[{ min: graphMinValue, max: graphMaxValue }]}
+            height={isMobile ? 100 : 300}
+            margin={isMobile ? { top: 4, right: 4, bottom: 4, left: 4 } : {}}
+            bottomAxis={isMobile ? null : undefined}
+            leftAxis={isMobile ? null : undefined}
+            slotProps={isMobile ? { popper: { placement: 'top-end' } } : {}}
+          />
+        )}
+
+        {props.graphPlotType === 'bar' && (
+          <BarChart
+            grid={{ horizontal: !isMobile }}
+            series={[
+              {
+                data: graphData,
+                color: theme.palette.grey[200]
+              }
+            ]}
+            xAxis={[
+              {
+                data: graphXAxis,
+                scaleType: 'band'
+              }
+            ]}
+            yAxis={[{ min: graphMinValue, max: graphMaxValue }]}
+            height={isMobile ? 100 : 300}
+            margin={isMobile ? { top: 4, right: 4, bottom: 4, left: 4 } : {}}
+            bottomAxis={isMobile ? null : undefined}
+            leftAxis={isMobile ? null : undefined}
+            slotProps={isMobile ? { popper: { placement: 'top-end' } } : {}}
+          />
+        )}
       </CardMedia>
     </Card>
   );
