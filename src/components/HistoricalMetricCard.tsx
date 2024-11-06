@@ -180,7 +180,14 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
                 tickInterval: props.metricKind === 'wind' ? (value) => value % 90 === 0 : 'auto',
                 valueFormatter:
                   props.metricKind === 'wind'
-                    ? (value) => (value < 90 ? 'N' : value < 180 ? 'E' : value < 270 ? 'S' : 'W')
+                    ? (value) =>
+                        value < 90
+                          ? t('CardinalPoints.North')
+                          : value < 180
+                            ? t('CardinalPoints.East')
+                            : value < 270
+                              ? t('CardinalPoints.South')
+                              : t('CardinalPoints.West')
                     : undefined
               }
             ]}

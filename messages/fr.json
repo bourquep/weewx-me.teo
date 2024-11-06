@@ -7,6 +7,16 @@
     "Average": "Moyenne",
     "Sum": "Somme"
   },
+  "CardinalPoints": {
+    "North": "N",
+    "NorthEast": "NE",
+    "East": "E",
+    "SouthEast": "SE",
+    "South": "S",
+    "SouthWest": "SO",
+    "West": "O",
+    "NorthWest": "NO"
+  },
   "Current": {
     "PageTitle": "Conditions actuelles",
     "PageFootnote": "Les graphiques et autres statistiques sont basés sur les dernières 24 heures.",
