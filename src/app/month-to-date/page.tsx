@@ -27,7 +27,7 @@ import { Grid2 } from '@mui/material';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
-export default function MonthToDataPage() {
+export default function MonthToDatePage() {
   const { data, isLoading, error } = useMonthToDateData();
   const { setTitle, setSubtitle } = useNavigation();
 
