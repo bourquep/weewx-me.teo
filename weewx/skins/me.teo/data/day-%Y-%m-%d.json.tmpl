@@ -42,21 +42,21 @@
       "avg": $day.wind.vecdir.json,
       "avgCompass": "$day.wind.vecdir.ordinal_compass",
       "avgLabel": "$consistency",
-      "graph": $day.windDir.series(time_series='stop').json
+      "graph": $day.windDir.series(time_series='start').json
     #elif $x in $obs_type_sum
       "sum": $getattr($day, $x).sum.json,
-      "graph": $getattr($day, $x).series(time_series='stop').json
+      "graph": $getattr($day, $x).series(time_series='start').json
     #elif $x in $obs_type_max
       "max": $getattr($day, $x).max.json,
       "maxTime": $getattr($day, $x).maxtime.json,
-      "graph": $getattr($day, $x).series(time_series='stop').json
+      "graph": $getattr($day, $x).series(time_series='start').json
     #else
       "min": $getattr($day, $x).min.json,
       "minTime": $getattr($day, $x).mintime.json,
       "max": $getattr($day, $x).max.json,
       "maxTime": $getattr($day, $x).maxtime.json,
       "avg": $getattr($day, $x).avg.json,
-      "graph": $getattr($day, $x).series(time_series='stop').json
+      "graph": $getattr($day, $x).series(time_series='start').json
     #end if
     },
   #else

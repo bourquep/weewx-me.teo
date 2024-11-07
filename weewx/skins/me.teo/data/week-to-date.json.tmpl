@@ -43,21 +43,21 @@
       "avg": $week.wind.vecdir.json,
       "avgCompass": "$week.wind.vecdir.ordinal_compass",
       "avgLabel": "$consistency",
-      "graph": $week.windDir.series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='stop').json
+      "graph": $week.windDir.series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='start').json
     #elif $x in $obs_type_sum
       "sum": $getattr($week, $x).sum.json,
-      "graph": $getattr($week, $x).series(aggregate_type='sum', aggregate_interval=$aggregate_interval, time_series='stop').json
+      "graph": $getattr($week, $x).series(aggregate_type='sum', aggregate_interval=$aggregate_interval, time_series='start').json
     #elif $x in $obs_type_max
       "max": $getattr($week, $x).max.json,
       "maxTime": $getattr($week, $x).maxtime.json,
-      "graph": $getattr($week, $x).series(aggregate_type='max', aggregate_interval=$aggregate_interval, time_series='stop').json
+      "graph": $getattr($week, $x).series(aggregate_type='max', aggregate_interval=$aggregate_interval, time_series='start').json
     #else
       "min": $getattr($week, $x).min.json,
       "minTime": $getattr($week, $x).mintime.json,
       "max": $getattr($week, $x).max.json,
       "maxTime": $getattr($week, $x).maxtime.json,
       "avg": $getattr($week, $x).avg.json,
-      "graph": $getattr($week, $x).series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='stop').json
+      "graph": $getattr($week, $x).series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='start').json
     #end if
     },
   #else

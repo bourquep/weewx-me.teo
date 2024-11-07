@@ -43,21 +43,21 @@
       "avg": $year.wind.vecdir.json,
       "avgCompass": "$year.wind.vecdir.ordinal_compass",
       "avgLabel": "$consistency",
-      "graph": $year.windDir.series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='stop').json
+      "graph": $year.windDir.series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='start').json
     #elif $x in $obs_type_sum
       "sum": $getattr($year, $x).sum.json,
-      "graph": $getattr($year, $x).series(aggregate_type='sum', aggregate_interval=$aggregate_interval, time_series='stop').json
+      "graph": $getattr($year, $x).series(aggregate_type='sum', aggregate_interval=$aggregate_interval, time_series='start').json
     #elif $x in $obs_type_max
       "max": $getattr($year, $x).max.json,
       "maxTime": $getattr($year, $x).maxtime.json,
-      "graph": $getattr($year, $x).series(aggregate_type='max', aggregate_interval=$aggregate_interval, time_series='stop').json
+      "graph": $getattr($year, $x).series(aggregate_type='max', aggregate_interval=$aggregate_interval, time_series='start').json
     #else
       "min": $getattr($year, $x).min.json,
       "minTime": $getattr($year, $x).mintime.json,
       "max": $getattr($year, $x).max.json,
       "maxTime": $getattr($year, $x).maxtime.json,
       "avg": $getattr($year, $x).avg.json,
-      "graph": $getattr($year, $x).series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='stop').json
+      "graph": $getattr($year, $x).series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='start').json
     #end if
     },
   #else
