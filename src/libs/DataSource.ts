@@ -28,7 +28,7 @@ const fetcher = async (url: string | URL | Request) => {
   return res.json();
 };
 
-const baseUrl = process.env.NODE_ENV === 'production' ? '/data' : '/sample_data';
+const baseUrl = process.env.NODE_ENV === 'production' ? '../data' : '/sample_data';
 
 export function useCurrentWeatherData() {
   const global = useSWR<GlobalData>(`${baseUrl}/global.json`, fetcher);
