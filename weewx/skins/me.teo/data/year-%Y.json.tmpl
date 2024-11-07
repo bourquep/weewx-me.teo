@@ -17,7 +17,7 @@
 #set $observations = $to_list($DisplayOptions.get('observations_summary', ['outTemp', 'outHumidity', 'windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'barometer', 'UV']))
 #set $obs_type_sum = $to_list($DisplayOptions.get('obs_type_sum', ['rain', 'ET', 'hail', 'snow', 'lightning_strike_count']))
 #set $obs_type_max = $to_list($DisplayOptions.get('obs_type_max', ['rainRate', 'hailRate', 'snowRate', 'UV']))
-#set $aggregate_interval = 'week'
+#set $aggregate_interval = 'day'
 {
   "report": {
     "time": $year.dateTime.json
