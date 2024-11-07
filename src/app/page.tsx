@@ -66,7 +66,6 @@ export default function Home() {
                     avgValue={observation.avg}
                     formattedAvgValue={observation.observation === 'windDir' ? observation.avgCompass : undefined}
                     avgLabel={observation.observation === 'windDir' ? observation.avgLabel : undefined}
-                    sumValue={observation.sum}
                     graphData={observation.past24h}
                     graphPlotType={plotTypeFromObservation(observation.observation)}
                     graphMinValue={graphMinMaxValuesFromObservation(observation.observation)[0]}
