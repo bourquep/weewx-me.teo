@@ -4,8 +4,8 @@
     "DataLoadUnexpectedErrorMessage": "Une erreur inattendue s'est produite lors du chargement des données."
   },
   "Labels": {
-    "Average": "Moyenne",
-    "Sum": "Total"
+    "Average": "moyenne",
+    "Sum": "total"
   },
   "CardinalPoints": {
     "North": "N",

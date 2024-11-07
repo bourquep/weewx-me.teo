@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 'use client';
 
 import { MetricKind, PlotType } from '@/libs/GraphUtils';
-import FunctionIcon from '@/resources/FunctionIcon';
+import AverageIcon from '@/resources/AverageIcon';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import FunctionsIcon from '@mui/icons-material/Functions';
@@ -85,7 +85,7 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
     if (timestamp === undefined) return '';
     return typeof timestamp === 'number'
       ? format.dateTime(new Date(timestamp * 1000), {
-          weekday: 'long',
+          weekday: 'short',
           hour: 'numeric',
           minute: '2-digit'
         })
@@ -135,7 +135,7 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
           {/* Average */}
           {formattedAvgValue !== undefined && (
             <Stack sx={{ alignItems: 'start' }}>
-              <IconLabel icon={FunctionIcon} label={formattedAvgValue} />
+              <IconLabel icon={props.metricKind !== 'wind' ? AverageIcon : undefined} label={formattedAvgValue} />
 
               <Typography variant="caption" sx={{ color: 'text.secondary' }}>
                 {props.avgLabel ?? t('Labels.Average')}

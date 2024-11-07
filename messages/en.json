@@ -4,8 +4,8 @@
     "DataLoadUnexpectedErrorMessage": "An unexpected error occurred while loading weather data."
   },
   "Labels": {
-    "Average": "Average",
-    "Sum": "Total"
+    "Average": "average",
+    "Sum": "total"
   },
   "CardinalPoints": {
     "North": "N",
