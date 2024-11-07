@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
-import { MetricKind, PlotType } from '@/libs/GraphUtils';
 import AverageIcon from '@/resources/AverageIcon';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -33,36 +32,11 @@ import Typography from '@mui/material/Typography';
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 import { NumberFormatOptions, useFormatter, useTranslations } from 'next-intl';
 import IconLabel from './IconLabel';
+import MetricCardProps from './MetricCardProps';
 
-interface CurrentMetricCardProps {
-  metricKind: MetricKind;
-  metricUnit: string;
-
-  cardTitle: string;
-
+interface CurrentMetricCardProps extends MetricCardProps {
   currentValue: number;
   formattedCurrentValue?: string;
-
-  minValue?: number;
-  formattedMinValue?: string;
-  minTimestamp?: number | string;
-
-  maxValue?: number;
-  formattedMaxValue?: string;
-  maxTimestamp?: number | string;
-
-  avgValue?: number;
-  formattedAvgValue?: string;
-  avgLabel?: string;
-
-  sumValue?: number;
-  formattedSumValue?: string;
-  sumLabel?: string;
-
-  graphData: Array<Array<number>>;
-  graphPlotType: PlotType;
-  graphMinValue?: number;
-  graphMaxValue?: number;
 }
 
 export default function CurrentMetricCard(props: CurrentMetricCardProps) {

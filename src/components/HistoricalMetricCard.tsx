@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
-import { MetricKind, PlotType } from '@/libs/GraphUtils';
 import AverageIcon from '@/resources/AverageIcon';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -37,34 +36,9 @@ import {
 import { BarChart, LineChart } from '@mui/x-charts';
 import { NumberFormatOptions, useFormatter, useTranslations } from 'next-intl';
 import IconLabel from './IconLabel';
+import MetricCardProps from './MetricCardProps';
 
-interface HistoricalMetricCardProps {
-  metricKind: MetricKind;
-  metricUnit: string;
-
-  cardTitle: string;
-
-  minValue?: number;
-  formattedMinValue?: string;
-  minTimestamp?: number | string;
-
-  maxValue?: number;
-  formattedMaxValue?: string;
-  maxTimestamp?: number | string;
-
-  avgValue?: number;
-  formattedAvgValue?: string;
-  avgLabel?: string;
-
-  sumValue?: number;
-  formattedSumValue?: string;
-  sumLabel?: string;
-
-  graphData: Array<Array<number>>;
-  graphPlotType: PlotType;
-  graphMinValue?: number;
-  graphMaxValue?: number;
-}
+interface HistoricalMetricCardProps extends MetricCardProps {}
 
 export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
   const t = useTranslations();
