@@ -45,3 +45,9 @@ export function useWeekToDateData() {
     refreshInterval: 60 * 60 * 1000 // 1 hour
   });
 }
+
+export function useMonthToDateData() {
+  return useSWR<MonthToDateData>(`${baseUrl}/month-to-date.json`, fetcher, {
+    refreshInterval: 60 * 60 * 1000 // 1 hour
+  });
+}

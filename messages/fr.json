@@ -27,7 +27,8 @@
     "PageSubtitleSince": "Depuis le"
   },
   "MonthToDate": {
-    "PageTitle": "Mois à ce jour"
+    "PageTitle": "Mois à ce jour",
+    "PageSubtitleSince": "Depuis le"
   },
   "Day": {
     "PageTitle": "Sommaire quotidien"

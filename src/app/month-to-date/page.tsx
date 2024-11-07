@@ -18,19 +18,59 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
+import HistoricalMetricCard from '@/components/HistoricalMetricCard';
+import LoadingOrErrorIndicator from '@/components/LoadingOrErrorIndicator';
 import { useNavigation } from '@/contexts/NavigationContext';
-import { Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
+import { useMonthToDateData } from '@/libs/DataSource';
+import { graphMinMaxValuesFromObservation, plotTypeFromObservation } from '@/libs/GraphUtils';
+import { Grid2 } from '@mui/material';
+import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
 export default function MonthToDataPage() {
+  const { data, isLoading, error } = useMonthToDateData();
   const { setTitle, setSubtitle } = useNavigation();
 
   const t = useTranslations();
+  const format = useFormatter();
 
   useEffect(() => {
     setTitle(t('MonthToDate.PageTitle'));
-    setSubtitle('TODO');
-  }, []);
-  return <Typography variant="h4">{t('MonthToDate.PageTitle')}</Typography>;
+    setSubtitle(
+      data
+        ? `${t('MonthToDate.PageSubtitleSince')} ${format.dateTime(new Date(data.report.time * 1000), { dateStyle: 'medium' })}`
+        : ''
+    );
+  }, [data]);
+
+  return (
+    <>
+      <LoadingOrErrorIndicator data={data} isLoading={isLoading} error={error} />
+      <Grid2 container spacing={2} columns={{ xs: 4, sm: 4, md: 4, lg: 8, xl: 8 }}>
+        {data?.observations
+          .filter((x) => x != null)
+          .map((observation) => (
+            <Grid2 key={observation.observation} size={4}>
+              <HistoricalMetricCard
+                cardTitle={observation.label}
+                metricKind={observation.observation === 'windDir' ? 'wind' : 'number'}
+                metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
+                minValue={observation.min}
+                minTimestamp={observation.minTime}
+                maxValue={observation.max}
+                maxTimestamp={observation.maxTime}
+                avgValue={observation.avg}
+                formattedAvgValue={observation.observation === 'windDir' ? observation.avgCompass : undefined}
+                avgLabel={observation.avgLabel}
+                sumValue={observation.sum}
+                graphData={observation.graph}
+                graphPlotType={plotTypeFromObservation(observation.observation)}
+                graphMinValue={graphMinMaxValuesFromObservation(observation.observation)[0]}
+                graphMaxValue={graphMinMaxValuesFromObservation(observation.observation)[1]}
+              />
+            </Grid2>
+          ))}
+      </Grid2>
+    </>
+  );
 }

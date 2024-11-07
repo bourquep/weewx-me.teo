@@ -27,7 +27,8 @@
     "PageSubtitleSince": "Since"
   },
   "MonthToDate": {
-    "PageTitle": "Month to Date"
+    "PageTitle": "Month to Date",
+    "PageSubtitleSince": "Since"
   },
   "Day": {
     "PageTitle": "Daily Summary"
