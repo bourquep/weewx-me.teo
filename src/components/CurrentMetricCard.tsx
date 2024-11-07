@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 'use client';
 
 import { MetricKind, PlotType } from '@/libs/GraphUtils';
+import AverageIcon from '@/resources/AverageIcon';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import FunctionsIcon from '@mui/icons-material/Functions';
@@ -50,8 +51,13 @@ interface CurrentMetricCardProps {
   formattedMaxValue?: string;
   maxTimestamp?: number | string;
 
+  avgValue?: number;
+  formattedAvgValue?: string;
+  avgLabel?: string;
+
   sumValue?: number;
   formattedSumValue?: string;
+  sumLabel?: string;
 
   graphData: Array<Array<number>>;
   graphPlotType: PlotType;
@@ -91,6 +97,7 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
   const formattedMinTimestamp = formatTimestamp(props.minTimestamp);
   const formattedMaxValue = props.formattedMaxValue ?? formatNumber(props.maxValue);
   const formattedMaxTimestamp = formatTimestamp(props.maxTimestamp);
+  const formattedAvgValue = props.formattedAvgValue ?? formatNumber(props.avgValue);
   const formattedSumValue = props.formattedSumValue ?? formatNumber(props.sumValue);
 
   return (
@@ -128,7 +135,7 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
           {/* Spacer */}
           <Box flexGrow={1} />
 
-          {/* Min/Max/Sum */}
+          {/* Min/Max/Avg/Sum */}
           {!isGraphEmpty && (
             <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="flex-end" alignItems="flex-end">
               {/* Min */}
@@ -153,8 +160,31 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
                 </Stack>
               )}
 
+              {/* Average */}
+              {formattedAvgValue !== undefined && (
+                <Stack alignItems="flex-end">
+                  <IconLabel icon={AverageIcon} label={formattedAvgValue} />
+
+                  {props.avgLabel && (
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                      {props.avgLabel}
+                    </Typography>
+                  )}
+                </Stack>
+              )}
+
               {/* Sum */}
-              {formattedSumValue !== undefined && <IconLabel icon={FunctionsIcon} label={formattedSumValue} />}
+              {formattedSumValue !== undefined && (
+                <Stack alignItems="flex-end">
+                  <IconLabel icon={FunctionsIcon} label={formattedSumValue} />
+
+                  {props.sumLabel && (
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                      {props.sumLabel}
+                    </Typography>
+                  )}
+                </Stack>
+              )}
             </Stack>
           )}
         </Stack>

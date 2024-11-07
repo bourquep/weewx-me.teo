@@ -135,7 +135,7 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
           {/* Average */}
           {formattedAvgValue !== undefined && (
             <Stack sx={{ alignItems: 'start' }}>
-              <IconLabel icon={props.metricKind !== 'wind' ? AverageIcon : undefined} label={formattedAvgValue} />
+              <IconLabel icon={AverageIcon} label={formattedAvgValue} />
 
               <Typography variant="caption" sx={{ color: 'text.secondary' }}>
                 {props.avgLabel ?? t('Labels.Average')}

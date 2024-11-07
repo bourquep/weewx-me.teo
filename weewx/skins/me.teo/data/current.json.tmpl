@@ -28,7 +28,6 @@
       "observation": "$x",
       "label": "$obs.label[$x]",
       "unit": "$getVar('unit.label.' + $x)",
-      "current": $getVar('current.' + $x).json,
     #if $x == 'windDir'
       #set $wind_vecavg = $span(hour_delta=24).wind.vecavg.raw
       #set $wind_avg = $span(hour_delta=24).windSpeed.avg.raw
@@ -40,19 +39,23 @@
       #else
         #set $consistency = $gettext("variable")
       #end if
+      "current": $getVar('current.' + $x).json,
       "currentCompass": "$current.windDir.ordinal_compass",
-      "max": $span(hour_delta=24).wind.vecdir.json,
-      "maxCompass": "$span(hour_delta=24).wind.vecdir.ordinal_compass",
-      "maxLabel": "$consistency",
+      "avg": $span(hour_delta=24).wind.vecdir.json,
+      "avgCompass": "$span(hour_delta=24).wind.vecdir.ordinal_compass",
+      "avgLabel": "$consistency",
       "past24h": $span(hour_delta=24).windDir.series(aggregate_type='avg', aggregate_interval='1h', time_series='start').json
     #elif $x in $obs_type_sum
+      "current": $getattr($span(hour_delta=24), $x).sum.json,
       "sum": $getattr($span(hour_delta=24), $x).sum.json,
       "past24h": $getattr($span(hour_delta=24), $x).series(aggregate_type='sum', aggregate_interval='1h', time_series='start').json
     #elif $x in $obs_type_max
+      "current": $getVar('current.' + $x).json,
       "max": $getattr($span(hour_delta=24), $x).max.json,
       "maxTime": $getattr($span(hour_delta=24), $x).maxtime.json,
       "past24h": $getattr($span(hour_delta=24), $x).series(aggregate_type='max', aggregate_interval='1h', time_series='start').json
     #else
+      "current": $getVar('current.' + $x).json,
       "min": $getattr($span(hour_delta=24), $x).min.json,
       "minTime": $getattr($span(hour_delta=24), $x).mintime.json,
       "max": $getattr($span(hour_delta=24), $x).max.json,
