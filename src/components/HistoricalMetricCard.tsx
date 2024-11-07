@@ -55,15 +55,14 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
     return typeof value === 'number' ? format.number(value, options) : value;
   }
 
-  function formatTimestamp(timestamp?: number | string) {
-    if (timestamp === undefined) return '';
-    return typeof timestamp === 'number'
-      ? format.dateTime(new Date(timestamp * 1000), {
+  function formatTimestamp(timestamp?: number) {
+    return timestamp === undefined
+      ? ''
+      : format.dateTime(new Date(timestamp * 1000), {
           weekday: 'short',
           hour: 'numeric',
           minute: '2-digit'
-        })
-      : timestamp;
+        });
   }
 
   const formattedMinValue = props.formattedMinValue ?? formatNumber(props.minValue);

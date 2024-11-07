@@ -26,11 +26,11 @@ export default interface MetricCardProps {
 
   minValue?: number;
   formattedMinValue?: string;
-  minTimestamp?: number | string;
+  minTimestamp?: number;
 
   maxValue?: number;
   formattedMaxValue?: string;
-  maxTimestamp?: number | string;
+  maxTimestamp?: number;
 
   avgValue?: number;
   formattedAvgValue?: string;

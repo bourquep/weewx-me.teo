@@ -53,11 +53,8 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
     return typeof value === 'number' ? format.number(value, options) : value;
   }
 
-  function formatTimestamp(timestamp?: number | string) {
-    if (timestamp === undefined) return '';
-    return typeof timestamp === 'number'
-      ? format.dateTime(new Date(timestamp * 1000), { timeStyle: 'short' })
-      : timestamp;
+  function formatTimestamp(timestamp?: number) {
+    return timestamp === undefined ? '' : format.dateTime(new Date(timestamp * 1000), { timeStyle: 'short' });
   }
 
   const formattedCurrentValue =
