@@ -44,23 +44,23 @@
       "avg": $span(hour_delta=24).wind.vecdir.json,
       "avgCompass": "$span(hour_delta=24).wind.vecdir.ordinal_compass",
       "avgLabel": "$consistency",
-      "past24h": $span(hour_delta=24).windDir.series(aggregate_type='avg', aggregate_interval='1h', time_series='start').json
+      "graph": $span(hour_delta=24).windDir.series(aggregate_type='avg', aggregate_interval='1h', time_series='start').json
     #elif $x in $obs_type_sum
       ## Special case for sum values: Display the sum as the 'current' value instead of as the 'sum'.
       "current": $getattr($span(hour_delta=24), $x).sum.json,
-      "past24h": $getattr($span(hour_delta=24), $x).series(aggregate_type='sum', aggregate_interval='1h', time_series='start').json
+      "graph": $getattr($span(hour_delta=24), $x).series(aggregate_type='sum', aggregate_interval='1h', time_series='start').json
     #elif $x in $obs_type_max
       "current": $getVar('current.' + $x).json,
       "max": $getattr($span(hour_delta=24), $x).max.json,
       "maxTime": $getattr($span(hour_delta=24), $x).maxtime.json,
-      "past24h": $getattr($span(hour_delta=24), $x).series(aggregate_type='max', aggregate_interval='1h', time_series='start').json
+      "graph": $getattr($span(hour_delta=24), $x).series(aggregate_type='max', aggregate_interval='1h', time_series='start').json
     #else
       "current": $getVar('current.' + $x).json,
       "min": $getattr($span(hour_delta=24), $x).min.json,
       "minTime": $getattr($span(hour_delta=24), $x).mintime.json,
       "max": $getattr($span(hour_delta=24), $x).max.json,
       "maxTime": $getattr($span(hour_delta=24), $x).maxtime.json,
-      "past24h": $getattr($span(hour_delta=24), $x).series(aggregate_type='avg', aggregate_interval='1h', time_series='start').json
+      "graph": $getattr($span(hour_delta=24), $x).series(aggregate_type='avg', aggregate_interval='1h', time_series='start').json
     #end if
     },
   #else
@@ -69,7 +69,7 @@
       "label": "$obs.label[$x]",
       "unit": "$getVar('unit.label.' + $x)",
       "current": 0,
-      "past24h": []
+      "graph": []
     },
   #end if
 #end for

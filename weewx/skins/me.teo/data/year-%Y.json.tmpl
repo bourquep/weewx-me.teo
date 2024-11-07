@@ -29,16 +29,34 @@
       "observation": "$x",
       "label": "$obs.label[$x]",
       "unit": "$getVar('unit.label.' + $x)",
+    #if $x == 'windDir'
+      #set $wind_vecavg = $year.wind.vecavg.raw
+      #set $wind_avg = $year.windSpeed.avg.raw
+      #set $steadiness = $wind_vecavg / $wind_avg if $wind_avg > 0 else 0
+      #if $steadiness > 0.75
+        #set $consistency = $gettext("steady")
+      #elif $steadiness > 0.5
+        #set $consistency = $gettext("mainly")
+      #else
+        #set $consistency = $gettext("variable")
+      #end if
+      "avg": $year.wind.vecdir.json,
+      "avgCompass": "$year.wind.vecdir.ordinal_compass",
+      "avgLabel": "$consistency",
+      "graph": $year.windDir.series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='stop').json
+    #elif $x in $obs_type_sum
+      "sum": $getattr($year, $x).sum.json,
+      "graph": $getattr($year, $x).series(aggregate_type='sum', aggregate_interval=$aggregate_interval, time_series='stop').json
+    #elif $x in $obs_type_max
+      "max": $getattr($year, $x).max.json,
+      "maxTime": $getattr($year, $x).maxtime.json,
+      "graph": $getattr($year, $x).series(aggregate_type='max', aggregate_interval=$aggregate_interval, time_series='stop').json
+    #else
       "min": $getattr($year, $x).min.json,
       "minTime": $getattr($year, $x).mintime.json,
       "max": $getattr($year, $x).max.json,
       "maxTime": $getattr($year, $x).maxtime.json,
       "avg": $getattr($year, $x).avg.json,
-    #if $x in $obs_type_sum
-      "graph": $getattr($year, $x).series(aggregate_type='sum', aggregate_interval=$aggregate_interval, time_series='stop').json
-    #elif $x in $obs_type_max
-      "graph": $getattr($year, $x).series(aggregate_type='max', aggregate_interval=$aggregate_interval, time_series='stop').json
-    #else
       "graph": $getattr($year, $x).series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='stop').json
     #end if
     },

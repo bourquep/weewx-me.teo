@@ -15,6 +15,8 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set $observations = $to_list($DisplayOptions.get('observations_summary', ['outTemp', 'outHumidity', 'windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'barometer', 'UV']))
+#set $obs_type_sum = $to_list($DisplayOptions.get('obs_type_sum', ['rain', 'ET', 'hail', 'snow', 'lightning_strike_count']))
+#set $obs_type_max = $to_list($DisplayOptions.get('obs_type_max', ['rainRate', 'hailRate', 'snowRate', 'UV']))
 {
   "report": {
     "time": $day.dateTime.json
@@ -26,12 +28,36 @@
       "observation": "$x",
       "label": "$obs.label[$x]",
       "unit": "$getVar('unit.label.' + $x)",
+    #if $x == 'windDir'
+      #set $wind_vecavg = $day.wind.vecavg.raw
+      #set $wind_avg = $day.windSpeed.avg.raw
+      #set $steadiness = $wind_vecavg / $wind_avg if $wind_avg > 0 else 0
+      #if $steadiness > 0.75
+        #set $consistency = $gettext("steady")
+      #elif $steadiness > 0.5
+        #set $consistency = $gettext("mainly")
+      #else
+        #set $consistency = $gettext("variable")
+      #end if
+      "avg": $day.wind.vecdir.json,
+      "avgCompass": "$day.wind.vecdir.ordinal_compass",
+      "avgLabel": "$consistency",
+      "graph": $day.windDir.series(time_series='stop').json
+    #elif $x in $obs_type_sum
+      "sum": $getattr($day, $x).sum.json,
+      "graph": $getattr($day, $x).series(time_series='stop').json
+    #elif $x in $obs_type_max
+      "max": $getattr($day, $x).max.json,
+      "maxTime": $getattr($day, $x).maxtime.json,
+      "graph": $getattr($day, $x).series(time_series='stop').json
+    #else
       "min": $getattr($day, $x).min.json,
       "minTime": $getattr($day, $x).mintime.json,
       "max": $getattr($day, $x).max.json,
       "maxTime": $getattr($day, $x).maxtime.json,
       "avg": $getattr($day, $x).avg.json,
       "graph": $getattr($day, $x).series(time_series='stop').json
+    #end if
     },
   #else
     {
