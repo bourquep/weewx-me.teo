@@ -25,9 +25,15 @@ interface LoadingOrErrorIndicatorProps {
   data?: any;
   isLoading: boolean;
   error?: any;
+  expectUndefinedData?: boolean;
 }
 
-export default function LoadingOrErrorIndicator({ data, isLoading, error }: LoadingOrErrorIndicatorProps) {
+export default function LoadingOrErrorIndicator({
+  data,
+  isLoading,
+  error,
+  expectUndefinedData
+}: LoadingOrErrorIndicatorProps) {
   const t = useTranslations();
 
   if (isLoading) {
@@ -36,6 +42,10 @@ export default function LoadingOrErrorIndicator({ data, isLoading, error }: Load
         <CircularProgress />
       </Box>
     );
+  }
+
+  if ((!error && data === undefined && expectUndefinedData) ?? false) {
+    return <></>;
   }
 
   if (error || data === undefined) {

@@ -28,6 +28,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Metadata } from 'next';
 import { getLocale, getMessages } from 'next-intl/server';
 import { Roboto } from 'next/font/google';
+import { Suspense } from 'react';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -71,7 +72,7 @@ export default async function RootLayout({
                 <GoogleAnalytics />
                 <Stack>
                   <PageHeader />
-                  {children}
+                  <Suspense fallback=<p>Loading...</p>>{children}</Suspense>
                   <PageFooter />
                 </Stack>
               </NavigationProvider>

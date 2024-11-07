@@ -22,6 +22,9 @@ const fetcher = async (url: string | URL | Request) => {
   const res = await fetch(url);
 
   if (!res.ok) {
+    if (res.status === 404) {
+      return undefined;
+    }
     throw new Error(`Status code does not indicate success: ${res.status}`);
   }
 
@@ -52,8 +55,8 @@ export function useMonthToDateData() {
   });
 }
 
-export function useDayData() {
-  return useSWR<DayData>(`${baseUrl}/day-2024-11-01.json`, fetcher, {
+export function useDayData(day: string) {
+  return useSWR<DayData>(`${baseUrl}/day-${day}.json`, fetcher, {
     refreshInterval: 60 * 1000 // 1 minute
   });
 }
