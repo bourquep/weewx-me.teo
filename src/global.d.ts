@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import currentData from '../public/sample_data/current.json';
+import dayData from '../public/sample_data/day-2024-11-01.json';
 import globalData from '../public/sample_data/global.json';
 import monthToDateData from '../public/sample_data/month-to-date.json';
 import weekToDateData from '../public/sample_data/week-to-date.json';
@@ -25,6 +26,7 @@ type GlobalDataType = typeof globalData;
 type CurrentWeatherDataType = typeof currentData;
 type WeekToDateDataType = typeof weekToDateData;
 type MonthToDateDataType = typeof monthToDateData;
+type DayDataType = typeof dayData;
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -38,4 +40,7 @@ declare global {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface MonthToDateData extends MonthToDateDataType {}
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface DayData extends DayDataType {}
 }

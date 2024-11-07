@@ -51,3 +51,9 @@ export function useMonthToDateData() {
     refreshInterval: 60 * 60 * 1000 // 1 hour
   });
 }
+
+export function useDayData() {
+  return useSWR<DayData>(`${baseUrl}/day-2024-11-01.json`, fetcher, {
+    refreshInterval: 60 * 1000 // 1 minute
+  });
+}
