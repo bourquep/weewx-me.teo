@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
-import { blueGrey, cyan, orange } from '@mui/material/colors';
+import { blueGrey, cyan } from '@mui/material/colors';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 let theme = createTheme({
@@ -30,7 +30,7 @@ let theme = createTheme({
       main: cyan[400]
     },
     secondary: {
-      main: orange[400]
+      main: '#da3b26'
     },
     grey: blueGrey
   },
