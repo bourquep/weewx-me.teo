@@ -70,3 +70,9 @@ export function useMonthData(formattedMonth: string) {
     refreshInterval: dayjs.duration(1, 'day').asMilliseconds()
   });
 }
+
+export function useYearData(formattedYear: string) {
+  return useSWR<YearData>(`${baseUrl}/year-${formattedYear}.json`, fetcher, {
+    refreshInterval: dayjs.duration(1, 'day').asMilliseconds()
+  });
+}

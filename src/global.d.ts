@@ -22,6 +22,7 @@ import globalData from '../public/sample_data/global.json';
 import monthData from '../public/sample_data/month-2024-11.json';
 import monthToDateData from '../public/sample_data/month-to-date.json';
 import weekToDateData from '../public/sample_data/week-to-date.json';
+import yearData from '../public/sample_data/year-2024.json';
 
 type GlobalDataType = typeof globalData;
 type CurrentWeatherDataType = typeof currentData;
@@ -29,6 +30,7 @@ type WeekToDateDataType = typeof weekToDateData;
 type MonthToDateDataType = typeof monthToDateData;
 type DayDataType = typeof dayData;
 type MonthDataType = typeof monthData;
+type YearDataType = typeof yearData;
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -48,4 +50,7 @@ declare global {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface MonthData extends MonthDataType {}
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface YearData extends YearDataType {}
 }
