@@ -24,6 +24,7 @@ import { useNavigation } from '@/contexts/NavigationContext';
 import { useCurrentWeatherData } from '@/libs/DataSource';
 import { graphMinMaxValuesFromObservation, plotTypeFromObservation } from '@/libs/GraphUtils';
 import { Grid2, Stack, Typography } from '@mui/material';
+import dayjs from 'dayjs';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
@@ -37,7 +38,7 @@ export default function Home() {
   useEffect(() => {
     setTitle(t('Current.PageTitle'));
     setSubtitle(
-      data ? format.dateTime(new Date(data.report.time * 1000), { dateStyle: 'medium', timeStyle: 'medium' }) : ''
+      data ? format.dateTime(dayjs.unix(data.report.time).toDate(), { dateStyle: 'medium', timeStyle: 'medium' }) : ''
     );
   }, [data]);
 

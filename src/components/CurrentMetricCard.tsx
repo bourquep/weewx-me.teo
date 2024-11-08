@@ -30,6 +30,7 @@ import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
+import dayjs from 'dayjs';
 import { NumberFormatOptions, useFormatter, useTranslations } from 'next-intl';
 import IconLabel from './IconLabel';
 import MetricCardProps from './MetricCardProps';
@@ -54,7 +55,7 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
   }
 
   function formatTimestamp(timestamp?: number) {
-    return timestamp === undefined ? '' : format.dateTime(new Date(timestamp * 1000), { timeStyle: 'short' });
+    return timestamp === undefined ? '' : format.dateTime(dayjs.unix(timestamp).toDate(), { timeStyle: 'short' });
   }
 
   const formattedCurrentValue =
@@ -168,7 +169,7 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
             plotType={props.graphPlotType}
             data={graphData}
             xAxis={{
-              data: props.graphData.map(([timestamp]) => new Date(timestamp * 1000)),
+              data: props.graphData.map(([timestamp]) => dayjs.unix(timestamp).toDate()),
               valueFormatter: (date) => format.dateTime(date, { timeStyle: 'short' })
             }}
             yAxis={{ min: graphMinValue, max: graphMaxValue }}

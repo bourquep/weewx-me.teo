@@ -34,6 +34,7 @@ import {
   useTheme
 } from '@mui/material';
 import { BarChart, LineChart } from '@mui/x-charts';
+import dayjs from 'dayjs';
 import { NumberFormatOptions, useFormatter, useTranslations } from 'next-intl';
 import IconLabel from './IconLabel';
 import MetricCardProps from './MetricCardProps';
@@ -47,7 +48,7 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const graphData = props.graphData.map(([, value]) => (value != null ? Number(value.toFixed(1)) : null));
-  const graphXAxis = props.graphData.map(([timestamp]) => (timestamp != null ? new Date(timestamp * 1000) : null));
+  const graphXAxis = props.graphData.map(([timestamp]) => (timestamp != null ? dayjs.unix(timestamp).toDate() : null));
   const graphMinValue = props.graphMinValue ?? Math.min(...graphData.filter((x) => x != null));
   const graphMaxValue = props.graphMaxValue ?? Math.max(...graphData.filter((x) => x != null));
 
@@ -58,7 +59,7 @@ export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
   function formatTimestamp(timestamp?: number) {
     return timestamp === undefined
       ? ''
-      : format.dateTime(new Date(timestamp * 1000), {
+      : format.dateTime(dayjs.unix(timestamp).toDate(), {
           weekday: 'short',
           hour: 'numeric',
           minute: '2-digit'

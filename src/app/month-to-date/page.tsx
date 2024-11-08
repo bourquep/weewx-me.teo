@@ -24,6 +24,7 @@ import { useNavigation } from '@/contexts/NavigationContext';
 import { useMonthToDateData } from '@/libs/DataSource';
 import { graphMinMaxValuesFromObservation, plotTypeFromObservation } from '@/libs/GraphUtils';
 import { Grid2 } from '@mui/material';
+import dayjs from 'dayjs';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
@@ -38,7 +39,7 @@ export default function MonthToDatePage() {
     setTitle(t('MonthToDate.PageTitle'));
     setSubtitle(
       data
-        ? `${t('MonthToDate.PageSubtitleSince')} ${format.dateTime(new Date(data.report.time * 1000), { dateStyle: 'medium' })}`
+        ? `${t('MonthToDate.PageSubtitleSince')} ${format.dateTime(dayjs.unix(data.report.time).toDate(), { dateStyle: 'medium' })}`
         : ''
     );
   }, [data]);
