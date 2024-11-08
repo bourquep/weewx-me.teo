@@ -8,8 +8,30 @@ updates:
   - package-ecosystem: 'npm' # See documentation for possible values
     directory: '/' # Location of package manifests
     schedule:
-      interval: 'weekly'
+      interval: 'daily'
     labels:
       - 'dependencies'
     reviewers:
       - 'bourquep'
+    groups:
+      mui:
+        patterns:
+          - '@mui/*'
+          - '@emotion/*'
+      next:
+        patterns:
+          - 'next'
+          - '@next/*'
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+      dev-dependencies:
+        patterns:
+          - '@types/*'
+          - 'eslint*'
+          - 'prettier*'
+          - 'typescript'
+          - 'serve'
+          - 'semantic-release'
+          - '@semantic-release/*'
