@@ -25,7 +25,7 @@ import { useDayData } from '@/libs/DataSource';
 import { graphMinMaxValuesFromObservation, plotTypeFromObservation } from '@/libs/GraphUtils';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { Alert, Box, Grid2, IconButton, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Alert, Box, Button, Grid2, IconButton, Stack, useMediaQuery, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
 import { useFormatter, useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -76,9 +76,9 @@ export default function DayPage() {
 
           {isMobile && <Box flexGrow={1} />}
 
-          <Typography variant="h6" color="info" mx={2} minWidth={!isMobile ? 300 : undefined} textAlign="center">
+          <Button variant="text" color="info" sx={{ minWidth: !isMobile ? 300 : undefined }}>
             {formattedReportDate}
-          </Typography>
+          </Button>
 
           {isMobile && <Box flexGrow={1} />}
 
