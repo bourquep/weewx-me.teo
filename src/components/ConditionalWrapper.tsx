@@ -16,12 +16,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-interface ConditionalWrapperProps<T = {}> {
+interface ConditionalWrapperProps<T = object> {
   condition: boolean;
   wrapper: (children: React.ReactNode) => React.ReactElement<T>;
   children: React.ReactNode;
 }
 
-export default function ConditionalWrapper<T = {}>({ condition, wrapper, children }: ConditionalWrapperProps<T>) {
+export default function ConditionalWrapper<T = object>({ condition, wrapper, children }: ConditionalWrapperProps<T>) {
   return condition ? wrapper(children) : <>{children}</>;
 }

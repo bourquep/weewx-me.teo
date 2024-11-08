@@ -42,7 +42,7 @@ export default function MonthToDatePage() {
         ? `${t('MonthToDate.PageSubtitleSince')} ${format.dateTime(dayjs.unix(data.report.time).toDate(), { dateStyle: 'medium' })}`
         : ''
     );
-  }, [data]);
+  });
 
   return (
     <>

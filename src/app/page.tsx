@@ -40,7 +40,7 @@ export default function Home() {
     setSubtitle(
       data ? format.dateTime(dayjs.unix(data.report.time).toDate(), { dateStyle: 'medium', timeStyle: 'medium' }) : ''
     );
-  }, [data]);
+  });
 
   return (
     <>

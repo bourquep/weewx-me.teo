@@ -20,10 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { useGlobalData } from '@/libs/DataSource';
 import { Link, Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
 
 export default function PageFooter() {
-  const t = useTranslations();
   const { data, isLoading, error } = useGlobalData();
 
   if (!isLoading && !error && data) {

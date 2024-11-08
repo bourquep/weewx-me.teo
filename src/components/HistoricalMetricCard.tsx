@@ -39,9 +39,7 @@ import { NumberFormatOptions, useFormatter, useTranslations } from 'next-intl';
 import IconLabel from './IconLabel';
 import MetricCardProps from './MetricCardProps';
 
-interface HistoricalMetricCardProps extends MetricCardProps {}
-
-export default function HistoricalMetricCard(props: HistoricalMetricCardProps) {
+export default function HistoricalMetricCard(props: MetricCardProps) {
   const t = useTranslations();
   const format = useFormatter();
   const theme = useTheme();

@@ -39,9 +39,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-interface PageHeaderProps {}
-
-interface LoadedPageHeaderProps extends PageHeaderProps {
+interface LoadedPageHeaderProps {
   data: GlobalData;
   title: string;
   subtitle: string;
@@ -49,7 +47,7 @@ interface LoadedPageHeaderProps extends PageHeaderProps {
   onCloseMenu: () => void;
 }
 
-export default function PageHeader(props: PageHeaderProps) {
+export default function PageHeader() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { data, isLoading, error } = useGlobalData();
@@ -88,7 +86,6 @@ export default function PageHeader(props: PageHeaderProps) {
             </>
           ) : isMobile ? (
             <CompactPageHeader
-              {...props}
               data={data}
               title={title}
               subtitle={subtitle}
@@ -97,7 +94,6 @@ export default function PageHeader(props: PageHeaderProps) {
             />
           ) : (
             <RegularPageHeader
-              {...props}
               data={data}
               title={title}
               subtitle={subtitle}

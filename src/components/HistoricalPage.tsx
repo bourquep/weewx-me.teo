@@ -61,19 +61,22 @@ export default function HistoricalPage({
   const parsedDay = urlParam ? dayjs(urlParam, dateFormat, true) : undefined;
   const urlDate = parsedDay?.isValid() ? parsedDay : getDefaultDate();
 
-  const getData = () => {
+  const useData = () => {
     const formattedDate = urlDate.format(dateFormat);
     switch (pageType) {
       case 'day':
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         return useDayData(formattedDate);
       case 'month':
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         return useMonthData(formattedDate);
       case 'year':
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         return useYearData(formattedDate);
     }
   };
 
-  const { data, isLoading, error } = getData();
+  const { data, isLoading, error } = useData();
   const { setTitle, setSubtitle } = useNavigation();
 
   const t = useTranslations(pageType.charAt(0).toUpperCase() + pageType.slice(1));

@@ -22,9 +22,9 @@ import { Alert, AlertTitle, Box, CircularProgress } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
 interface LoadingOrErrorIndicatorProps {
-  data?: any;
+  data?: object;
   isLoading: boolean;
-  error?: any;
+  error?: object;
   expectUndefinedData?: boolean;
 }
 
