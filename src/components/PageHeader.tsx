@@ -104,7 +104,19 @@ export default function PageHeader() {
         </Toolbar>
       </AppBar>
 
-      <Menu anchorEl={menuAnchor} open={isMenuOpen} onClose={onCloseMenu}>
+      <Menu
+        anchorEl={menuAnchor}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        open={isMenuOpen}
+        onClose={onCloseMenu}
+      >
         <MenuItem onClick={() => navigate('/')}>{t('Current.PageTitle')}</MenuItem>
         <MenuItem onClick={() => navigate('/week-to-date')}>{t('WeekToDate.PageTitle')}</MenuItem>
         <MenuItem onClick={() => navigate('/month-to-date')}>{t('MonthToDate.PageTitle')}</MenuItem>
@@ -141,7 +153,13 @@ function CompactPageHeader(props: LoadedPageHeaderProps) {
 
           <Box flexGrow={1} />
 
-          <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+          <Typography
+            variant="caption"
+            component="div"
+            noWrap
+            sx={{ textOverflow: 'ellipsis', overflow: 'hidden', cursor: 'pointer' }}
+            onClick={props.openMenu}
+          >
             {props.title}
           </Typography>
         </Stack>
@@ -162,7 +180,7 @@ function RegularPageHeader(props: LoadedPageHeaderProps) {
         </Typography>
       </Stack>
 
-      <Stack textAlign="end" sx={{ minWidth: 0, flex: 1 }}>
+      <Stack textAlign="end" alignItems="flex-end" sx={{ minWidth: 0, cursor: 'pointer' }} onClick={props.openMenu}>
         <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
           {props.title}
         </Typography>
