@@ -137,7 +137,7 @@ export default function YearPage() {
 
         {!isLoading && !error && !data && (
           <Box my={8} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Alert severity="warning">No data available for the selected year. Please select another year.</Alert>
+            <Alert severity="warning">{t('Year.NoData')}</Alert>
           </Box>
         )}
 

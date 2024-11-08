@@ -137,7 +137,7 @@ export default function DayPage() {
 
         {!isLoading && !error && !data && (
           <Box my={8} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Alert severity="warning">No data available for the selected day. Please select another day.</Alert>
+            <Alert severity="warning">{t('Day.NoData')}</Alert>
           </Box>
         )}
 

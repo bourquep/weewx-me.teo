@@ -138,7 +138,7 @@ export default function MonthPage() {
 
         {!isLoading && !error && !data && (
           <Box my={8} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Alert severity="warning">No data available for the selected month. Please select another month.</Alert>
+            <Alert severity="warning">{t('Month.NoData')}</Alert>
           </Box>
         )}
 

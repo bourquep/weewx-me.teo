@@ -31,12 +31,15 @@
     "PageSubtitleSince": "Since"
   },
   "Day": {
-    "PageTitle": "Daily Summary"
+    "PageTitle": "Daily Summary",
+    "NoData": "No data available for the selected day. Please select another day."
   },
   "Month": {
-    "PageTitle": "Monthly Summary"
+    "PageTitle": "Monthly Summary",
+    "NoData": "No data available for the selected month. Please select another month."
   },
   "Year": {
-    "PageTitle": "Yearly Summary"
+    "PageTitle": "Yearly Summary",
+    "NoData": "No data available for the selected year. Please select another year."
   }
 }

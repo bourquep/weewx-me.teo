@@ -31,12 +31,15 @@
     "PageSubtitleSince": "Depuis le"
   },
   "Day": {
-    "PageTitle": "Sommaire quotidien"
+    "PageTitle": "Sommaire quotidien",
+    "NoData": "Aucune donnée disponible pour la journée sélectionnée. Veuillez sélectionner une autre journée."
   },
   "Month": {
-    "PageTitle": "Sommaire mensuel"
+    "PageTitle": "Sommaire mensuel",
+    "NoData": "Aucune donnée disponible pour le mois sélectionné. Veuillez sélectionner un autre mois."
   },
   "Year": {
-    "PageTitle": "Sommaire annuel"
+    "PageTitle": "Sommaire annuel",
+    "NoData": "Aucune donnée disponible pour l’année sélectionnée. Veuillez sélectionner une autre année."
   }
 }
