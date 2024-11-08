@@ -25,7 +25,7 @@ import { useDayData } from '@/libs/DataSource';
 import { graphMinMaxValuesFromObservation, plotTypeFromObservation } from '@/libs/GraphUtils';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { Alert, Box, Grid2, IconButton, Stack, Typography } from '@mui/material';
+import { Alert, Box, Grid2, IconButton, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useFormatter, useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
@@ -46,6 +46,9 @@ export default function DayPage() {
 
   const t = useTranslations();
   const format = useFormatter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const formattedReportDate = format.dateTime(data ? new Date(data.report.time * 1000) : urlDate, {
     dateStyle: 'full'
   });
@@ -53,7 +56,7 @@ export default function DayPage() {
   useEffect(() => {
     setTitle(t('Day.PageTitle'));
     setSubtitle(formattedReportDate);
-  }, [formattedReportDate]);
+  }, [formattedReportDate, data, urlDate]);
 
   return (
     <>
@@ -61,7 +64,7 @@ export default function DayPage() {
 
       <Stack>
         <Stack direction="row" width="100%" marginY={2} alignItems="center">
-          <Box flexGrow={1} />
+          {!isMobile && <Box flexGrow={1} />}
 
           <IconButton
             onClick={() => {
@@ -73,9 +76,13 @@ export default function DayPage() {
             <ArrowLeftIcon />
           </IconButton>
 
-          <Typography variant="h6" color="info" mx={2}>
+          {isMobile && <Box flexGrow={1} />}
+
+          <Typography variant="h6" color="info" mx={2} minWidth={!isMobile ? 300 : undefined} textAlign="center">
             {formattedReportDate}
           </Typography>
+
+          {isMobile && <Box flexGrow={1} />}
 
           <IconButton
             onClick={() => {
@@ -87,7 +94,7 @@ export default function DayPage() {
             <ArrowRightIcon />
           </IconButton>
 
-          <Box flexGrow={1} />
+          {!isMobile && <Box flexGrow={1} />}
         </Stack>
 
         {!isLoading && !error && !data && (
