@@ -26,6 +26,7 @@ import { graphMinMaxValuesFromObservation, plotTypeFromObservation } from '@/lib
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Alert, Box, Grid2, IconButton, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import dayjs from 'dayjs';
 import { useFormatter, useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
@@ -35,13 +36,11 @@ export default function DayPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const yesterday = new Date(Date.now() - 86400000);
-  const urlDay =
-    searchParams.get('d') ??
-    `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
-  const urlDate = new Date(urlDay + 'T00:00:00');
+  const urlDay = searchParams.get('d');
+  const parsedDay = urlDay ? dayjs(urlDay, 'YYYY-MM-DD', true) : undefined;
+  const urlDate = parsedDay?.isValid() ? parsedDay : dayjs().startOf('day').subtract(1, 'day');
 
-  const { data, isLoading, error } = useDayData(urlDay);
+  const { data, isLoading, error } = useDayData(urlDate.format('YYYY-MM-DD'));
   const { setTitle, setSubtitle } = useNavigation();
 
   const t = useTranslations();
@@ -49,14 +48,14 @@ export default function DayPage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const formattedReportDate = format.dateTime(data ? new Date(data.report.time * 1000) : urlDate, {
+  const formattedReportDate = format.dateTime((data ? dayjs.unix(data.report.time) : urlDate).toDate(), {
     dateStyle: 'full'
   });
 
   useEffect(() => {
     setTitle(t('Day.PageTitle'));
     setSubtitle(formattedReportDate);
-  }, [formattedReportDate, data, urlDate]);
+  }, [formattedReportDate]);
 
   return (
     <>
@@ -68,9 +67,8 @@ export default function DayPage() {
 
           <IconButton
             onClick={() => {
-              const previous = new Date(urlDate.getFullYear(), urlDate.getMonth(), urlDate.getDate() - 1);
-              const formattedPrevious = `${previous.getFullYear()}-${String(previous.getMonth() + 1).padStart(2, '0')}-${String(previous.getDate()).padStart(2, '0')}`;
-              router.push(`${pathname}?d=${formattedPrevious}`);
+              const previous = urlDate.subtract(1, 'day').format('YYYY-MM-DD');
+              router.push(`${pathname}?d=${previous}`);
             }}
           >
             <ArrowLeftIcon />
@@ -86,9 +84,8 @@ export default function DayPage() {
 
           <IconButton
             onClick={() => {
-              const next = new Date(urlDate.getFullYear(), urlDate.getMonth(), urlDate.getDate() + 1);
-              const formattedNext = `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, '0')}-${String(next.getDate()).padStart(2, '0')}`;
-              router.push(`${pathname}?d=${formattedNext}`);
+              const next = urlDate.add(1, 'day').format('YYYY-MM-DD');
+              router.push(`${pathname}?d=${next}`);
             }}
           >
             <ArrowRightIcon />

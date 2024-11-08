@@ -49,6 +49,7 @@
     "@mui/material-nextjs": "6.1.6",
     "@mui/x-charts": "7.22.1",
     "@next/third-parties": "15.0.2",
+    "dayjs": "1.11.13",
     "next": "15.0.1",
     "next-intl": "3.24.0",
     "react": "19.0.0-rc.0",
