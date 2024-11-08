@@ -16,7 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import useSWR from 'swr';
+
+dayjs.extend(duration);
 
 const fetcher = async (url: string | URL | Request) => {
   const res = await fetch(url);
@@ -39,24 +43,24 @@ export function useGlobalData() {
 
 export function useCurrentWeatherData() {
   return useSWR<CurrentWeatherData>(`${baseUrl}/current.json`, fetcher, {
-    refreshInterval: 60 * 1000 // 1 minute
+    refreshInterval: dayjs.duration(1, 'minute').asMilliseconds()
   });
 }
 
 export function useWeekToDateData() {
   return useSWR<WeekToDateData>(`${baseUrl}/week-to-date.json`, fetcher, {
-    refreshInterval: 60 * 60 * 1000 // 1 hour
+    refreshInterval: dayjs.duration(1, 'hour').asMilliseconds()
   });
 }
 
 export function useMonthToDateData() {
   return useSWR<MonthToDateData>(`${baseUrl}/month-to-date.json`, fetcher, {
-    refreshInterval: 60 * 60 * 1000 // 1 hour
+    refreshInterval: dayjs.duration(1, 'hour').asMilliseconds()
   });
 }
 
 export function useDayData(formattedDay: string) {
   return useSWR<DayData>(`${baseUrl}/day-${formattedDay}.json`, fetcher, {
-    refreshInterval: 60 * 1000 // 1 minute
+    refreshInterval: dayjs.duration(1, 'minute').asMilliseconds()
   });
 }
