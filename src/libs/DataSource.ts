@@ -55,8 +55,8 @@ export function useMonthToDateData() {
   });
 }
 
-export function useDayData(day: string) {
-  return useSWR<DayData>(`${baseUrl}/day-${day}.json`, fetcher, {
+export function useDayData(formattedDay: string) {
+  return useSWR<DayData>(`${baseUrl}/day-${formattedDay}.json`, fetcher, {
     refreshInterval: 60 * 1000 // 1 minute
   });
 }
