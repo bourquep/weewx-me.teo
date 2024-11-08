@@ -14,23 +14,24 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set $observations = $to_list($DisplayOptions.get('observations_current', ['outTemp', 'outHumidity', 'windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'barometer', 'UV']))
+#set $observations = $to_list($DisplayOptions.get('observations_summary', ['outTemp', 'outHumidity', 'windDir', 'windSpeed', 'windGust', 'rainRate', 'rain', 'barometer', 'UV']))
 #set $obs_type_sum = $to_list($DisplayOptions.get('obs_type_sum', ['rain', 'ET', 'hail', 'snow', 'lightning_strike_count']))
 #set $obs_type_max = $to_list($DisplayOptions.get('obs_type_max', ['rainRate', 'hailRate', 'snowRate', 'UV']))
+#set $aggregate_interval = 'hour'
 {
   "report": {
-    "time": $current.dateTime.json
+    "time": $week.dateTime.json
   },
   "observations": [
 #for $x in $observations
-  #if $getVar('current.%s.has_data' % $x)
+  #if $getVar('week.%s.has_data' % $x)
     {
       "observation": "$x",
       "label": "$obs.label[$x]",
       "unit": "$getVar('unit.label.' + $x)",
     #if $x == 'windDir'
-      #set $wind_vecavg = $span(hour_delta=24).wind.vecavg.raw
-      #set $wind_avg = $span(hour_delta=24).windSpeed.avg.raw
+      #set $wind_vecavg = $week.wind.vecavg.raw
+      #set $wind_avg = $week.windSpeed.avg.raw
       #set $steadiness = $wind_vecavg / $wind_avg if $wind_avg > 0 else 0
       #if $steadiness > 0.75
         #set $consistency = $gettext("steady")
@@ -39,28 +40,24 @@
       #else
         #set $consistency = $gettext("variable")
       #end if
-      "current": $getVar('current.' + $x).json,
-      "currentCompass": "$current.windDir.ordinal_compass",
-      "avg": $span(hour_delta=24).wind.vecdir.json,
-      "avgCompass": "$span(hour_delta=24).wind.vecdir.ordinal_compass",
+      "avg": $week.wind.vecdir.json,
+      "avgCompass": "$week.wind.vecdir.ordinal_compass",
       "avgLabel": "$consistency",
-      "graph": $span(hour_delta=24).windDir.series(aggregate_type='avg', aggregate_interval='1h', time_series='start').json
+      "graph": $week.windDir.series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='start').json
     #elif $x in $obs_type_sum
-      ## Special case for sum values: Display the sum as the 'current' value instead of as the 'sum'.
-      "current": $getattr($span(hour_delta=24), $x).sum.json,
-      "graph": $getattr($span(hour_delta=24), $x).series(aggregate_type='sum', aggregate_interval='1h', time_series='start').json
+      "sum": $getattr($week, $x).sum.json,
+      "graph": $getattr($week, $x).series(aggregate_type='sum', aggregate_interval=$aggregate_interval, time_series='start').json
     #elif $x in $obs_type_max
-      "current": $getVar('current.' + $x).json,
-      "max": $getattr($span(hour_delta=24), $x).max.json,
-      "maxTime": $getattr($span(hour_delta=24), $x).maxtime.json,
-      "graph": $getattr($span(hour_delta=24), $x).series(aggregate_type='max', aggregate_interval='1h', time_series='start').json
+      "max": $getattr($week, $x).max.json,
+      "maxTime": $getattr($week, $x).maxtime.json,
+      "graph": $getattr($week, $x).series(aggregate_type='max', aggregate_interval=$aggregate_interval, time_series='start').json
     #else
-      "current": $getVar('current.' + $x).json,
-      "min": $getattr($span(hour_delta=24), $x).min.json,
-      "minTime": $getattr($span(hour_delta=24), $x).mintime.json,
-      "max": $getattr($span(hour_delta=24), $x).max.json,
-      "maxTime": $getattr($span(hour_delta=24), $x).maxtime.json,
-      "graph": $getattr($span(hour_delta=24), $x).series(aggregate_type='avg', aggregate_interval='1h', time_series='start').json
+      "min": $getattr($week, $x).min.json,
+      "minTime": $getattr($week, $x).mintime.json,
+      "max": $getattr($week, $x).max.json,
+      "maxTime": $getattr($week, $x).maxtime.json,
+      "avg": $getattr($week, $x).avg.json,
+      "graph": $getattr($week, $x).series(aggregate_type='avg', aggregate_interval=$aggregate_interval, time_series='start').json
     #end if
     },
   #else
@@ -68,7 +65,6 @@
       "observation": "$x",
       "label": "$obs.label[$x]",
       "unit": "$getVar('unit.label.' + $x)",
-      "current": 0,
       "graph": []
     },
   #end if

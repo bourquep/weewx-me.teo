@@ -16,19 +16,22 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SvgIconComponent } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+'use client';
 
-interface IconLabelProps {
-  icon?: SvgIconComponent;
-  label: string;
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/en';
+import 'dayjs/locale/fr';
+
+interface MUILocalizationProviderProps {
+  children: React.ReactNode;
+  locale: string;
 }
 
-export default function IconLabel(props: IconLabelProps) {
+export default function MUILocalizationProvider({ children, locale }: MUILocalizationProviderProps) {
   return (
-    <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-      {props.icon && <props.icon fontSize="inherit" sx={{ color: 'text.secondary' }} />}
-      {props.label}
-    </Typography>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
+      {children}
+    </LocalizationProvider>
   );
 }

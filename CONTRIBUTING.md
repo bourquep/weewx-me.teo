@@ -88,6 +88,7 @@ are welcome!
 8. Add the language code to:
    - the `build-locale` language matrix in `.github/workflows/ci.yml`
    - the `CopyGenerator.copy_once` list in `weewx/skins/me.teo/skin.conf`
+   - the `dayjs/locale` imports in `src/contexts/MUILocalizationProvider.tsx`
 9. Add the language to the list of supported languages in `README.md`
 10. Submit a pull request and be a hero!
 

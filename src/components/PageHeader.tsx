@@ -18,64 +18,180 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
-import { AppBar, Stack, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { useFormatter } from 'next-intl';
+import { useNavigation } from '@/contexts/NavigationContext';
+import { useGlobalData } from '@/libs/DataSource';
+import ExpandCircleDownOutlinedIcon from '@mui/icons-material/ExpandCircleDownOutlined';
+import {
+  AppBar,
+  Box,
+  CircularProgress,
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+  styled,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-interface PageHeaderProps {
-  stationLocationName: string;
-  stationCoordinates: string;
-  observationDate: Date;
-  pageTitle: string;
+interface LoadedPageHeaderProps {
+  data: GlobalData;
+  title: string;
+  subtitle: string;
+  openMenu: (event: React.MouseEvent<HTMLElement>) => void;
+  onCloseMenu: () => void;
 }
 
-export default function PageHeader(props: PageHeaderProps) {
+export default function PageHeader() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { data, isLoading, error } = useGlobalData();
+  const { title, subtitle } = useNavigation();
+  const router = useRouter();
+  const t = useTranslations();
+
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+  const isMenuOpen = Boolean(menuAnchor);
+  const openMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setMenuAnchor(event.currentTarget);
+  };
+  const onCloseMenu = () => {
+    setMenuAnchor(null);
+  };
+  const navigate = (route: string) => {
+    onCloseMenu();
+    router.push(route);
+  };
+
+  const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
   return (
-    <AppBar>
-      <Toolbar>{isMobile ? <CompactPageHeader {...props} /> : <RegularPageHeader {...props} />}</Toolbar>
-    </AppBar>
-  );
-}
+    <Stack>
+      <AppBar>
+        <Toolbar>
+          {isLoading || error || !data ? (
+            <>
+              <Box flexGrow={1} />
+              <Typography variant="caption" color="error">
+                {isLoading && <CircularProgress />}
+                {error && 'Error loading data'}
+                {!isLoading && !error && !data && 'No data available'}
+              </Typography>
+              <Box flexGrow={1} />
+            </>
+          ) : isMobile ? (
+            <CompactPageHeader
+              data={data}
+              title={title}
+              subtitle={subtitle}
+              openMenu={openMenu}
+              onCloseMenu={onCloseMenu}
+            />
+          ) : (
+            <RegularPageHeader
+              data={data}
+              title={title}
+              subtitle={subtitle}
+              openMenu={openMenu}
+              onCloseMenu={onCloseMenu}
+            />
+          )}
+        </Toolbar>
+      </AppBar>
 
-function CompactPageHeader(props: PageHeaderProps) {
-  const format = useFormatter();
+      <Menu
+        anchorEl={menuAnchor}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        open={isMenuOpen}
+        onClose={onCloseMenu}
+      >
+        <MenuItem onClick={() => navigate('/')}>{t('Current.PageTitle')}</MenuItem>
+        <MenuItem onClick={() => navigate('/week-to-date')}>{t('WeekToDate.PageTitle')}</MenuItem>
+        <MenuItem onClick={() => navigate('/month-to-date')}>{t('MonthToDate.PageTitle')}</MenuItem>
+        <MenuItem onClick={() => navigate('/day')}>{t('Day.PageTitle')}</MenuItem>
+        <MenuItem onClick={() => navigate('/month')}>{t('Month.PageTitle')}</MenuItem>
+        <MenuItem onClick={() => navigate('/year')}>{t('Year.PageTitle')}</MenuItem>
+      </Menu>
 
-  return (
-    <Stack textAlign="center" sx={{ minWidth: 0, flex: 1 }}>
-      <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-        {props.stationLocationName}
-      </Typography>
-      <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-        {format.dateTime(props.observationDate, { dateStyle: 'medium', timeStyle: 'medium' })}
-      </Typography>
+      <Offset />
     </Stack>
   );
 }
 
-function RegularPageHeader(props: PageHeaderProps) {
-  const format = useFormatter();
-
+function CompactPageHeader(props: LoadedPageHeaderProps) {
   return (
     <>
-      <Stack sx={{ minWidth: 0, flex: 1.25 }}>
+      <Stack sx={{ minWidth: 0, flex: 1 }}>
+        <Stack direction="row">
+          <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+            {props.data.station.location}
+          </Typography>
+
+          <Box flexGrow={1} />
+
+          <IconButton size="small" onClick={props.openMenu}>
+            <ExpandCircleDownOutlinedIcon fontSize="inherit" />
+          </IconButton>
+        </Stack>
+
+        <Stack direction="row">
+          <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+            {props.subtitle}
+          </Typography>
+
+          <Box flexGrow={1} />
+
+          <Typography
+            variant="caption"
+            component="div"
+            noWrap
+            sx={{ textOverflow: 'ellipsis', overflow: 'hidden', cursor: 'pointer' }}
+            onClick={props.openMenu}
+          >
+            {props.title}
+          </Typography>
+        </Stack>
+      </Stack>
+    </>
+  );
+}
+
+function RegularPageHeader(props: LoadedPageHeaderProps) {
+  return (
+    <>
+      <Stack sx={{ minWidth: 0, flex: 1 }}>
         <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-          {props.stationLocationName}
+          {props.data.station.location}
         </Typography>
         <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-          {props.stationCoordinates}
+          {`${props.data.station.latitude}, ${props.data.station.longitude}, ${props.data.station.altitude}`}
         </Typography>
       </Stack>
 
-      <Stack textAlign="end" sx={{ minWidth: 0, flex: 1 }}>
+      <Stack textAlign="end" alignItems="flex-end" sx={{ minWidth: 0, cursor: 'pointer' }} onClick={props.openMenu}>
         <Typography variant="h6" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-          {props.pageTitle}
+          {props.title}
         </Typography>
         <Typography variant="caption" component="div" noWrap sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-          {format.dateTime(props.observationDate, { dateStyle: 'medium', timeStyle: 'medium' })}
+          {props.subtitle}
         </Typography>
       </Stack>
+
+      <IconButton size="large" onClick={props.openMenu}>
+        <ExpandCircleDownOutlinedIcon fontSize="inherit" />
+      </IconButton>
     </>
   );
 }

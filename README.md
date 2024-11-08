@@ -62,8 +62,8 @@ The WeeWX extension installer adds the following to your `weewx.conf`:
 ```
 
 There's not much else needed to get started. You can have a look at the `skin.conf` file to customize the skin to your
-liking. The most likely customization you'll want to make is to edit the `observations_current` variable to list which
-observations you want on your Me.teo dashboard and in what order.
+liking. The most likely customization you'll want to make is to edit the `observations_current` and `observations_summary`
+variables to list which observations you want on your Me.teo dashboard and in what order.
 
 ### Google Analytics
 

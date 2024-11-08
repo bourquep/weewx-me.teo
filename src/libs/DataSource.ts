@@ -16,12 +16,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import useSWR from 'swr';
+
+dayjs.extend(duration);
 
 const fetcher = async (url: string | URL | Request) => {
   const res = await fetch(url);
 
   if (!res.ok) {
+    if (res.status === 404) {
+      return undefined;
+    }
     throw new Error(`Status code does not indicate success: ${res.status}`);
   }
 
@@ -30,26 +37,42 @@ const fetcher = async (url: string | URL | Request) => {
 
 const baseUrl = process.env.NODE_ENV === 'production' ? '../data' : '/sample_data';
 
+export function useGlobalData() {
+  return useSWR<GlobalData>(`${baseUrl}/global.json`, fetcher);
+}
+
 export function useCurrentWeatherData() {
-  const global = useSWR<GlobalData>(`${baseUrl}/global.json`, fetcher);
-
-  const current = useSWR<CurrentWeatherData>(`${baseUrl}/current.json`, fetcher, {
-    refreshInterval: 60 * 1000 // 1 minute
+  return useSWR<CurrentWeatherData>(`${baseUrl}/current.json`, fetcher, {
+    refreshInterval: dayjs.duration(1, 'minute').asMilliseconds()
   });
+}
 
-  return {
-    global: {
-      data: global.data,
-      error: global.error,
-      isLoading: global.isLoading
-    },
-    current: {
-      data: current.data,
-      error: current.error,
-      isLoading: current.isLoading
-    },
-    // Combined loading and error states
-    isLoading: global.isLoading || current.isLoading,
-    error: global.error || current.error
-  };
+export function useWeekToDateData() {
+  return useSWR<WeekToDateData>(`${baseUrl}/week-to-date.json`, fetcher, {
+    refreshInterval: dayjs.duration(1, 'hour').asMilliseconds()
+  });
+}
+
+export function useMonthToDateData() {
+  return useSWR<MonthToDateData>(`${baseUrl}/month-to-date.json`, fetcher, {
+    refreshInterval: dayjs.duration(1, 'hour').asMilliseconds()
+  });
+}
+
+export function useDayData(formattedDay: string) {
+  return useSWR<DayData>(`${baseUrl}/day-${formattedDay}.json`, fetcher, {
+    refreshInterval: dayjs.duration(1, 'minute').asMilliseconds()
+  });
+}
+
+export function useMonthData(formattedMonth: string) {
+  return useSWR<MonthData>(`${baseUrl}/month-${formattedMonth}.json`, fetcher, {
+    refreshInterval: dayjs.duration(1, 'day').asMilliseconds()
+  });
+}
+
+export function useYearData(formattedYear: string) {
+  return useSWR<YearData>(`${baseUrl}/year-${formattedYear}.json`, fetcher, {
+    refreshInterval: dayjs.duration(1, 'day').asMilliseconds()
+  });
 }

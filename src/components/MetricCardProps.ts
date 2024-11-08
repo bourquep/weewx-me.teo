@@ -16,19 +16,32 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SvgIconComponent } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+import { MetricKind, PlotType } from '@/libs/GraphUtils';
 
-interface IconLabelProps {
-  icon?: SvgIconComponent;
-  label: string;
-}
+export default interface MetricCardProps {
+  metricKind: MetricKind;
+  metricUnit: string;
 
-export default function IconLabel(props: IconLabelProps) {
-  return (
-    <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-      {props.icon && <props.icon fontSize="inherit" sx={{ color: 'text.secondary' }} />}
-      {props.label}
-    </Typography>
-  );
+  cardTitle: string;
+
+  minValue?: number;
+  formattedMinValue?: string;
+  minTimestamp?: number;
+
+  maxValue?: number;
+  formattedMaxValue?: string;
+  maxTimestamp?: number;
+
+  avgValue?: number;
+  formattedAvgValue?: string;
+  avgLabel?: string;
+
+  sumValue?: number;
+  formattedSumValue?: string;
+  sumLabel?: string;
+
+  graphData: Array<Array<number>>;
+  graphPlotType: PlotType;
+  graphMinValue?: number;
+  graphMaxValue?: number;
 }

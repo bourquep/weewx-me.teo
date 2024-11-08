@@ -16,19 +16,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SvgIconComponent } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+'use client';
 
-interface IconLabelProps {
-  icon?: SvgIconComponent;
-  label: string;
-}
+import { useGlobalData } from '@/libs/DataSource';
+import { GoogleAnalytics as NextGoogleAnalytics } from '@next/third-parties/google';
 
-export default function IconLabel(props: IconLabelProps) {
-  return (
-    <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-      {props.icon && <props.icon fontSize="inherit" sx={{ color: 'text.secondary' }} />}
-      {props.label}
-    </Typography>
-  );
+export default function GoogleAnalytics() {
+  const { data, isLoading, error } = useGlobalData();
+
+  if (!isLoading && !error && data && data.meta.googleAnalyticsId.length > 0) {
+    return <NextGoogleAnalytics gaId={data.meta.googleAnalyticsId} />;
+  }
+
+  return <></>;
 }

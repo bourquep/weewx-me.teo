@@ -16,13 +16,20 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+import GoogleAnalytics from '@/components/GoogleAnalytics';
+import PageFooter from '@/components/PageFooter';
+import PageHeader from '@/components/PageHeader';
+import MUILocalizationProvider from '@/contexts/MUILocalizationProvider';
+import { NavigationProvider } from '@/contexts/NavigationContext';
 import { StaticNextIntlClientProvider } from '@/i18n/StaticNextIntlClientProvider';
 import theme from '@/theme';
+import { Stack } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import { Metadata } from 'next';
 import { getLocale, getMessages } from 'next-intl/server';
 import { Roboto } from 'next/font/google';
+import { Suspense } from 'react';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -62,7 +69,16 @@ export default async function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <StaticNextIntlClientProvider locale={locale} messages={messages}>
-              {children}
+              <MUILocalizationProvider locale={locale}>
+                <NavigationProvider>
+                  <GoogleAnalytics />
+                  <Stack>
+                    <PageHeader />
+                    <Suspense fallback=<p>Loading...</p>>{children}</Suspense>
+                    <PageFooter />
+                  </Stack>
+                </NavigationProvider>
+              </MUILocalizationProvider>
             </StaticNextIntlClientProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>

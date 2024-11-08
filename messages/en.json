@@ -3,9 +3,43 @@
     "DataLoadErrorTitle": "Unable to load weather data.",
     "DataLoadUnexpectedErrorMessage": "An unexpected error occurred while loading weather data."
   },
+  "Labels": {
+    "Average": "average",
+    "Sum": "total"
+  },
+  "CardinalPoints": {
+    "North": "N",
+    "NorthEast": "NE",
+    "East": "E",
+    "SouthEast": "SE",
+    "South": "S",
+    "SouthWest": "SW",
+    "West": "W",
+    "NorthWest": "NW"
+  },
   "Current": {
     "PageTitle": "Current Conditions",
     "PageFootnote": "Graphs and other statistical data are based on the last 24 hours.",
     "EmptyGraphMessage": "No data for the past 24 hours."
+  },
+  "WeekToDate": {
+    "PageTitle": "Week to Date",
+    "PageSubtitleSince": "Since"
+  },
+  "MonthToDate": {
+    "PageTitle": "Month to Date",
+    "PageSubtitleSince": "Since"
+  },
+  "Day": {
+    "PageTitle": "Daily Summary",
+    "NoData": "No data available for the selected day. Please select another day."
+  },
+  "Month": {
+    "PageTitle": "Monthly Summary",
+    "NoData": "No data available for the selected month. Please select another month."
+  },
+  "Year": {
+    "PageTitle": "Yearly Summary",
+    "NoData": "No data available for the selected year. Please select another year."
   }
 }

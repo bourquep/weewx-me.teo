@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use client';
 
+import AverageIcon from '@/resources/AverageIcon';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import FunctionsIcon from '@mui/icons-material/Functions';
@@ -29,101 +30,73 @@ import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
+import dayjs from 'dayjs';
 import { NumberFormatOptions, useFormatter, useTranslations } from 'next-intl';
 import IconLabel from './IconLabel';
+import MetricCardProps from './MetricCardProps';
 
-type MetricKind = 'number' | 'wind';
-
-interface MetricCardProps {
-  cardTitle: string;
-  sparkLineData: Array<Array<number>>;
-  sparkLinePlotType: 'line' | 'bar';
-  sparkLineMinValue?: number;
-  sparkLineMaxValue?: number;
+interface CurrentMetricCardProps extends MetricCardProps {
   currentValue: number;
   formattedCurrentValue?: string;
-  minValue?: number;
-  formattedMinValue?: string;
-  minTimestamp?: number | string;
-  maxValue?: number;
-  formattedMaxValue?: string;
-  maxTimestamp?: number | string;
-  sumValue?: number;
-  formattedSumValue?: string;
-  metricUnit: string;
-  metricKind: MetricKind;
 }
 
-export default function MetricCard({
-  cardTitle,
-  sparkLineData,
-  sparkLinePlotType,
-  sparkLineMinValue,
-  sparkLineMaxValue,
-  currentValue,
-  formattedCurrentValue,
-  minValue,
-  formattedMinValue,
-  minTimestamp,
-  maxValue,
-  formattedMaxValue,
-  maxTimestamp,
-  sumValue,
-  formattedSumValue,
-  metricUnit,
-  metricKind
-}: MetricCardProps) {
+export default function CurrentMetricCard(props: CurrentMetricCardProps) {
   const theme = useTheme();
   const format = useFormatter();
   const t = useTranslations();
 
-  const graphData = sparkLineData.map(([, value]) => (value != null ? Number(value.toFixed(1)) : 0));
-  const graphMinValue = sparkLineMinValue ?? Math.min(...graphData);
-  const graphMaxValue = sparkLineMaxValue ?? Math.max(...graphData);
+  const graphData = props.graphData.map(([, value]) => (value != null ? Number(value.toFixed(1)) : 0));
+  const graphMinValue = props.graphMinValue ?? Math.min(...graphData);
+  const graphMaxValue = props.graphMaxValue ?? Math.max(...graphData);
   const isGraphEmpty = graphData.filter((x) => x != 0).length == 0;
 
   function formatNumber(value?: number | string, options: NumberFormatOptions = { maximumFractionDigits: 1 }) {
     return typeof value === 'number' ? format.number(value, options) : value;
   }
 
-  function formatTimestamp(timestamp?: number | string) {
-    if (timestamp === undefined) return '';
-    return typeof timestamp === 'number'
-      ? format.dateTime(new Date(timestamp * 1000), { timeStyle: 'short' })
-      : timestamp;
+  function formatTimestamp(timestamp?: number) {
+    return timestamp === undefined ? '' : format.dateTime(dayjs.unix(timestamp).toDate(), { timeStyle: 'short' });
   }
 
-  formattedCurrentValue ??= formatNumber(currentValue, {
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1
-  });
+  const formattedCurrentValue =
+    props.formattedCurrentValue ??
+    formatNumber(props.currentValue, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1
+    });
 
-  formattedMinValue ??= formatNumber(minValue);
-  const formattedMinTimestamp = formatTimestamp(minTimestamp);
-  formattedMaxValue ??= formatNumber(maxValue);
-  const formattedMaxTimestamp = formatTimestamp(maxTimestamp);
-  formattedSumValue ??= formatNumber(sumValue);
+  const formattedMinValue = props.formattedMinValue ?? formatNumber(props.minValue);
+  const formattedMinTimestamp = formatTimestamp(props.minTimestamp);
+  const formattedMaxValue = props.formattedMaxValue ?? formatNumber(props.maxValue);
+  const formattedMaxTimestamp = formatTimestamp(props.maxTimestamp);
+  const formattedAvgValue = props.formattedAvgValue ?? formatNumber(props.avgValue);
+  const formattedSumValue = props.formattedSumValue ?? formatNumber(props.sumValue);
 
   return (
     <Card variant="outlined" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardHeader
-        title={cardTitle}
-        action={metricUnit.length > 0 && <Chip variant="outlined" size="small" color="info" label={metricUnit} />}
+        title={props.cardTitle}
+        action={
+          props.metricUnit.length > 0 && <Chip variant="outlined" size="small" color="info" label={props.metricUnit} />
+        }
       />
 
       <CardContent sx={{ paddingY: 0, flexGrow: 1 }}>
         {/* Current value + min/max/sum */}
         <Stack direction="row" alignItems="center" spacing={1}>
           {/* Current value */}
-          {metricKind === 'number' && (
+          {props.metricKind === 'number' && (
             <Typography variant={(formattedCurrentValue?.length ?? 0) < 5 ? 'h1' : 'h2'} sx={{ fontWeight: '500' }}>
               {formattedCurrentValue}
             </Typography>
           )}
-          {metricKind === 'wind' && (
+          {props.metricKind === 'wind' && (
             <>
               <Typography variant="h1" sx={{ fontWeight: '500', translate: '0 8%' }}>
-                <NavigationOutlinedIcon fontSize="inherit" sx={{ transform: `rotate(${currentValue + 180}deg)` }} />
+                <NavigationOutlinedIcon
+                  fontSize="inherit"
+                  sx={{ transform: `rotate(${props.currentValue + 180}deg)` }}
+                />
               </Typography>
               <Typography variant="h2" sx={{ fontWeight: '500' }}>
                 {formattedCurrentValue}
@@ -134,7 +107,7 @@ export default function MetricCard({
           {/* Spacer */}
           <Box flexGrow={1} />
 
-          {/* Min/Max/Sum */}
+          {/* Min/Max/Avg/Sum */}
           {!isGraphEmpty && (
             <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="flex-end" alignItems="flex-end">
               {/* Min */}
@@ -159,21 +132,44 @@ export default function MetricCard({
                 </Stack>
               )}
 
+              {/* Average */}
+              {formattedAvgValue !== undefined && (
+                <Stack alignItems="flex-end">
+                  <IconLabel icon={AverageIcon} label={formattedAvgValue} />
+
+                  {props.avgLabel && (
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                      {props.avgLabel}
+                    </Typography>
+                  )}
+                </Stack>
+              )}
+
               {/* Sum */}
-              {formattedSumValue !== undefined && <IconLabel icon={FunctionsIcon} label={formattedSumValue} />}
+              {formattedSumValue !== undefined && (
+                <Stack alignItems="flex-end">
+                  <IconLabel icon={FunctionsIcon} label={formattedSumValue} />
+
+                  {props.sumLabel && (
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                      {props.sumLabel}
+                    </Typography>
+                  )}
+                </Stack>
+              )}
             </Stack>
           )}
         </Stack>
       </CardContent>
 
       <CardMedia>
-        {!isGraphEmpty && metricKind === 'number' && (
+        {!isGraphEmpty && props.metricKind === 'number' && (
           <SparkLineChart
             height={40}
-            plotType={sparkLinePlotType}
+            plotType={props.graphPlotType}
             data={graphData}
             xAxis={{
-              data: sparkLineData.map(([timestamp]) => new Date(timestamp * 1000)),
+              data: props.graphData.map(([timestamp]) => dayjs.unix(timestamp).toDate()),
               valueFormatter: (date) => format.dateTime(date, { timeStyle: 'short' })
             }}
             yAxis={{ min: graphMinValue, max: graphMaxValue }}
@@ -185,9 +181,9 @@ export default function MetricCard({
           />
         )}
 
-        {!isGraphEmpty && metricKind === 'wind' && (
+        {!isGraphEmpty && props.metricKind === 'wind' && (
           <Stack direction="row" spacing={0} justifyContent="space-evenly">
-            {sparkLineData.map(([timestamp, value]) => (
+            {props.graphData.map(([timestamp, value]) => (
               <Typography key={timestamp} variant="body2" sx={{ translate: '0 8%' }}>
                 <NavigationIcon
                   key={timestamp}

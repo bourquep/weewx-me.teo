@@ -16,19 +16,27 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SvgIconComponent } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+'use client';
 
-interface IconLabelProps {
-  icon?: SvgIconComponent;
-  label: string;
-}
+import { useGlobalData } from '@/libs/DataSource';
+import { Link, Typography } from '@mui/material';
 
-export default function IconLabel(props: IconLabelProps) {
-  return (
-    <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-      {props.icon && <props.icon fontSize="inherit" sx={{ color: 'text.secondary' }} />}
-      {props.label}
-    </Typography>
-  );
+export default function PageFooter() {
+  const { data, isLoading, error } = useGlobalData();
+
+  if (!isLoading && !error && data) {
+    return (
+      <Typography mt={2} variant="caption" sx={{ color: 'text.secondary' }}>
+        <Link href="https://github.com/bourquep/weewx-me.teo" target="_blank">
+          {data.meta.skin}
+        </Link>
+        {' | '}
+        <Link href="https://github.com/weewx/weewx" target="_blank">
+          {data.meta.generator}
+        </Link>
+      </Typography>
+    );
+  }
+
+  return <></>;
 }

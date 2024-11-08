@@ -16,19 +16,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SvgIconComponent } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+'use client';
 
-interface IconLabelProps {
-  icon?: SvgIconComponent;
-  label: string;
-}
+import HistoricalPage from '@/components/HistoricalPage';
 
-export default function IconLabel(props: IconLabelProps) {
+export default function DayPage() {
   return (
-    <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-      {props.icon && <props.icon fontSize="inherit" sx={{ color: 'text.secondary' }} />}
-      {props.label}
-    </Typography>
+    <HistoricalPage
+      pageType="day"
+      dateFormat="YYYY-MM-DD"
+      calendarViews={['day', 'month', 'year']}
+      formatOptions={{ dateStyle: 'full' }}
+      defaultDateOffset={1}
+    />
   );
 }

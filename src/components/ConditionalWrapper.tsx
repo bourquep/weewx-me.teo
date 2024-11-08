@@ -16,19 +16,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SvgIconComponent } from '@mui/icons-material';
-import { Typography } from '@mui/material';
-
-interface IconLabelProps {
-  icon?: SvgIconComponent;
-  label: string;
+interface ConditionalWrapperProps<T = object> {
+  condition: boolean;
+  wrapper: (children: React.ReactNode) => React.ReactElement<T>;
+  children: React.ReactNode;
 }
 
-export default function IconLabel(props: IconLabelProps) {
-  return (
-    <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-      {props.icon && <props.icon fontSize="inherit" sx={{ color: 'text.secondary' }} />}
-      {props.label}
-    </Typography>
-  );
+export default function ConditionalWrapper<T = object>({ condition, wrapper, children }: ConditionalWrapperProps<T>) {
+  return condition ? wrapper(children) : <>{children}</>;
 }
