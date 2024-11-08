@@ -17,6 +17,12 @@ WeeWX-Me.teo is a custom skin for WeeWX that offers:
 - Support for light and dark modes
 - Modern, clean user interface built with [MUI](https://mui.com) and [Next.js](https://nextjs.org)
 - A focus on current weather conditions with trends from the past 24 hours
+- Historical data visualizations for:
+  - Week to date
+  - Month to date
+  - Daily summary
+  - Monthly summary
+  - Yearly summary
 - Customizable dashboard content and layout
 - Multi-language support
 
