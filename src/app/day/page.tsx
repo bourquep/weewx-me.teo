@@ -25,11 +25,12 @@ import { useDayData } from '@/libs/DataSource';
 import { graphMinMaxValuesFromObservation, plotTypeFromObservation } from '@/libs/GraphUtils';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { Alert, Box, Button, Grid2, IconButton, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { Alert, Box, Button, Grid2, IconButton, Popover, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { DateCalendar } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { useFormatter, useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function DayPage() {
   const router = useRouter();
@@ -57,6 +58,25 @@ export default function DayPage() {
     setSubtitle(formattedReportDate);
   }, [formattedReportDate]);
 
+  const [dateCalendarAnchor, setDateCalendarAnchor] = useState<HTMLButtonElement | null>(null);
+  const isDateCalendarOpen = Boolean(dateCalendarAnchor);
+
+  const handleDateButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setDateCalendarAnchor(event.currentTarget);
+  };
+
+  const handleDateCalendarClose = () => {
+    setDateCalendarAnchor(null);
+  };
+
+  const handleDateChange = (newDate: dayjs.Dayjs | null) => {
+    if (newDate) {
+      const formatted = newDate.format('YYYY-MM-DD');
+      router.push(`${pathname}?d=${formatted}`);
+      handleDateCalendarClose();
+    }
+  };
+
   return (
     <>
       <LoadingOrErrorIndicator data={data} isLoading={isLoading} error={error} expectUndefinedData />
@@ -76,9 +96,30 @@ export default function DayPage() {
 
           {isMobile && <Box flexGrow={1} />}
 
-          <Button variant="text" color="info" sx={{ minWidth: !isMobile ? 300 : undefined }}>
+          <Button
+            onClick={handleDateButtonClick}
+            variant="text"
+            color="info"
+            sx={{ minWidth: !isMobile ? 300 : undefined }}
+          >
             {formattedReportDate}
           </Button>
+
+          <Popover
+            open={isDateCalendarOpen}
+            anchorEl={dateCalendarAnchor}
+            onClose={handleDateCalendarClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center'
+            }}
+          >
+            <DateCalendar value={urlDate} onChange={handleDateChange} disableFuture />
+          </Popover>
 
           {isMobile && <Box flexGrow={1} />}
 

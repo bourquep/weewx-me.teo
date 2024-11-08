@@ -26,8 +26,6 @@ import theme from '@/theme';
 import { Stack } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
-import 'dayjs/locale/en';
-import 'dayjs/locale/fr';
 import { Metadata } from 'next';
 import { getLocale, getMessages } from 'next-intl/server';
 import { Roboto } from 'next/font/google';
