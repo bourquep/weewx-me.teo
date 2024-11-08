@@ -64,3 +64,9 @@ export function useDayData(formattedDay: string) {
     refreshInterval: dayjs.duration(1, 'minute').asMilliseconds()
   });
 }
+
+export function useMonthData(formattedMonth: string) {
+  return useSWR<MonthData>(`${baseUrl}/month-${formattedMonth}.json`, fetcher, {
+    refreshInterval: dayjs.duration(1, 'day').asMilliseconds()
+  });
+}
