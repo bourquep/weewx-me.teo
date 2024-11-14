@@ -7,26 +7,26 @@ const semanticReleaseConfig = {
     [
       '@semantic-release/commit-analyzer',
       {
-        preset: 'angular',
+        preset: 'conventionalcommits',
         releaseRules: [{ type: 'chore', scope: 'deps', release: 'patch' }]
       }
     ],
     [
       '@semantic-release/release-notes-generator',
       {
-        preset: 'angular',
+        preset: 'conventionalcommits',
         presetConfig: {
           types: [
-            { type: 'feat', section: '✨ Features', hidden: false },
-            { type: 'fix', section: '🐛 Bug Fixes', hidden: false },
-            { type: 'docs', section: '📚 Documentation', hidden: false },
-            { type: 'perf', section: '⚡️ Performance Improvements', hidden: false },
-            { type: 'refactor', section: '♻️ Code Refactoring', hidden: false },
-            { type: 'style', section: '💄 Style', hidden: false },
-            { type: 'chore', section: '🔧 Maintenance', hidden: false },
-            { type: 'build', section: '📦 Build System', hidden: false },
-            { type: 'ci', section: '👷 Continuous Integration', hidden: false },
-            { type: 'revert', section: '⏪ Reverts', hidden: false }
+            { type: 'feat', section: '✨ Features' },
+            { type: 'fix', section: '🐛 Bug Fixes' },
+            { type: 'docs', section: '📚 Documentation' },
+            { type: 'perf', section: '⚡️ Performance Improvements' },
+            { type: 'refactor', section: '♻️ Code Refactoring' },
+            { type: 'style', section: '💄 Style' },
+            { type: 'chore', section: '🔧 Maintenance' },
+            { type: 'build', section: '📦 Build System' },
+            { type: 'ci', section: '👷 Continuous Integration' },
+            { type: 'revert', section: '⏪ Reverts' }
           ]
         }
       }
