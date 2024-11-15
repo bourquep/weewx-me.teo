@@ -41,6 +41,9 @@ def get_files():
 
 class MeteoInstaller(ExtensionInstaller):
     def __init__(self):
+        files = get_files()
+        files.append(('bin/user', ['bin/user/meteo.py']))
+
         super(MeteoInstaller, self).__init__(
             version=VERSION,
             name=NAME,
@@ -48,7 +51,7 @@ class MeteoInstaller(ExtensionInstaller):
             author=AUTHOR,
             author_email=AUTHOR_EMAIL,
             config=config_dict,
-            files=get_files().append(('bin/user', ['bin/user/meteo.py']))
+            files=files
         )
 
 config_string = """
