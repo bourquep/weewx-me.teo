@@ -12,7 +12,7 @@ class NextJsBasePathGenerator(ReportGenerator):
 
     for root, dirs, files in os.walk(html_dest_dir):
       for file in files:
-        if file.endswith('.html') or file.endswith('.js') or file.endswith('.txt'):
+        if file.endswith('.html') or file.endswith('.js') or file.endswith('.css') or file.endswith('.txt'):
           filepath = os.path.join(root, file)
           try:
             with open(filepath, 'r') as f:
