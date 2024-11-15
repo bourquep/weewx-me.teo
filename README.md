@@ -71,6 +71,24 @@ There's not much else needed to get started. You can have a look at the `skin.co
 liking. The most likely customization you'll want to make is to edit the `observations_current` and `observations_summary`
 variables to list which observations you want on your Me.teo dashboard and in what order.
 
+### Configuring `HTML_ROOT` and `HTML_SUBDIR`
+
+If you are installing this skin in a subdirectory of your web server, you need to set `HTML_SUBDIR` to the name of the subdirectory.
+For example, if your web server is serving files from `/var/www/html`, and you have set `HTML_ROOT` for this skin to `/var/www/html/meteo`,
+you must set `HTML_SUBDIR` to `meteo`.
+
+```ini
+[StdReport]
+    [[Me.teo]]
+        skin = me.teo
+        enable = true
+
+        HTML_ROOT = public_html/foo/bar
+
+        # If web server is configured to serve files from public_html:
+        HTML_SUBDIR = foo/bar
+```
+
 ### Google Analytics
 
 If you have a Google Analytics account and want to track visits to your site, you can add your tracking ID to the skin
