@@ -10,7 +10,7 @@ class NextJsBasePathGenerator(ReportGenerator):
     html_dest_dir = os.path.join(self.config_dict['WEEWX_ROOT'], html_root)
     html_subdir = self.skin_dict.get('HTML_SUBDIR', '')
 
-    log.debug("Replacing ##METEO_BASE_PATH## with '%s' in all html, js, css and txt files in '%s'...", html_subdir, html_dest_dir)
+    log.info("Replacing ##METEO_BASE_PATH## with '%s' in all html, js, css and txt files in '%s'...", html_subdir, html_dest_dir)
 
     for root, dirs, files in os.walk(html_dest_dir):
       for file in files:
