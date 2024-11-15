@@ -15,13 +15,8 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with
 First, install the dependencies:
 
 ```bash
-npm install --force
+npm install
 ```
-
-> [!IMPORTANT]
-> The skin uses NextJS v15, which has a peer dependency on React v19 RC, which makes many packages fail to
-> install because of peer dependency mismatch. Right now, `npm install --force` must be used to work around this, but
-> hopefully React v19 will be out of RC soon and that workaround won't be needed anymore.
 
 Then, run the development server:
 
