@@ -59,10 +59,5 @@ config_string = """
     [[Me.teo]]
         skin = me.teo
         enable = true
-
-        # If you are installing this skin in a subdirectory of your web server, you need to set HTML_SUBDIR to the name of the subdirectory.
-        # For example, if your web server is serving files from "/var/www/html", and you have set HTML_ROOT for this skin to "/var/www/html/meteo",
-        # set HTML_SUBDIR to "meteo".
-        # HTML_SUBDIR = meteo
 """
 config_dict = configobj.ConfigObj(StringIO(config_string))
