@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import configobj
-from setup import ExtensionInstaller
+from weecfg.extension import ExtensionInstaller
 from io import StringIO
 import os
 
@@ -48,7 +48,7 @@ class MeteoInstaller(ExtensionInstaller):
             author=AUTHOR,
             author_email=AUTHOR_EMAIL,
             config=config_dict,
-            files=get_files()
+            files=get_files().append(('bin/user', ['bin/user/meteo.py']))
         )
 
 config_string = """
