@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@semantic-release/exec": "6.0.3",
-    "@types/node": "22.9.0",
+    "@types/node": "22.9.1",
     "@types/react": "npm:types-react@rc",
     "@types/react-dom": "npm:types-react-dom@rc",
     "conventional-changelog-conventionalcommits": "8.0.0",
