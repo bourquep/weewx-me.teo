@@ -58,7 +58,7 @@
     "@next/third-parties": "15.0.3",
     "dayjs": "1.11.13",
     "next": "15.0.3",
-    "next-intl": "3.25.2",
+    "next-intl": "3.25.3",
     "react": "19.0.0-rc.1",
     "react-dom": "19.0.0-rc.1",
     "swr": "2.2.5"
