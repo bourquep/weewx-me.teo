@@ -1,3 +1,5 @@
 node_modules
 .next
 out
+README.md
+.all-contributorsrc
