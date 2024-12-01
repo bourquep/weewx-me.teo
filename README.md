@@ -110,6 +110,7 @@ configuration in `weewx.conf`:
 
 - English (default)
 - French
+- Finnish
 
 ### Language Selection
 
