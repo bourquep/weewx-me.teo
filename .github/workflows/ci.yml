@@ -40,6 +40,7 @@ jobs:
         build-locale:
           - en
           - fr
+          - fi
 
     env:
       METEO_BUILD_LOCALE: ${{ matrix.build-locale }}
