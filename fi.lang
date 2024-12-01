@@ -1,0 +1,126 @@
+# weewx-me.teo
+# Copyright (C) 2024 Pascal Bourque
+# Finnish language by iiseppi 1.12.2024
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+unit_system = metricwx
+
+[Units]
+
+    [[Labels]]
+
+        # These are singular, plural
+        meter             = " metri",  " metriä"
+        day               = " päivä",    " päivää"
+        hour              = " tunti",   " tuntia"
+        minute            = " minuutti", " minuuttia"
+        second            = " sekuntti", " sekunttia"
+
+    [[Ordinates]]
+
+        # Ordinal directions. The last one should be for no wind direction
+        directions = P, NNE, PI, ENE, I, IK, KE, SSE, E, EL, SW, LO, E, LL, PL, LP, N/A
+
+[Labels]
+
+    # Set to hemisphere abbreviations suitable for your location:
+    hemispheres = P, L, I, E
+
+    # Generic labels, keyed by an observation type.
+    
+    [[Generic]]
+ 		altimeter              = Korkeus                # QNH
+        altimeterRate          = Korkeuden Muutos
+        appTemp                = Tuntuu Kuin
+        appTemp1               = Tuntuu Kuin
+        barometer              = Ilmanpaine                # QFF
+        barometerRate          = Ilmanpaineen muutos
+        cloudbase              = Pilvien Taso
+        dateTime               = Aika
+        dewpoint               = Kastepiste
+        ET                     = Haihtuvuus
+        extraHumid1            = Kosteus1
+        extraHumid2            = Kosteus2
+        extraHumid3            = Kosteus3
+        extraHumid4            = Kosteus4
+        extraHumid5            = Kosteus5
+        extraHumid6            = Kosteus6
+        extraHumid7            = Kosteus7
+        extraHumid8            = Kosteus8
+        extraTemp1             = Järjestelmän lämpötila
+        extraTemp2             = Lämpötila2
+        extraTemp3             = Lämpötila3
+        extraTemp4             = Lämpötila4
+        extraTemp5             = Lämpötila5
+        extraTemp6             = Lämpötila6
+        extraTemp7             = Lämpötila7
+        extraTemp8             = Lämpötila8
+        heatindex              = Lämpöindeksi
+        inDewpoint             = Sisätilan Kastepiste
+        inHumidity             = Sisätilan Kosteus
+        inTemp                 = Sisälämpötila
+        interval               = Aikaväli
+        leafTemp1              = Leaf Temperature1
+        leafTemp2              = Leaf Temperature2
+        leafWet1               = Leaf Wetness1
+        leafWet2               = Leaf Wetness2
+        lightning_distance     = Salaman Etäisyys
+        lightning_strike_count = Salamoita
+        luminosity             = Valoisuus
+        outHumidity            = Kosteus
+        outTemp                = Lämpötila
+        pressure               = Ilmanpaine                 # QFE
+        pressureRate           = Ilmanpaineen Muutos
+        radiation              = Säteily
+        rain                   = Sade
+        rainRate               = Sateen Määrä
+        soilMoist1             = Maaperän Kosteus1
+        soilMoist2             = Maaperän Kosteus2
+        soilMoist3             = Maaperän Kosteus3
+        soilMoist4             = Maaperän Kosteus4
+        soilTemp1              = Maaperän Lämpötila1
+
+# Sensor status indicators
+        consBatteryVoltage     = Konsolin Paristo
+        heatingVoltage         = Lämmityksen Paristo
+        inTempBatteryStatus    = Sisälämpötilän Paristo
+        outTempBatteryStatus   = Ulkolämpötilän Paristo
+        rainBatteryStatus      = Sademittarin Paristo
+        referenceVoltage       = Referenssi Jännite
+        rxCheckPercent         = Signaalin Laatu
+        supplyVoltage          = Syöttöjännite
+        txBatteryStatus        = Lähttimen Paristo
+        windBatteryStatus      = Tuuliyksikön Paristo
+        batteryStatus1         = Paristo1
+        batteryStatus2         = Paristo2
+        batteryStatus3         = Paristo3
+        batteryStatus4         = Paristo4
+        batteryStatus5         = Paristo5
+        batteryStatus6         = Paristo6
+        batteryStatus7         = Paristo7
+        batteryStatus8         = Paristo8
+        signal1                = Signaali1
+        signal2                = Signaali2
+        signal3                = Signaali3
+        signal4                = Signaali4
+        signal5                = Signaali5
+        signal6                = Signaali6
+        signal7                = Signaali7
+        signal8                = Signaali8
+[Texts]
+
+    "steady" = "vakaa"
+    "mainly" = "pääasiassa"
+    "variable" = "vaihtoehto"
