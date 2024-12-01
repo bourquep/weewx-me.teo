@@ -39,13 +39,13 @@ unit_system = metricwx
     hemispheres = P, L, I, E
 
     # Generic labels, keyed by an observation type.
-    
+
     [[Generic]]
- 		altimeter              = Korkeus                # QNH
+        altimeter              = Korkeus                      # QNH
         altimeterRate          = Korkeuden Muutos
         appTemp                = Tuntuu Kuin
         appTemp1               = Tuntuu Kuin
-        barometer              = Ilmanpaine                # QFF
+        barometer              = Ilmanpaine                   # QFF
         barometerRate          = Ilmanpaineen muutos
         cloudbase              = Pilvien Taso
         dateTime               = Aika
@@ -81,7 +81,7 @@ unit_system = metricwx
         luminosity             = Valoisuus
         outHumidity            = Kosteus
         outTemp                = Lämpötila
-        pressure               = Ilmanpaine                 # QFE
+        pressure               = Ilmanpaine                   # QFE
         pressureRate           = Ilmanpaineen Muutos
         radiation              = Säteily
         rain                   = Sade
@@ -119,8 +119,8 @@ unit_system = metricwx
         signal6                = Signaali6
         signal7                = Signaali7
         signal8                = Signaali8
-[Texts]
 
+[Texts]
     "steady" = "vakaa"
     "mainly" = "pääasiassa"
     "variable" = "vaihtoehto"
