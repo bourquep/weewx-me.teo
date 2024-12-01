@@ -1,0 +1,45 @@
+{
+  "Global": {
+    "DataLoadErrorTitle": "Säätietoja ei voida ladata.",
+    "DataLoadUnexpectedErrorMessage": "Odottamaton virhe tapahtui säätietoja ladattaessa."
+  },
+  "Labels": {
+    "Average": "keskiarvo",
+    "Sum": "yhteensä"
+  },
+  "CardinalPoints": {
+    "North": "P",
+    "NorthEast": "PI",
+    "East": "I",
+    "SouthEast": "KA",
+    "South": "E",
+    "SouthWest": "LO",
+    "West": "L",
+    "NorthWest": "LU"
+  },
+  "Current": {
+    "PageTitle": "Nykyiset Olot",
+    "PageFootnote": "Kaaviot ja muut tilastotiedot perustuvat viimeiseen 24 tuntiin.",
+    "EmptyGraphMessage": "Ei tietoja viimeisten 24 tunnin ajalta."
+  },
+  "WeekToDate": {
+    "PageTitle": "Viikko tähän asti",
+    "PageSubtitleSince": "Alkaen"
+  },
+  "MonthToDate": {
+    "PageTitle": "Kuukausi tähän asti",
+    "PageSubtitleSince": "Alkaen"
+  },
+  "Day": {
+    "PageTitle": "Päivän Yhteenveto",
+    "NoData": "Valitulle päivälle ei ole tietoja. Valitse toinen päivä."
+  },
+  "Month": {
+    "PageTitle": "Kuukauden Yhteenveto",
+    "NoData": "Valitulle kuukaudelle ei ole tietoja. Valitse toinen kuukausi."
+  },
+  "Year": {
+    "PageTitle": "Vuoden Yhteenveto",
+    "NoData": "Valitulle vuodelle ei ole tietoja. Valitse toinen vuosi."
+  }
+}
