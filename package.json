@@ -69,7 +69,7 @@
     "@types/react": "npm:types-react@rc",
     "@types/react-dom": "npm:types-react-dom@rc",
     "conventional-changelog-conventionalcommits": "8.0.0",
-    "eslint": "9.15.0",
+    "eslint": "9.16.0",
     "eslint-config-next": "15.0.3",
     "prettier": "3.4.1",
     "prettier-plugin-organize-imports": "4.1.0",
