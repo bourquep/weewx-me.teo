@@ -23,7 +23,10 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   output: 'export',
-  basePath: `/##METEO_BASE_PATH##/${process.env.METEO_BUILD_LOCALE || 'en'}`,
+  basePath:
+    process.env.NODE_ENV === 'production'
+      ? `/##METEO_BASE_PATH##/${process.env.METEO_BUILD_LOCALE || 'en'}`
+      : undefined,
   distDir: `out/${process.env.METEO_BUILD_LOCALE || 'en'}`
 };
 
