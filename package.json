@@ -47,12 +47,12 @@
     "@types/react-dom": "19.0.1"
   },
   "dependencies": {
-    "@emotion/cache": "11.13.5",
-    "@emotion/react": "11.13.5",
-    "@emotion/styled": "11.13.5",
-    "@mui/icons-material": "6.1.10",
-    "@mui/material": "6.1.10",
-    "@mui/material-nextjs": "6.1.9",
+    "@emotion/cache": "11.14.0",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.0",
+    "@mui/icons-material": "6.2.0",
+    "@mui/material": "6.2.0",
+    "@mui/material-nextjs": "6.2.0",
     "@mui/x-charts": "7.23.1",
     "@mui/x-date-pickers": "7.23.1",
     "@next/third-parties": "15.0.4",
