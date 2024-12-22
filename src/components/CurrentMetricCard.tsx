@@ -86,7 +86,7 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
         <Stack direction="row" alignItems="center" spacing={1}>
           {/* Current value */}
           {props.metricKind === 'number' && (
-            <Typography variant={(formattedCurrentValue?.length ?? 0) < 5 ? 'h1' : 'h2'} sx={{ fontWeight: '500' }}>
+            <Typography variant={(formattedCurrentValue?.length ?? 0) <= 5 ? 'h1' : 'h2'} sx={{ fontWeight: '500' }}>
               {formattedCurrentValue}
             </Typography>
           )}
