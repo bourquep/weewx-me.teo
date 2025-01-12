@@ -24,6 +24,7 @@ import 'dayjs/locale/en';
 import 'dayjs/locale/fi';
 import 'dayjs/locale/fr';
 import 'dayjs/locale/ca';
+
 interface MUILocalizationProviderProps {
   children: React.ReactNode;
   locale: string;
