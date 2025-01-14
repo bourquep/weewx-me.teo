@@ -20,10 +20,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/ca';
 import 'dayjs/locale/en';
 import 'dayjs/locale/fi';
 import 'dayjs/locale/fr';
-import 'dayjs/locale/ca';
 
 interface MUILocalizationProviderProps {
   children: React.ReactNode;
