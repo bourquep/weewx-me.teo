@@ -114,6 +114,7 @@ configuration in `weewx.conf`:
 - English (default)
 - French
 - Finnish
+- Catalan-Valencian
 
 ### Language Selection
 

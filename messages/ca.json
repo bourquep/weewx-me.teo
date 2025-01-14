@@ -1,0 +1,45 @@
+{
+  "Global": {
+    "DataLoadErrorTitle": "No s'ha pogut carregar les dades meteorològiques.",
+    "DataLoadUnexpectedErrorMessage": "S'ha produït un error en carregar les dades meteorològiques."
+  },
+  "Labels": {
+    "Average": "mitjana",
+    "Sum": "total"
+  },
+  "CardinalPoints": {
+    "North": "N",
+    "NorthEast": "NE",
+    "East": "E",
+    "SouthEast": "SE",
+    "South": "S",
+    "SouthWest": "SO",
+    "West": "O",
+    "NorthWest": "NO"
+  },
+  "Current": {
+    "PageTitle": "Condicions actuals",
+    "PageFootnote": "Els gràfics i altres dades estadístiques es basen en les últimes 24 hores.",
+    "EmptyGraphMessage": "No hi ha dades de les últimes 24 hores."
+  },
+  "WeekToDate": {
+    "PageTitle": "Setmana fins a hui",
+    "PageSubtitleSince": "Des del dia"
+  },
+  "MonthToDate": {
+    "PageTitle": "Mes fins a hui",
+    "PageSubtitleSince": "Des del dia"
+  },
+  "Day": {
+    "PageTitle": "Resum diari",
+    "NoData": "No hi ha dades disponibles per al dia seleccionat. Selecciona un altre dia."
+  },
+  "Month": {
+    "PageTitle": "Resum mensual",
+    "NoData": "No hi ha dades disponibles per al mes seleccionat. Selecciona un altre mes."
+  },
+  "Year": {
+    "PageTitle": "Resum anual",
+    "NoData": "No hi ha dades disponibles per a l'any seleccionat. Selecciona un altre any."
+  }
+}
