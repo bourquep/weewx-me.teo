@@ -42,6 +42,7 @@ jobs:
           - fr
           - fi
           - ca
+          - pl
 
     env:
       METEO_BUILD_LOCALE: ${{ matrix.build-locale }}
