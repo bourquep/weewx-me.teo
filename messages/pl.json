@@ -1,1 +1,45 @@
-
+{
+  "Global": {
+    "DataLoadErrorTitle": "Nie można załadować danych pogodowych.",
+    "DataLoadUnexpectedErrorMessage": "Wystąpił nieoczekiwany błąd podczas ładowania danych pogodowych."
+  },
+  "Labels": {
+    "Average": "średnia",
+    "Sum": "suma"
+  },
+  "CardinalPoints": {
+    "North": "N",
+    "NorthEast": "NE",
+    "East": "E",
+    "SouthEast": "SE",
+    "South": "S",
+    "SouthWest": "SW",
+    "West": "W",
+    "NorthWest": "NW"
+  },
+  "Current": {
+    "PageTitle": "Bieżące warunki",
+    "PageFootnote": "Wykresy i inne dane statystyczne oparte są na ostatnich 24 godzinach.",
+    "EmptyGraphMessage": "Brak danych z ostatnich 24 godzin."
+  },
+  "WeekToDate": {
+    "PageTitle": "Podsumowanie tygodnia",
+    "PageSubtitleSince": "Od"
+  },
+  "MonthToDate": {
+    "PageTitle": "Podsumowanie miesiąca",
+    "PageSubtitleSince": "Od"
+  },
+  "Day": {
+    "PageTitle": "Podsumowanie dnia",
+    "NoData": "Brak danych dla wybranego dnia. Proszę wybrać inny dzień."
+  },
+  "Month": {
+    "PageTitle": "Podsumowanie miesiąca",
+    "NoData": "Brak danych dla wybranego miesiąca. Proszę wybrać inny miesiąc."
+  },
+  "Year": {
+    "PageTitle": "Podsumowanie roku",
+    "NoData": "Brak danych dla wybranego roku. Proszę wybrać inny rok."
+  }
+}
