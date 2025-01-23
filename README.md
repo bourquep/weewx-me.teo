@@ -1,6 +1,6 @@
 # WeeWX-Me.teo
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 A modern, responsive web interface skin for the [WeeWX weather station software](https://github.com/weewx/weewx).
@@ -178,6 +178,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/iiseppi"><img src="https://avatars.githubusercontent.com/u/47714239?v=4?s=100" width="100px;" alt="iiseppi"/><br /><sub><b>iiseppi</b></sub></a><br /><a href="#translation-iiseppi" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/aryiu"><img src="https://avatars.githubusercontent.com/u/130826840?v=4?s=100" width="100px;" alt="aryiu"/><br /><sub><b>aryiu</b></sub></a><br /><a href="#translation-aryiu" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jkmikke"><img src="https://avatars.githubusercontent.com/u/188262270?v=4?s=100" width="100px;" alt="jkmikke"/><br /><sub><b>jkmikke</b></sub></a><br /><a href="#translation-jkmikke" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>
