@@ -156,7 +156,7 @@ available. The GPL v3 ensures that this software and any modifications remain fr
 
 ## Copyright
 
-© 2024 Pascal Bourque
+© 2024-2025 Pascal Bourque
 
 ## Support
 
