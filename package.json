@@ -61,7 +61,7 @@
     "next-intl": "3.26.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "swr": "2.3.2"
+    "swr": "2.3.3"
   },
   "devDependencies": {
     "@semantic-release/exec": "7.0.3",
