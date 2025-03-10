@@ -65,16 +65,16 @@
   },
   "devDependencies": {
     "@semantic-release/exec": "7.0.3",
-    "@types/node": "22.13.4",
+    "@types/node": "22.13.10",
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.1",
     "conventional-changelog-conventionalcommits": "8.0.0",
-    "eslint": "9.20.1",
-    "eslint-config-next": "15.1.7",
-    "prettier": "3.5.1",
+    "eslint": "9.22.0",
+    "eslint-config-next": "15.2.1",
+    "prettier": "3.5.3",
     "prettier-plugin-organize-imports": "4.1.0",
-    "semantic-release": "24.2.2",
+    "semantic-release": "24.2.3",
     "serve": "14.2.4",
-    "typescript": "5.7.3"
+    "typescript": "5.8.2"
   }
 }
