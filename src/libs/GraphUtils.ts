@@ -20,7 +20,7 @@ export type PlotType = 'line' | 'bar';
 export type MetricKind = 'number' | 'wind';
 
 export function plotTypeFromObservation(observation: string): PlotType {
-  if (['rainRate', 'rain', 'UV', 'ET'].includes(observation)) {
+  if (['rainRate', 'rain', 'UV', 'ET', 'lightning_strike_count', 'lightning_distance'].includes(observation)) {
     return 'bar';
   }
 
