@@ -43,38 +43,38 @@
   "overrides": {
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "@types/react": "19.0.1",
-    "@types/react-dom": "19.0.1"
+    "@types/react": "19.0.12",
+    "@types/react-dom": "19.0.4"
   },
   "dependencies": {
     "@emotion/cache": "11.14.0",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
-    "@mui/icons-material": "6.4.4",
-    "@mui/material": "6.4.4",
+    "@mui/icons-material": "6.4.8",
+    "@mui/material": "6.4.8",
     "@mui/material-nextjs": "6.4.3",
-    "@mui/x-charts": "7.26.0",
-    "@mui/x-date-pickers": "7.26.0",
-    "@next/third-parties": "15.1.7",
+    "@mui/x-charts": "7.28.0",
+    "@mui/x-date-pickers": "7.28.0",
+    "@next/third-parties": "15.2.3",
     "dayjs": "1.11.13",
-    "next": "15.1.7",
+    "next": "15.2.3",
     "next-intl": "3.26.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "swr": "2.3.2"
+    "swr": "2.3.3"
   },
   "devDependencies": {
     "@semantic-release/exec": "7.0.3",
-    "@types/node": "22.13.4",
-    "@types/react": "19.0.1",
-    "@types/react-dom": "19.0.1",
+    "@types/node": "22.13.11",
+    "@types/react": "19.0.12",
+    "@types/react-dom": "19.0.4",
     "conventional-changelog-conventionalcommits": "8.0.0",
-    "eslint": "9.20.1",
-    "eslint-config-next": "15.1.7",
-    "prettier": "3.5.1",
+    "eslint": "9.23.0",
+    "eslint-config-next": "15.2.3",
+    "prettier": "3.5.3",
     "prettier-plugin-organize-imports": "4.1.0",
-    "semantic-release": "24.2.2",
+    "semantic-release": "24.2.3",
     "serve": "14.2.4",
-    "typescript": "5.7.3"
+    "typescript": "5.8.2"
   }
 }
