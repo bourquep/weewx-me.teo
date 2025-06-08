@@ -23,7 +23,7 @@ import LoadingOrErrorIndicator from '@/components/LoadingOrErrorIndicator';
 import { useNavigation } from '@/contexts/NavigationContext';
 import { useCurrentWeatherData } from '@/libs/DataSource';
 import { graphMinMaxValuesFromObservation, plotTypeFromObservation } from '@/libs/GraphUtils';
-import { Grid2, Stack, Typography } from '@mui/material';
+import { Grid, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
@@ -47,11 +47,11 @@ export default function Home() {
       <LoadingOrErrorIndicator data={data} isLoading={isLoading} error={error} />
       {data && (
         <Stack>
-          <Grid2 container spacing={2} columns={{ xs: 4, sm: 8, md: 12, lg: 12, xl: 16 }}>
+          <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12, lg: 12, xl: 16 }}>
             {data.observations
               .filter((x) => x != null)
               .map((observation) => (
-                <Grid2 key={observation.observation} size={4}>
+                <Grid key={observation.observation} size={4}>
                   <CurrentMetricCard
                     cardTitle={observation.label}
                     metricUnit={observation.observation === 'windDir' ? '' : observation.unit}
@@ -72,9 +72,9 @@ export default function Home() {
                     graphMinValue={graphMinMaxValuesFromObservation(observation.observation)[0]}
                     graphMaxValue={graphMinMaxValuesFromObservation(observation.observation)[1]}
                   />
-                </Grid2>
+                </Grid>
               ))}
-          </Grid2>
+          </Grid>
           <Typography mt={2} mb={-2} variant="caption" sx={{ color: 'text.secondary' }}>
             <em>{t('Current.PageFootnote')}</em>
           </Typography>

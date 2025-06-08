@@ -23,7 +23,7 @@ import LoadingOrErrorIndicator from '@/components/LoadingOrErrorIndicator';
 import { useNavigation } from '@/contexts/NavigationContext';
 import { useWeekToDateData } from '@/libs/DataSource';
 import { graphMinMaxValuesFromObservation, plotTypeFromObservation } from '@/libs/GraphUtils';
-import { Grid2 } from '@mui/material';
+import { Grid } from '@mui/material';
 import dayjs from 'dayjs';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
@@ -47,11 +47,11 @@ export default function WeekToDataPage() {
   return (
     <>
       <LoadingOrErrorIndicator data={data} isLoading={isLoading} error={error} />
-      <Grid2 container spacing={2} columns={{ xs: 4, sm: 4, md: 4, lg: 8, xl: 8 }}>
+      <Grid container spacing={2} columns={{ xs: 4, sm: 4, md: 4, lg: 8, xl: 8 }}>
         {data?.observations
           .filter((x) => x != null)
           .map((observation) => (
-            <Grid2 key={observation.observation} size={4}>
+            <Grid key={observation.observation} size={4}>
               <HistoricalMetricCard
                 cardTitle={observation.label}
                 metricKind={observation.observation === 'windDir' ? 'wind' : 'number'}
@@ -69,9 +69,9 @@ export default function WeekToDataPage() {
                 graphMinValue={graphMinMaxValuesFromObservation(observation.observation)[0]}
                 graphMaxValue={graphMinMaxValuesFromObservation(observation.observation)[1]}
               />
-            </Grid2>
+            </Grid>
           ))}
-      </Grid2>
+      </Grid>
     </>
   );
 }
