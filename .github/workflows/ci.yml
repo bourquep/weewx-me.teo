@@ -1,5 +1,9 @@
 name: 'CI: lint, multi-locale build and release'
 
+permissions:
+  contents: read
+  pull-requests: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
