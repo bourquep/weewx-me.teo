@@ -170,13 +170,12 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
             data={graphData}
             xAxis={{
               data: props.graphData.map(([timestamp]) => dayjs.unix(timestamp).toDate()),
-              valueFormatter: (date) => format.dateTime(date, { timeStyle: 'short' })
+              valueFormatter: (date: Date) => format.dateTime(date, { timeStyle: 'short' })
             }}
             yAxis={{ min: graphMinValue, max: graphMaxValue }}
             color={theme.palette.grey[200]}
             curve="natural"
             area
-            disableAxisListener
             sx={{ pointerEvents: 'none' }}
           />
         )}
