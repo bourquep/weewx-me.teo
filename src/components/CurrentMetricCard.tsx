@@ -173,7 +173,7 @@ export default function CurrentMetricCard(props: CurrentMetricCardProps) {
               valueFormatter: (date) => format.dateTime(date, { timeStyle: 'short' })
             }}
             yAxis={{ min: graphMinValue, max: graphMaxValue }}
-            colors={[theme.palette.grey[200]]}
+            color={theme.palette.grey[200]}
             curve="natural"
             area
             disableAxisListener
