@@ -154,7 +154,7 @@ export default function HistoricalMetricCard(props: MetricCardProps) {
                 tickInterval: props.metricKind === 'wind' ? [0, 90, 180, 270, 360] : 'auto',
                 valueFormatter:
                   props.metricKind === 'wind'
-                    ? (value) => {
+                    ? (value: number) => {
                         const angle = (value + 360) % 360;
                         if (angle >= 337.5 || angle < 22.5) return t('CardinalPoints.North');
                         if (angle >= 22.5 && angle < 67.5) return t('CardinalPoints.NorthEast');
@@ -170,9 +170,7 @@ export default function HistoricalMetricCard(props: MetricCardProps) {
             ]}
             height={isMobile ? 100 : 300}
             margin={isMobile ? { top: 4, right: 4, bottom: 4, left: 4 } : {}}
-            bottomAxis={isMobile ? null : undefined}
-            leftAxis={isMobile ? null : undefined}
-            slotProps={isMobile ? { popper: { placement: 'top-end' } } : {}}
+            slotProps={isMobile ? { tooltip: { placement: 'top-end' } } : {}}
           />
         )}
 
@@ -194,9 +192,7 @@ export default function HistoricalMetricCard(props: MetricCardProps) {
             yAxis={[{ min: graphMinValue, max: graphMaxValue }]}
             height={isMobile ? 100 : 300}
             margin={isMobile ? { top: 4, right: 4, bottom: 4, left: 4 } : {}}
-            bottomAxis={isMobile ? null : undefined}
-            leftAxis={isMobile ? null : undefined}
-            slotProps={isMobile ? { popper: { placement: 'top-end' } } : {}}
+            slotProps={isMobile ? { tooltip: { placement: 'top-end' } } : {}}
           />
         )}
       </CardMedia>
